@@ -1,8 +1,8 @@
 <template>
 <div class='h-navigation-container'>
   <span>个人主页</span>
-  <div class="message-wrapper">
-    <span class="red-notify"></span>
+  <div class="message-wrapper" @click="messageClick">
+    <span class="red-notify" v-if="showRedNotify"></span>
     <span class="iconfont">&#xe60c;</span>
   </div>
 </div>
@@ -15,7 +15,13 @@ export default {
   components: {},
   data () {
     return {
-
+      showRedNotify: true
+    }
+  },
+  methods: {
+    messageClick () {
+      this.showRedNotify = false
+      this.$router.push({name: 'message'})
     }
   }
 }

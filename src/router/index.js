@@ -23,6 +23,7 @@ import RegisterSeller from '@/pages/register/RegisterSeller'
 import OrderInfoPay from '@/pages/order/OrderInfoPay'
 
 import CustomService from '@/pages/home/other/CustomService'
+import Message from '@/pages/home/other/Message'
 
 Vue.use(Router)
 
@@ -161,6 +162,11 @@ export default new Router({
       path: '/customservice',
       name: 'customService',
       component: CustomService
+    },
+    {
+      path: '/message',
+      name: 'message',
+      component: Message
     }
   ],
   scrollBehavior (to, from, saveTop) {
