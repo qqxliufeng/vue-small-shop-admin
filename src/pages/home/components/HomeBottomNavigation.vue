@@ -4,7 +4,9 @@
   <i class="separator"></i>
   <span>商家中心</span>
   <i class="separator"></i>
-  <span>退出</span>
+  <router-link tag="span" :to="{name: 'login'}">
+    <span>退出</span>
+  </router-link>
   <i class="separator"></i>
   <router-link tag="span" :to="{name: 'customService'}">
     <span>联系客服</span>

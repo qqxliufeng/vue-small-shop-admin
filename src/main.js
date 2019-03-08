@@ -18,6 +18,7 @@ import 'vue2-toast/lib/toast.css'
 import Toast from 'vue2-toast'
 import validator from 'common/utils/validator'
 import utils from 'common/utils/utils'
+import SlideVerify from 'vue-monoplasty-slide-verify'
 
 Vue.config.productionTip = false
 
@@ -32,6 +33,7 @@ Vue.use(VueLazyLoad, {
   loading: logo,
   attempt: 1
 })
+Vue.use(SlideVerify)
 Vue.prototype.$validator = validator
 Vue.prototype.$utils = utils
 Vue.prototype.$isWeiXin = navigator.userAgent.toLowerCase().indexOf('micromessenger') !== -1

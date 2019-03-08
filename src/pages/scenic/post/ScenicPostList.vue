@@ -9,15 +9,15 @@
       <ul>
         <li v-for="(item, index) of scenicPostList" :key="index" class="scenic-post-item-wrapper" @click="startScenicPost(item)">
           <el-card shadow="always" :bodyStyle="{padding: '0'}">
-              <img class="item-image" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1551767583542&di=c71abe346d8549974662ee3129a1a25f&imgtype=0&src=http%3A%2F%2Fhbimg.b0.upaiyun.com%2F1c527b891defb0ddfe86302ba7f644b63c53d193e801-yE5WDO_fw658" alt="">
-              <div class="item-info-wrapper">
-                <p class="item-title">卧虎山滑雪场卧虎山滑雪场卧虎山滑雪场</p>
-                <p class="item-lvxingshe">旅行社好</p>
-                <p class="item-info">
-                  <span>4.9分</span>
-                  <span>1200人次</span>
-                </p>
-              </div>
+            <img class="item-image" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1551767583542&di=c71abe346d8549974662ee3129a1a25f&imgtype=0&src=http%3A%2F%2Fhbimg.b0.upaiyun.com%2F1c527b891defb0ddfe86302ba7f644b63c53d193e801-yE5WDO_fw658" alt="">
+            <div class="item-info-wrapper">
+              <p class="item-title">卧虎山滑雪场卧虎山滑雪场卧虎山滑雪场</p>
+              <p class="item-lvxingshe">旅行社好</p>
+              <p class="item-info">
+                <span>4.9分</span>
+                <span>1200人次</span>
+              </p>
+            </div>
           </el-card>
         </li>
       </ul>
@@ -71,7 +71,6 @@ export default {
   },
   computed: {
     showSearch () {
-      console.log(this.$route.params)
       return this.$route.params.type !== '1'
     }
   },
@@ -79,6 +78,9 @@ export default {
     startScenicPost (item) {
       this.$router.push({name: 'shareScenic'})
     }
+  },
+  mounted () {
+    console.log('mounted')
   }
 }
 </script>
@@ -87,7 +89,8 @@ export default {
 @import '~styles/mixin.styl'
 .s-p-list-container
     .content
-        contentFixed()
+        // contentFixed()
+        padding-top $headerHeight
         .search-wrapper
             background #ffffff
             height $headerHeight
