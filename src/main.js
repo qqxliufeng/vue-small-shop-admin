@@ -18,7 +18,7 @@ import 'vue2-toast/lib/toast.css'
 import Toast from 'vue2-toast'
 import validator from 'common/utils/validator'
 import utils from 'common/utils/utils'
-import SlideVerify from 'vue-monoplasty-slide-verify'
+import SlideVerify from 'common/components/slideverify/index'
 
 Vue.config.productionTip = false
 

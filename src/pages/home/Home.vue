@@ -35,15 +35,6 @@ export default {
   methods: {
     tipClick () {
       this.showTip = false
-    },
-    onSuccess () {
-      this.msg = 'login success'
-    },
-    onFail () {
-      this.msg = ''
-    },
-    onRefresh () {
-      this.msg = ''
     }
   }
 }
