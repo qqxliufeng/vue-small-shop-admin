@@ -14,7 +14,6 @@
 import imgShareShopIcon from 'images/img_share_shop_icon.png'
 import imgScenicPostIcon from 'images/img_scenic_info_icon.png'
 import imgShopListIcon from 'images/img_shop_list_icon.png'
-import imgNotifyIcon from 'images/img_notify_icon.png'
 import imgAddPartnerIcon from 'images/img_add_partner_icon.png'
 import imgPartnerListIcon from 'images/img_partner_icon.png'
 export default {
@@ -37,11 +36,6 @@ export default {
           name: '商品列表',
           icon: imgShopListIcon,
           actionUrl: 'goodsList'
-        },
-        {
-          name: '编辑公告',
-          icon: imgNotifyIcon,
-          actionUrl: 'editNotify'
         },
         {
           name: '发展伙伴',

@@ -1,16 +1,14 @@
 <template>
 <div class='h-bottom-navigation-container'>
-  <span>分享小店</span>
-  <i class="separator"></i>
-  <span>商家中心</span>
-  <i class="separator"></i>
-  <router-link tag="span" :to="{name: 'login'}">
-    <span>退出</span>
-  </router-link>
-  <i class="separator"></i>
-  <router-link tag="span" :to="{name: 'customService'}">
-    <span>联系客服</span>
-  </router-link>
+    <span>分享小店</span>
+    <i class="separator"></i>
+    <span>商家中心</span>
+    <i class="separator"></i>
+    <span @click="logout">退出</span>
+    <i class="separator"></i>
+    <router-link tag="span" :to="{name: 'customService'}">
+      <span>联系客服</span>
+    </router-link>
 </div>
 </template>
 
@@ -21,6 +19,11 @@ export default {
   data () {
     return {
 
+    }
+  },
+  methods: {
+    logout () {
+      this.$emit('logout')
     }
   }
 }

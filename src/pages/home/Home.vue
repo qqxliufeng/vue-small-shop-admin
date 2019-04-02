@@ -9,7 +9,7 @@
       <home-header></home-header>
   </div>
   <home-tools></home-tools>
-  <home-bottom-navigation></home-bottom-navigation>
+  <home-bottom-navigation @logout="logout"></home-bottom-navigation>
 </div>
 </template>
 
@@ -35,6 +35,18 @@ export default {
   methods: {
     tipClick () {
       this.showTip = false
+    },
+    logout () {
+      let confirm = window.confirm('是否要退出当前帐号？')
+      if (confirm) {
+        this.$http(this.$urlPath.logoutUrl, {
+        }, '正在退出…', (data) => {
+          this.$root.userInfo.clearInfoAction()
+          this.$router.replace({name: 'login'})
+        }, (errorCode, error) => {
+          this.$toast(error)
+        })
+      }
     }
   }
 }

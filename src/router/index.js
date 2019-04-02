@@ -28,6 +28,7 @@ import Message from '@/pages/home/other/Message'
 Vue.use(Router)
 
 export default new Router({
+  mode: 'history',
   routes: [
     {
       path: '/',

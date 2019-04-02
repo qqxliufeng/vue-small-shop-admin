@@ -42,10 +42,13 @@ export default {
       html2canvas(this.$refs.post, {
         backgroundColor: '#ffffff',
         useCORS: true,
+        allowTaint: false,
+        taintTest: false,
         width: this.$refs.post.offsetWidth,
         height: this.$refs.post.offsetHeight,
         dpi: window.devicePixelRatio
       }).then((canvas) => {
+        console.log(canvas)
         let dataUrl = canvas.toDataURL('image/png')
         this.postUrl = dataUrl
         this.dialogTitle = '长按保存图片到手机'

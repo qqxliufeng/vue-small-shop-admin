@@ -1,13 +1,12 @@
 <template>
 <div class='login-container'>
-  <my-navi title="登录"></my-navi>
+  <my-navi title="登录" :isShowBack="false"></my-navi>
   <div class="input-container">
       <div>
-          <span class="iconfont input-close" @click="clear">&#xe604;</span>
           <input placeholder="请输入手机号" class="user-name" maxlength="11" v-model="userName"/>
       </div>
       <div class="input-password-container">
-          <input placeholder="请输入密码" class="user-password" maxlength="16" v-model="userPassword"/>
+          <input placeholder="请输入密码" class="user-password" maxlength="16" v-model="userPassword" type="password"/>
           <router-link to="/forgetpasswordstepone">
             <span class="input-forget-password">忘记密码</span>
           </router-link>
@@ -19,7 +18,6 @@
           </router-link>
       </div>
   </div>
-  <loading v-if="showLoading" loadingTip="正在登录…"></loading>
   <el-dialog :visible.sync="showVerifyDialog" modal width="90%" @opened="openDialog" @closed="closeDialog">
     <slide-verify
     :w="width"
@@ -33,6 +31,9 @@
 
 export default {
   name: 'login',
+  props: {
+    backName: Object
+  },
   methods: {
     goHome () {
       this.$router.push({name: 'home'})
@@ -49,20 +50,45 @@ export default {
     },
     onSlideSuccess () {
       this.showVerifyDialog = false
+      this.$http(this.$urlPath.loginUrl, {
+        mobile: this.userName,
+        password: this.userPassword
+      }, '正在登录…', (data) => {
+        if (data.data) {
+          this.$root.$data.userInfo.setUserInfo(data.data.distributorinfo)
+        }
+        this.$router.replace({name: 'home'})
+      }, (errorCode, error) => {
+        this.$toast(error)
+      })
+    },
+    login () {
+      if (!this.userName) {
+        this.$toast('请输入手机号')
+        return
+      }
+      if (!this.$utils.validator.isPhone(this.userName)) {
+        this.$toast('请输入合法的手机号')
+        return
+      }
+      if (!this.userPassword) {
+        this.$toast('请输入密码')
+        return
+      }
+      this.showVerifyDialog = true
     }
   },
   data () {
     return {
-      showVerifyDialog: false
+      showVerifyDialog: false,
+      userName: '15006519751',
+      userPassword: '123456'
     }
   },
   computed: {
     width () {
       return document.body.clientWidth * 0.9 - 40
     }
-  },
-  mounted () {
-    console.log(this.width)
   }
 }
 </script>

@@ -2,20 +2,22 @@
 <div class='h-header-container'>
   <div class="circle-bg"></div>
   <div class="content-wrapper">
-      <div class="face-wrapper"></div>
-      <span class="nick-name">王大宝</span>
+      <div class="face-wrapper">
+        <img :src="$utils.image.getImagePath($root.userInfo.state.avatar)">
+      </div>
+      <span class="nick-name">{{$root.userInfo.state.name}}</span>
       <div class="info-wrapper">
           <div class="release-money-wrapper">
             <div class="release-money">
               <p>账户余额</p>
-              <p class="money">￥1234</p>
+              <p class="money">￥{{$root.userInfo.state.balance}}</p>
             </div>
             <el-button type="primary" size="mini">余额提现</el-button>
           </div>
           <span class="separator-line"></span>
           <div class="other-money-wrapper">
-            <p><span>账户返利  </span><span class="money">￥1234</span></p>
-            <p><span>授信额度  </span><span class="money">￥1234</span></p>
+            <p><span>账户返利  </span><span class="money">￥{{$root.userInfo.state.rebate}}</span></p>
+            <p><span>授信额度  </span><span class="money">￥{{$root.userInfo.state.credit}}</span></p>
           </div>
       </div>
   </div>
@@ -69,11 +71,16 @@ export default {
         z-index 10
         .face-wrapper
             margin-top rem(.32)
-            background red
+            background #f5f5f5
             height rem(1.2)
             width rem(1.2)
             border-radius 50%
             border rem(.1) solid #ffffff
+            overflow hidden
+            & img
+                width 100%
+                height 100%
+                object-fit cover
         .nick-name
             normalTextStyle(#333, .32)
         .info-wrapper
@@ -94,6 +101,7 @@ export default {
                 .release-money
                     margin-right rem(.5)
                     font-size rem(.3)
+                    text-align center
                     & p:nth-child(2)
                         margin-top rem(.2)
                         font-size rem(.32)

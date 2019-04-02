@@ -16,13 +16,14 @@ import logo from 'images/logo.png'
 
 import 'vue2-toast/lib/toast.css'
 import Toast from 'vue2-toast'
-import validator from 'common/utils/validator'
 import utils from 'common/utils/utils'
 import SlideVerify from 'common/components/slideverify/index'
+import axios from 'common/http/http.js'
+import * as urlPath from 'common/http/urlConfig'
+
+import userInfo from 'common/data/user-info'
 
 Vue.config.productionTip = false
-
-Vue.use(Toast)
 Vue.use(ElementUI)
 Vue.use(MyNavigation)
 Vue.use(Loading)
@@ -34,22 +35,80 @@ Vue.use(VueLazyLoad, {
   attempt: 1
 })
 Vue.use(SlideVerify)
-Vue.prototype.$validator = validator
+Vue.use(Toast)
 Vue.prototype.$utils = utils
+Vue.prototype.$urlPath = urlPath
 Vue.prototype.$isWeiXin = navigator.userAgent.toLowerCase().indexOf('micromessenger') !== -1
+Vue.prototype.$http = function (url, params = {}, loadingTip, onRequestSuccess, onRequestFail) {
+  try {
+    if (!url) {
+      this.$toast('url 参数不正确')
+      return
+    }
+    if (loadingTip !== null) {
+      this.$loading(loadingTip || '正在加载…')
+    }
+    if (userInfo.isLogin()) {
+      params.token = userInfo.state.token
+    }
+    return axios.post(url, params)
+      .then(response => {
+        // 判断是否是正常的http请求状态
+        if (response.status === 200) {
+          if (response.data) {
+            if (response.data.code === 1) {
+              if (this.NODE_DEVELOPMENT) {
+                console.log(response.data)
+              }
+              onRequestSuccess(response.data)
+            } else {
+              onRequestFail(200, response.data.msg)
+            }
+          } else {
+            onRequestFail(-1, '请求失败，请重试…')
+          }
+        } else {
+          if (onRequestFail) {
+            onRequestFail(-1, '请求失败，请重试…')
+          }
+        }
+      })
+      .catch((error) => {
+        if (this.NODE_DEVELOPMENT) {
+          console.log(error)
+        }
+        if (onRequestFail) {
+          onRequestFail(-1, '请求失败，请重试…')
+        }
+      })
+      .then(() => {
+        this.$loading.close()
+      })
+  } catch (error) {
+    if (this.NODE_DEVELOPMENT) {
+      console.log(error)
+    }
+    this.$loading.close()
+  }
+}
 
-// router.beforeEach((to, from, next) => {
-//   if (to.matched.some(m => m.meta.auth)) {
-//     next({name: 'login', params: { backName: to.name }})
-//   } else {
-//     next()
-//   }
-// })
+router.beforeEach((to, from, next) => {
+  if (!userInfo.isLogin() && to.name !== 'login') {
+    next({name: 'login'})
+  } else {
+    next()
+  }
+})
 
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
   router,
   components: { App },
-  template: '<App/>'
+  template: '<App/>',
+  data () {
+    return {
+      userInfo
+    }
+  }
 })

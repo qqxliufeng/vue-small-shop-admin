@@ -1,20 +1,20 @@
 <template>
-  <div class='s-shop-container'>
+  <div class='s-shop-container' v-if="info">
     <my-navi title="分享店铺" :isFixed="true"></my-navi>
     <div class="content">
         <share-component>
           <template slot="shareHeader">
-            <img class="share-image" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1551767583542&di=c71abe346d8549974662ee3129a1a25f&imgtype=0&src=http%3A%2F%2Fhbimg.b0.upaiyun.com%2F1c527b891defb0ddfe86302ba7f644b63c53d193e801-yE5WDO_fw658" alt="">
+            <img class="share-image" v-lazy="image" alt="">
           </template>
           <template slot="shareInfo">
             <div class="info-content-wrapper">
                 <div class="post-logo">
-                    <img src="http://img.pconline.com.cn/images/upload/upc/tx/ladyproduct/1501/08/c0/1616021_1420691838105_100x100.jpg" alt="">
+                    <img :src="logo">
                 </div>
                 <div class="post-info">
-                  <p><span class="iconfont icon">&#xe736;</span>王大宝的店铺</p>
-                  <p><span class="iconfont icon">&#xe613;</span>王大宝</p>
-                  <p><span class="iconfont icon">&#xe615;</span>189888888888</p>
+                  <p><span class="iconfont icon">&#xe736;</span>{{$root.userInfo.state.name}}的店铺</p>
+                  <p><span class="iconfont icon">&#xe613;</span>{{$root.userInfo.state.name}}</p>
+                  <p><span class="iconfont icon">&#xe615;</span>{{$root.userInfo.state.phone}}</p>
                 </div>
                 <div class="post-code-wrapper">
                   <div class="post-code">
@@ -42,7 +42,28 @@ export default {
   },
   data () {
     return {
+      info: null
     }
+  },
+  computed: {
+    image () {
+      return this.$utils.image.getImagePath(this.info.image) + '?time=' + (new Date()).getTime()
+    },
+    logo () {
+      return this.$utils.image.getImagePath(this.info.logo) + '?time=' + (new Date()).getTime()
+    }
+  },
+  methods: {
+    getData () {
+      this.$http(this.$urlPath.shareShopUrl, {}, '', (data) => {
+        this.info = data.data
+      }, (errorCode, error) => {
+        this.$toast(error)
+      })
+    }
+  },
+  mounted () {
+    this.getData()
   }
 }
 </script>
