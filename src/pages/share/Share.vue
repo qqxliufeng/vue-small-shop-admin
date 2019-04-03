@@ -11,7 +11,6 @@
         </p>
         <slot name="otherInfo"></slot>
         <div class="post-action-wrapper">
-          <span class="action action1">复制链接</span>
           <span class="action action1" @click="savePost">保存图片</span>
           <span class="action action2" @click="sharePost">分享图片</span>
         </div>
@@ -42,13 +41,11 @@ export default {
       html2canvas(this.$refs.post, {
         backgroundColor: '#ffffff',
         useCORS: true,
-        allowTaint: false,
-        taintTest: false,
+        logging: true,
         width: this.$refs.post.offsetWidth,
         height: this.$refs.post.offsetHeight,
         dpi: window.devicePixelRatio
       }).then((canvas) => {
-        console.log(canvas)
         let dataUrl = canvas.toDataURL('image/png')
         this.postUrl = dataUrl
         this.dialogTitle = '长按保存图片到手机'
@@ -67,6 +64,7 @@ export default {
 @import '~styles/varibles.styl'
 @import '~styles/mixin.styl'
 .share-container
+    overflow-y scroll
     .share-header
         width 100%
         height 117vw

@@ -4,7 +4,7 @@
     <div class="content">
         <share-component>
           <template slot="shareHeader">
-            <img class="share-image" v-lazy="image" alt="">
+            <img class="share-image" :src="image" alt="">
           </template>
           <template slot="shareInfo">
             <div class="info-content-wrapper">
@@ -18,7 +18,7 @@
                 </div>
                 <div class="post-code-wrapper">
                   <div class="post-code">
-                    <img src="http://cli.clewm.net/file/2014/12/10/10febbdfabe543c7dd27d74fb4f411f3.png" alt="">
+                    <canvas ref="codeCanvas" class="code-canvas"></canvas>
                   </div>
                   <p>长按识别进入</p>
                 </div>
@@ -26,7 +26,7 @@
           </template>
           <template slot="shareAddress">
             <span class="shop-address-title">店铺链接:</span>
-            <span class="shop-address">http://www.baidu.comhttp://www.baidu.comhttp://www.baidu.comhttp://www.baidu.comhttp://www.baidu.comhttp://www.baidu.comhttp://www.baidu.com</span>
+            <span class="shop-address" ref="copyUrl">{{info.url}}</span>
           </template>
         </share-component>
     </div>
@@ -35,6 +35,7 @@
 
 <script>
 import ShareComponent from '@/pages/share/Share'
+import QRCode from 'qrcode'
 export default {
   name: 'shareShop',
   components: {
@@ -47,10 +48,10 @@ export default {
   },
   computed: {
     image () {
-      return this.$utils.image.getImagePath(this.info.image) + '?time=' + (new Date()).getTime()
+      return this.$utils.image.getImagePath(this.info.image)
     },
     logo () {
-      return this.$utils.image.getImagePath(this.info.logo) + '?time=' + (new Date()).getTime()
+      return this.$utils.image.getImagePath(this.info.logo)
     }
   },
   methods: {
@@ -60,6 +61,18 @@ export default {
       }, (errorCode, error) => {
         this.$toast(error)
       })
+    },
+    creatQrCode () {
+      this.$nextTick(() => {
+        let mCanvas = this.$refs.codeCanvas
+        QRCode.toCanvas(mCanvas, this.info.url, (data) => {
+        })
+      })
+    }
+  },
+  watch: {
+    info (newVal, oldVal) {
+      this.creatQrCode()
     }
   },
   mounted () {
@@ -71,43 +84,45 @@ export default {
 @import '~styles/varibles.styl'
 @import '~styles/mixin.styl'
 .s-shop-container
+    overflow scroll
     .content
-        contentFixed()
+        overflow-y scroll
+        padding-top $headerHeight
         .share-image
             width 100%
-            height 100%
+            background #f5f5f5
         .info-content-wrapper
             display flex
-            padding rem(.3)
+            width 100%
+            box-sizing border-box
+            padding rem(.2) rem(.3)
             .post-logo
                 width rem(1.5)
-                height rem(1.5)
                 & img
                     width 100%
-                    height 100%
                     object-fit cover
-        .post-info
-            flex 1
-            display flex
-            justify-content space-between
-            flex-direction column
-            color #333
-            font-size rem(.3)
-            margin-left rem(.2)
-            .icon
-                color #EEA53A
-                font-size rem(.35)
-                margin-right rem(.1)
-        .post-code-wrapper
-            text-align center
-            .post-code
-                width rem(1.2)
-                height rem(1.2)
-                & img
-                    width 100%
-                    height 100%
-            & p
-                margin-top rem(.1)
-                color red
-                font-size rem(.2)
+            .post-info
+                flex 1
+                display flex
+                justify-content space-around
+                flex-direction column
+                color #333
+                font-size rem(.3)
+                margin-left rem(.2)
+                .icon
+                    color #EEA53A
+                    font-size rem(.35)
+                    margin-right rem(.1)
+            .post-code-wrapper
+                text-align center
+                width rem(1.8)
+                overflow hidden
+                .post-code
+                    text-align center
+                    .code-canvas
+                        width rem(1.6) !important
+                        height rem(1.6) !important
+                & p
+                    color red
+                    font-size rem(.2)
 </style>

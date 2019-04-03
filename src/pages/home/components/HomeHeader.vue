@@ -75,7 +75,7 @@ export default {
             height rem(1.2)
             width rem(1.2)
             border-radius 50%
-            border rem(.1) solid #ffffff
+            border 2px solid #ffffff
             overflow hidden
             & img
                 width 100%

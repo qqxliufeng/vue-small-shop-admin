@@ -93,8 +93,12 @@ Vue.prototype.$http = function (url, params = {}, loadingTip, onRequestSuccess, 
 }
 
 router.beforeEach((to, from, next) => {
-  if (!userInfo.isLogin() && to.name !== 'login') {
-    next({name: 'login'})
+  if (!userInfo.isLogin()) {
+    if (to.name !== 'login') {
+      next({name: 'login'})
+    } else {
+      next()
+    }
   } else {
     next()
   }

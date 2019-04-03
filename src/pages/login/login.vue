@@ -41,12 +41,10 @@ export default {
     openDialog () {
       document.addEventListener('touchmove', e => {
         e.preventDefault()
-        e.stopPropagation()
-      }, { passive: false })
+      }, { passive: true })
     },
     closeDialog () {
       this.$refs.slideVerfiy.refresh()
-      document.removeEventListener('touchmove', null, { passive: false })
     },
     onSlideSuccess () {
       this.showVerifyDialog = false

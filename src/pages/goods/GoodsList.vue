@@ -9,7 +9,7 @@
          </li>
         </ul>
       </div>
-      <div class="content-list" v-if="tempMenu">
+      <div class="content-list" v-if="tempMenu"  @scroll="onScroll">
         <p class="list-title">{{tempMenu.name}}</p>
          <ul>
            <li v-for="(item, index) of tempMenu.contentList" :key="index" class="content-item">
@@ -113,6 +113,9 @@ export default {
     },
     selectScenicShare () {
       this.$router.push({name: 'scenicPostList', params: {type: '1'}})
+    },
+    onScroll () {
+      console.log(1)
     }
   },
   mounted () {
@@ -125,9 +128,14 @@ export default {
 @import '~styles/mixin.styl'
 .g-list-container
     .content
-        contentFixed()
+        padding-top $headerHeight
+        display flex
+        position relative
         .menu
-            width 20%
+            position fixed
+            top $headerHeight
+            left 0
+            width rem(1.5)
             height 100%
             border-right 1px solid #f5f5f5
             .menu-item
@@ -139,13 +147,9 @@ export default {
                 .menu-active-style
                     color #64BBAE
         .content-list
-            position fixed
-            top $headerHeight
-            left 20%
-            right 0
-            height 100%
+            flex 3
+            margin-left rem(1.5)
             overflow-y scroll
-            padding-bottom $headerHeight
             box-sizing border-box
             .list-title
                 textStyle(#333, .32)
