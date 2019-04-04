@@ -1,6 +1,6 @@
 <template>
     <div class='r-seller-container'>
-      <my-navi title="分销商申请" :isFixed="true"></my-navi>
+      <my-navi title="分销商申请" :isFixed="true" :isShowBack="false"></my-navi>
       <div class="tab-wrapper">
           <p
           class="tab-item"

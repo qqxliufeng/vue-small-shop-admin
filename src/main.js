@@ -22,6 +22,7 @@ import axios from 'common/http/http.js'
 import * as urlPath from 'common/http/urlConfig'
 
 import userInfo from 'common/data/user-info'
+import state from 'common/data/state'
 
 Vue.config.productionTip = false
 Vue.use(ElementUI)
@@ -93,6 +94,10 @@ Vue.prototype.$http = function (url, params = {}, loadingTip, onRequestSuccess, 
 }
 
 router.beforeEach((to, from, next) => {
+  if (to.name === 'registerDefault' || to.name === 'stepone' || to.name === 'stepTwo' || to.name === 'stepThree' || to.name === 'city') {
+    next()
+    return
+  }
   if (!userInfo.isLogin()) {
     if (to.name !== 'login') {
       next({name: 'login'})
@@ -112,6 +117,7 @@ new Vue({
   template: '<App/>',
   data () {
     return {
+      state,
       userInfo
     }
   }

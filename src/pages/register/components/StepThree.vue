@@ -7,7 +7,7 @@
       <span class="info-tag">(必填)</span>
     </div>
     <div class="info-content-wrapper">
-      <input type="text" class="input" placeholder="请输入手机号">
+      <input type="text" class="input" placeholder="请输入店铺名称" v-model="registerInfo.shopName">
     </div>
   </div>
   <div class="info-wrapper">
@@ -15,45 +15,57 @@
       <p class="info-title">所在区域：</p>
       <span class="info-tag">(必填)</span>
     </div>
-    <div class="info-code-wrapper">
+    <div class="info-area-wrapper" @click="selectArea">
+      {{city ? city : '选择所在地区'}}<span class="el-icon-arrow-right"></span>
     </div>
   </div>
   <div class="info-wrapper">
     <div class="info-item-wrapper">
       <p class="info-title">客服电话：</p>
+      <span class="info-tag">(必填)</span>
     </div>
     <div class="info-content-wrapper">
-      <input type="text" class="input" placeholder="请输入手机号">
+      <input type="text" class="input" placeholder="请输入客服电话"  v-model="registerInfo.shopPhone">
     </div>
   </div>
-  <div class="info-wrapper">
-    <div class="info-item-wrapper">
-      <p class="info-title">客服QQ：</p>
-    </div>
-    <div class="info-content-wrapper">
-      <input type="text" class="input" placeholder="请输入手机号">
-    </div>
-  </div>
-  <div class="info-wrapper">
-    <div class="info-item-wrapper">
-      <p class="info-title">客服微信：</p>
-    </div>
-    <div class="info-content-wrapper">
-      <input type="text" class="input" placeholder="请输入手机号">
-    </div>
-  </div>
-  <p class="next-step">提交</p>
+  <p class="next-step" @click="submit">提交</p>
 </div>
 </template>
 
 <script>
-
 export default {
   name: 'stepThree',
   components: {},
   data () {
     return {
-
+      registerInfo: this.$root.state.registerInfo,
+      city: null
+    }
+  },
+  methods: {
+    selectArea () {
+      this.$router.push({name: 'city', params: {backName: 'stepThree'}})
+    },
+    submit () {
+      if (!this.registerInfo.shopName) {
+        this.$toast('请输入店铺名称')
+        return
+      }
+      if (!this.registerInfo.shopArea) {
+        this.$toast('请输入所在区域')
+        return
+      }
+      if (!this.registerInfo.shopPhone) {
+        this.$toast('请输入客服电话')
+        return
+      }
+      this.$http(this.$urlPath.register, {
+        registerInfo: JSON.stringify(this.registerInfo)
+      }, '正在注册…', (data) => {
+        console.log(data)
+      }, (errorCode, error) => {
+        this.$toast(error)
+      })
     }
   },
   mounted () {
@@ -62,6 +74,14 @@ export default {
         setTimeout(() => {
           document.activeElement.scrollIntoViewIfNeeded()
         }, 0)
+      }
+    })
+  },
+  beforeRouteEnter (to, from, next) {
+    next(vm => {
+      if (from.name === 'city' && to.params.city) {
+        vm.registerInfo.shopArea = to.params.city
+        vm.city = to.params.city.province.value + ' ' + to.params.city.city.value
       }
     })
   },
@@ -78,6 +98,7 @@ export default {
     padding rem(.4) rem(.4) $headerHeight rem(.4)
     box-sizing border-box
     overflow hidden
+    height 100%
     .title
         textStyle(#888, .3)
     .info-wrapper
@@ -101,6 +122,8 @@ export default {
                 padding rem(.1)
                 box-sizing border-box
                 font-size 12px
+        .info-area-wrapper
+            textStyle(#888, .28)
     .image-title-wrapper
         textStyle(#333, .28)
         margin-top rem(.2)

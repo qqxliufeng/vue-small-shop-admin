@@ -1,15 +1,15 @@
 <template>
 <div class='share-ticket-container'>
   <my-navi title="邀请好友" :isFixed="true"></my-navi>
-  <div class="content">
+  <div class="content" v-if="info">
     <share-component>
       <template slot="shareHeader">
         <div class="header-content-wrapper">
           <div class="header-content">
             <div class="content-title-wrapper">
-              <img src="http://img.pconline.com.cn/images/upload/upc/tx/ladyproduct/1501/08/c0/1616021_1420691838105_100x100.jpg" class="item-face-icon">
+              <img :src="$utils.image.getImagePath($root.userInfo.state.avatar)" class="item-face-icon">
               <div class="item-info">
-                <p class="item-name">王大宝</p>
+                <p class="item-name">{{$root.userInfo.state.name}}</p>
                 <p class="item-phone">邀请您成为他的分销商</p>
               </div>
             </div>
@@ -20,7 +20,7 @@
             </div>
             <div class="code-wrapper">
               <canvas class="code" ref="qrcode"/>
-              <p class="flag">长按识别二维码</p>
+              <p class="flag" @click="test">长按识别二维码</p>
             </div>
           </div>
         </div>
@@ -33,7 +33,7 @@
       </template>
       <template slot="shareAddress">
         <span class="shop-address-title">注册链接:</span>
-        <span class="shop-address">http://www.baidu.comhttp://www.baidu.comhttp://www.baidu.comhttp://www.baidu.comhttp://www.baidu.comhttp://www.baidu.comhttp://www.baidu.com</span>
+        <span class="shop-address">{{info.url}}</span>
       </template>
     </share-component>
   </div>
@@ -50,21 +50,42 @@ export default {
   },
   data () {
     return {
+      info: null
+    }
+  },
+  watch: {
+    info (newVal, oldVal) {
+      if (newVal) {
+        this.qrCode()
+      }
     }
   },
   methods: {
     qrCode () {
-      QRCode.toCanvas(this.$refs.qrcode, 'http://www.baidu.com', error => {
-        if (error) {
-          console.log(error)
-        } else {
-          console.log('success')
-        }
+      this.$nextTick(() => {
+        QRCode.toCanvas(this.$refs.qrcode, 'http://192.168.0.107:8888/registerseller?parentId=10', error => {
+          if (error) {
+            console.log(error)
+          } else {
+            console.log('success')
+          }
+        })
       })
+    },
+    getData () {
+      this.$http(this.$urlPath.shareReigsterUrl, {}, '',
+        (data) => {
+          this.info = data.data
+        }, (errorCode, error) => {
+          this.$toast(error)
+        })
+    },
+    test () {
+      this.$router.push({name: 'registerDefault'})
     }
   },
   mounted () {
-    this.qrCode()
+    this.getData()
   }
 }
 </script>
@@ -93,7 +114,6 @@ export default {
                         display inline-block
                         width rem(1)
                         height rem(1)
-                        background red
                         border-radius 50%
                         margin-right rem(.1)
                     .item-info
@@ -151,4 +171,8 @@ export default {
           padding-bottom rem(.3)
           margin-top rem(-.6)
           box-sizing border-box
+    .loading-fail
+        margin-top rem(1)
+        text-align center
+        textStyle(#888, .32)
 </style>

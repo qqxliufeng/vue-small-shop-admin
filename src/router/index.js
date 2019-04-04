@@ -168,6 +168,12 @@ export default new Router({
       path: '/message',
       name: 'message',
       component: Message
+    },
+    {
+      path: '/city',
+      name: 'city',
+      component: () => import('@/pages/city/City'),
+      props: true
     }
   ],
   scrollBehavior (to, from, saveTop) {

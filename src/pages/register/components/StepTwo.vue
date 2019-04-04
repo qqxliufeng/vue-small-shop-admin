@@ -7,7 +7,7 @@
       <span class="info-tag">(必填)</span>
     </div>
     <div class="info-content-wrapper">
-      <input type="text" class="input" placeholder="请输入手机号">
+      <input type="text" class="input" placeholder="请输入真实姓名" maxlength="6" v-model="registerInfo.realName">
     </div>
   </div>
   <div class="info-wrapper">
@@ -15,9 +15,9 @@
       <span class="info-title">您的身份:</span>
     </div>
     <div class="info-code-wrapper">
-      <el-radio-group v-model="selectTags">
-        <el-radio :label="1">学生</el-radio>
-        <el-radio :label="2">社会</el-radio>
+      <el-radio-group v-model="registerInfo.idCard" @change='onChange'>
+        <el-radio :label="1">社会</el-radio>
+        <el-radio :label="2">学生</el-radio>
       </el-radio-group>
     </div>
   </div>
@@ -27,38 +27,30 @@
       <span class="info-tag">(必填)</span>
     </div>
     <div class="info-content-wrapper">
-      <input type="text" class="input" placeholder="请输入手机号">
+      <input type="text" class="input" placeholder="请输入单位/学校名称" v-model="registerInfo.workName">
     </div>
   </div>
-  <div class="info-wrapper">
-    <div class="info-item-wrapper">
-      <p class="info-title">QQ：</p>
-    </div>
-    <div class="info-content-wrapper">
-      <input type="text" class="input" placeholder="请输入手机号">
-    </div>
-  </div>
-  <div class="info-wrapper">
-    <div class="info-item-wrapper">
-      <p class="info-title">微信号：</p>
-    </div>
-    <div class="info-content-wrapper">
-      <input type="text" class="input" placeholder="请输入手机号">
-    </div>
-  </div>
-  <p class="image-title-wrapper">身份证上传：<span>（正反照各一张）</span></p>
-  <div class="upload-wrapper">
+  <p class="image-title-wrapper" v-show="showIdCard">身份证上传：<span>（正反照各一张）</span></p>
+  <div class="upload-wrapper" v-show="showIdCard">
     <el-upload
-      action="https://jsonplaceholder.typicode.com/posts/"
-      list-type="picture-card">
+      :action="$urlPath.registerImageActionUrl"
+      list-type="picture-card"
+      :before-upload="beforeUpload"
+      :on-success="uploadSuccess"
+      :on-error="uploadError"
+      :limit="2">
       <i class="el-icon-plus"></i>
     </el-upload>
   </div>
-  <p class="image-title-wrapper">学生证上传：</p>
-  <div class="upload-wrapper">
+  <p class="image-title-wrapper" v-show="!showIdCard">学生证上传：</p>
+  <div class="upload-wrapper" v-show="!showIdCard">
     <el-upload
-      action="https://jsonplaceholder.typicode.com/posts/"
-      list-type="picture-card">
+      :action="$urlPath.registerImageActionUrl"
+      list-type="picture-card"
+      :before-upload="beforeUpload"
+      :on-success="uploadSuccess"
+      :on-error="uploadError"
+      :limit="1">
       <i class="el-icon-plus"></i>
     </el-upload>
   </div>
@@ -67,18 +59,60 @@
 </template>
 
 <script>
-
 export default {
   name: 'stepTwo',
   components: {},
   data () {
     return {
-      selectTags: 1
+      registerInfo: this.$root.state.registerInfo,
+      showIdCard: true,
+      selected: 1
     }
   },
   methods: {
     nextStep () {
+      if (!this.registerInfo.realName) {
+        this.$toast('请输入真实姓名')
+        return
+      }
+      if (!this.registerInfo.workName) {
+        this.$toast('请输入单位/学校名称')
+        return
+      }
       this.$router.replace({name: 'stepThree'})
+    },
+    onChange (index) {
+      this.selected = index
+      this.showIdCard = index === 1
+    },
+    beforeUpload (file) {
+      let checkResult = this.$utils.image.beforeUploadImageCheck(this.$root, file)
+      if (checkResult) {
+        this.$loading('正在上传…')
+      }
+      return checkResult
+    },
+    uploadSuccess (response, file, fileList) {
+      if (response.data) {
+        if (this.registerInfo.idCard === 1) {
+          if (this.registerInfo.idFront) {
+            this.registerInfo.idBack = response.data.url
+          } else {
+            this.registerInfo.idFront = response.data.url
+          }
+        } else {
+          this.registerInfo.studentCard = response.data.url
+        }
+        console.log(this.registerInfo)
+        this.$toast('上传成功')
+        this.$loading.close()
+      } else {
+        this.$toast(response.msg)
+      }
+    },
+    uploadError (err, file, fileList) {
+      this.$toast('上传失败' + err)
+      this.$loading.close()
     }
   }
 }
@@ -90,7 +124,7 @@ export default {
     background #f5f5f5
     padding rem(.4) rem(.4) $headerHeight rem(.4)
     box-sizing border-box
-    height auto
+    height 100%
     .title
         textStyle(#888, .3)
     .info-wrapper

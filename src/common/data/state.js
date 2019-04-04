@@ -1,14 +1,9 @@
-let defaultCity = {
-  value: '济南市',
-  code: 100
-}
-let currentCity = defaultCity
 let token = ''
 let identity = '1'
 let storeId = '1'
+let registerInfo = null
 try {
   if (localStorage) {
-    currentCity = JSON.parse(localStorage.getItem('currentCity')) || defaultCity
     token = localStorage.getItem('token')
     identity = localStorage.getItem('identity')
     storeId = localStorage.getItem('storeId')
@@ -18,18 +13,10 @@ try {
 }
 
 export default {
-  currentCity,
   token,
   identity,
   storeId,
-  changeCity (city) {
-    this.currentCity = city
-    try {
-      localStorage.setItem('currentCity', JSON.stringify(city))
-    } catch (error) {
-      console.log(error)
-    }
-  },
+  registerInfo,
   saveUserInfo (token) {
     this.token = token
     try {
@@ -49,5 +36,11 @@ export default {
       identity: localStorage.getItem('identity'),
       storeId: localStorage.getItem('storeId')
     }
+  },
+  getReisterInfo () {
+    return registerInfo
+  },
+  setRegisterInfo (info) {
+    registerInfo = info
   }
 }
