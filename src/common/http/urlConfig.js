@@ -24,3 +24,7 @@ export const shareReigsterUrl = distributorModuleUrl + 'share_register'
 export const register = distributorModuleUrl + 'register'
 
 export const getCaptcha = distributorModuleUrl + 'get_captcha'
+
+export const fastLogin = distributorModuleUrl + 'mobilelogin'
+
+export const modifyPassword = distributorModuleUrl + 'resetpwd'

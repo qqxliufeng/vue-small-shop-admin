@@ -7,18 +7,14 @@
       </div>
       <div class="input-password-container">
           <input placeholder="请输入密码" class="user-password" maxlength="16" v-model="userPassword" type="password"/>
-          <router-link to="/forgetpasswordstepone">
-            <span class="input-forget-password">忘记密码</span>
-          </router-link>
+          <span class="input-forget-password" @click="forgetPassword">忘记密码</span>
       </div>
       <el-button type="primary" class="input-login" @click="login">登录</el-button>
       <div>
-          <router-link to="/fastlogin">
-            <span class="input-fast-phone">手机快捷登录</span>
-          </router-link>
+          <span class="input-fast-phone" @click="fastLogin">手机快捷登录</span>
       </div>
   </div>
-  <el-dialog :visible.sync="showVerifyDialog" modal width="90%" @opened="openDialog" @closed="closeDialog">
+  <el-dialog :visible.sync="showVerifyDialog" modal width="90%">
     <slide-verify
     :w="width"
     @success="onSlideSuccess"
@@ -38,14 +34,6 @@ export default {
     goHome () {
       this.$router.push({name: 'home'})
     },
-    openDialog () {
-      document.addEventListener('touchmove', e => {
-        e.preventDefault()
-      }, { passive: true })
-    },
-    closeDialog () {
-      this.$refs.slideVerfiy.refresh()
-    },
     onSlideSuccess () {
       this.showVerifyDialog = false
       this.$http(this.$urlPath.loginUrl, {
@@ -54,8 +42,10 @@ export default {
       }, '正在登录…', (data) => {
         if (data.data) {
           this.$root.$data.userInfo.setUserInfo(data.data.distributorinfo)
+          this.$router.replace({name: 'home'})
+        } else {
+          this.$toast('登录失败')
         }
-        this.$router.replace({name: 'home'})
       }, (errorCode, error) => {
         this.$toast(error)
       })
@@ -74,6 +64,12 @@ export default {
         return
       }
       this.showVerifyDialog = true
+    },
+    fastLogin () {
+      this.$router.push({name: 'fastLogin'})
+    },
+    forgetPassword () {
+      this.$router.push({name: 'forgetPassword'})
     }
   },
   data () {
@@ -87,6 +83,13 @@ export default {
     width () {
       return document.body.clientWidth * 0.9 - 40
     }
+  },
+  beforeRouteEnter (to, from, next) {
+    next(vm => {
+      if (vm.$root.userInfo.isLogin()) {
+        vm.$router.replace({name: 'home'})
+      }
+    })
   }
 }
 </script>

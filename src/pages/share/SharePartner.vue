@@ -63,7 +63,7 @@ export default {
   methods: {
     qrCode () {
       this.$nextTick(() => {
-        QRCode.toCanvas(this.$refs.qrcode, 'http://192.168.0.107:8888/registerseller?parentId=10', error => {
+        QRCode.toCanvas(this.$refs.qrcode, 'http://192.168.0.104:8888/registerseller?parentId=2', error => {
           if (error) {
             console.log(error)
           } else {
@@ -81,7 +81,7 @@ export default {
         })
     },
     test () {
-      this.$router.push({name: 'registerDefault'})
+      this.$router.push({name: 'registerDefault', query: {parentId: '2'}})
     }
   },
   mounted () {

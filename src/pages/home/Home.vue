@@ -8,7 +8,7 @@
       </p>
       <home-header></home-header>
   </div>
-  <home-tools></home-tools>
+  <home-tools ref="homeTools"></home-tools>
   <home-bottom-navigation @logout="logout"></home-bottom-navigation>
 </div>
 </template>

@@ -36,8 +36,8 @@ export default {
   data () {
     return {
       registerInfo: {
-        // parentId: this.$route.query.parentId,
-        parentId: 2,
+        parentId: this.$route.query.parentId,
+        // parentId: 2,
         phone: '',
         verifyCode: '',
         password: '',
@@ -99,7 +99,8 @@ export default {
         return
       }
       this.$http(this.$urlPath.getCaptcha, {
-        mobile: this.registerInfo.phone
+        mobile: this.registerInfo.phone,
+        event: 'register'
       }, '正在发送验证码…', (data) => {
         this.disabled = true
         let count = 60
@@ -142,7 +143,8 @@ export default {
     background #f5f5f5
     padding rem(.4)
     padding-bottom 0
-    height 100%
+    height auto
+    min-height 100%
     overflow hidden
     .title
         textStyle(#888, .3)
@@ -180,14 +182,14 @@ export default {
                     font-size 12px
                     flex 1
                 .bt-code
-                  font-size 12px
-                  padding 0 rem(.1)
-                  background $primary
-                  border-radius rem(.1)
-                  color #fff
-                  margin-left rem(.2)
-                  white-space nowrap
-                  min-width rem(1.5)
+                    font-size 12px
+                    padding 0 rem(.1)
+                    background $primary
+                    border-radius rem(.1)
+                    color #fff
+                    margin-left rem(.2)
+                    white-space nowrap
+                    min-width rem(1.5)
     .next-step
         background $primary
         color #fff

@@ -11,7 +11,8 @@ const userInfo = {
     city: sessionStorage.getItem('city'),
     balance: sessionStorage.getItem('balance'),
     rebate: sessionStorage.getItem('rebate'),
-    credit: sessionStorage.getItem('credit')
+    credit: sessionStorage.getItem('credit'),
+    rank: sessionStorage.getItem('rank')
   },
   isLogin () {
     // return this.state.id !== '' && this.state.id !== null && this.state.token !== '' && this.state.token !== null && this.state.phone !== '' && this.state.phone !== null
@@ -29,6 +30,7 @@ const userInfo = {
     this.state.balance = userInfo.balance
     this.state.rebate = userInfo.rebate
     this.state.credit = userInfo.line_of_credit
+    this.state.rank = userInfo.rank
 
     sessionStorage.setItem('id', this.state.id)
     sessionStorage.setItem('token', this.state.token)
@@ -41,6 +43,7 @@ const userInfo = {
     sessionStorage.setItem('balance', this.state.balance)
     sessionStorage.setItem('rebate', this.state.rebate)
     sessionStorage.setItem('credit', this.state.credit)
+    sessionStorage.setItem('rank', this.state.rank)
   },
   setUserInfoAvatar (avatar) {
     this.state.avatar = avatar

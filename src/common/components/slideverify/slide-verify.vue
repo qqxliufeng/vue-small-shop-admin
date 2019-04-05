@@ -217,6 +217,7 @@
             },
             touchMoveEvent(e) {
                 if (!this.isMouseDown) return false;
+                e.preventDefault()
                 const moveX = e.changedTouches[0].pageX - this.originX;
                 const moveY = e.changedTouches[0].pageY - this.originY;
                 if (moveX < 0 || moveX + 38 >= this.w) return false;

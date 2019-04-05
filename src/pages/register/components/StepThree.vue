@@ -59,10 +59,20 @@ export default {
         this.$toast('请输入客服电话')
         return
       }
+      if (!this.registerInfo.parentId) {
+        this.$toast('注册失败，请重试…')
+        return
+      }
       this.$http(this.$urlPath.register, {
         registerInfo: JSON.stringify(this.registerInfo)
       }, '正在注册…', (data) => {
-        console.log(data)
+        if (data.data) {
+          this.$toast('恭喜，注册成功')
+          this.$root.$data.userInfo.setUserInfo(data.data.distributorinfo)
+          this.$router.replace({name: 'home'})
+        } else {
+          this.$toast('注册失败')
+        }
       }, (errorCode, error) => {
         this.$toast(error)
       })
@@ -82,6 +92,10 @@ export default {
       if (from.name === 'city' && to.params.city) {
         vm.registerInfo.shopArea = to.params.city
         vm.city = to.params.city.province.value + ' ' + to.params.city.city.value
+      } else {
+        if (vm.$root.userInfo.isLogin()) {
+          vm.$router.replace({name: 'home'})
+        }
       }
     })
   },
@@ -98,7 +112,8 @@ export default {
     padding rem(.4) rem(.4) $headerHeight rem(.4)
     box-sizing border-box
     overflow hidden
-    height 100%
+    height auto
+    min-height 100%
     .title
         textStyle(#888, .3)
     .info-wrapper

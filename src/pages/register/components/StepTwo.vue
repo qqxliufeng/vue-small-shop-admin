@@ -38,6 +38,7 @@
       :before-upload="beforeUpload"
       :on-success="uploadSuccess"
       :on-error="uploadError"
+      :on-exceed="onExceed"
       :limit="2">
       <i class="el-icon-plus"></i>
     </el-upload>
@@ -50,6 +51,7 @@
       :before-upload="beforeUpload"
       :on-success="uploadSuccess"
       :on-error="uploadError"
+      :on-exceed="onExceed"
       :limit="1">
       <i class="el-icon-plus"></i>
     </el-upload>
@@ -86,7 +88,7 @@ export default {
       this.showIdCard = index === 1
     },
     beforeUpload (file) {
-      let checkResult = this.$utils.image.beforeUploadImageCheck(this.$root, file)
+      let checkResult = this.$utils.image.beforeUploadImageCheck(this.$root, file, 2)
       if (checkResult) {
         this.$loading('正在上传…')
       }
@@ -113,6 +115,9 @@ export default {
     uploadError (err, file, fileList) {
       this.$toast('上传失败' + err)
       this.$loading.close()
+    },
+    onExceed (files, fileList) {
+      this.$toast('最多上传' + fileList.length + '张图片')
     }
   }
 }
@@ -124,7 +129,8 @@ export default {
     background #f5f5f5
     padding rem(.4) rem(.4) $headerHeight rem(.4)
     box-sizing border-box
-    height 100%
+    height auto
+    min-height 100%
     .title
         textStyle(#888, .3)
     .info-wrapper
@@ -168,4 +174,8 @@ export default {
             width 30%
             height 27vw
             line-height 27vw
+        & >>> .el-upload-list__item-status-label
+            height 0
+            & i
+                font-size 0
 </style>

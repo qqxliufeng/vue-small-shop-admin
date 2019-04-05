@@ -45,6 +45,16 @@ export default new Router({
       component: Login
     },
     {
+      path: '/forgetpassword',
+      name: 'forgetPassword',
+      component: () => import('@/pages/login/ForgetPassword')
+    },
+    {
+      path: '/fastlogin',
+      name: 'fastLogin',
+      component: () => import('@/pages/login/FastLogin')
+    },
+    {
       path: '/scenicpostlist',
       name: 'scenicPostList',
       component: ScenicPostList

@@ -2,7 +2,7 @@
 <div class='h-tool-container'>
   <p class="title">快捷工具</p>
   <div class="tools-wrapper">
-    <div v-for="(item, index) of toolsList" :key="index" class="tools-item-wrapper" @click="itemClick(item)">
+    <div v-for="(item, index) of computedToolList" :key="index" class="tools-item-wrapper" @click="itemClick(item)">
       <img :src="item.icon" :alt="item.name">
       <p>{{item.name}}</p>
     </div>
@@ -25,30 +25,46 @@ export default {
         {
           name: '分享小店',
           icon: imgShareShopIcon,
-          actionUrl: 'shareShop'
+          actionUrl: 'shareShop',
+          show: true
         },
         {
           name: '景区海报',
           icon: imgScenicPostIcon,
-          actionUrl: 'scenicPostList'
+          actionUrl: 'scenicPostList',
+          show: true
         },
         {
           name: '商品列表',
           icon: imgShopListIcon,
-          actionUrl: 'goodsList'
+          actionUrl: 'goodsList',
+          show: true
         },
         {
           name: '发展伙伴',
           icon: imgAddPartnerIcon,
-          // actionUrl: 'registerDefault'
-          actionUrl: 'sharePartner'
+          actionUrl: 'sharePartner',
+          show: true
         },
         {
           name: '伙伴列表',
           icon: imgPartnerListIcon,
-          actionUrl: 'partnerList'
+          actionUrl: 'partnerList',
+          show: true
         }
       ]
+    }
+  },
+  computed: {
+    computedToolList () {
+      this.toolsList.forEach((it, index) => {
+        if (index < 3) {
+          it.show = true
+        } else {
+          it.show = Number(this.$root.userInfo.state.rank) < 3
+        }
+      })
+      return this.toolsList.filter((it) => it.show)
     }
   },
   methods: {

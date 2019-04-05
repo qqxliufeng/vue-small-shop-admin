@@ -93,8 +93,18 @@ Vue.prototype.$http = function (url, params = {}, loadingTip, onRequestSuccess, 
   }
 }
 
+let noLoginContainer = [
+  'registerDefault',
+  'stepone',
+  'stepTwo',
+  'stepThree',
+  'city',
+  'forgetPassword',
+  'fastLogin'
+]
+
 router.beforeEach((to, from, next) => {
-  if (to.name === 'registerDefault' || to.name === 'stepone' || to.name === 'stepTwo' || to.name === 'stepThree' || to.name === 'city') {
+  if (noLoginContainer.includes(to.name)) {
     next()
     return
   }
