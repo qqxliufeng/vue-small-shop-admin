@@ -1,119 +1,61 @@
 <template>
 <div class='p-list-container'>
-  <my-navi title="合作伙伴列表（111）" :isFixed="true"></my-navi>
-  <div class="content">
+  <my-navi :title="countTitle" :isFixed="true"></my-navi>
+  <div class="content" v-if="partners">
     <el-collapse accordion value="0">
-      <el-collapse-item :name="index" v-for="(item, index) of partners" :key="index">
+      <el-collapse-item :name="index" v-for="(title, index) of titles" :key="index">
         <template slot="title">
           <div class="item-title-wrapper">
-            {{item.title}}
+            {{title}}
           </div>
         </template>
         <ul class="list-wrapper">
-          <li v-for="(item, index) of item.partnerList" :key="index" class="item-wrapper">
-            <img src="http://img.pconline.com.cn/images/upload/upc/tx/ladyproduct/1501/08/c0/1616021_1420691838105_100x100.jpg" class="item-face-icon">
+          <li v-for="(item, index) of partners['partners'][title]" :key="index" class="item-wrapper">
+            <img v-lazy="$utils.image.getImagePath(item.avatar)" class="item-face-icon">
             <div>
-              <p class="item-name">王大宝</p>
-              <p class="item-phone">13512352432434</p>
+              <p class="item-name">{{item.linkname}}</p>
+              <p class="item-phone">{{item.phone}}</p>
             </div>
           </li>
         </ul>
       </el-collapse-item>
     </el-collapse>
   </div>
+  <div v-if="errorTip" class="error-tip">暂无合作伙伴哦~</div>
 </div>
 </template>
 
 <script>
-
 export default {
   name: 'partnerList',
   components: {},
   data () {
     return {
-      partners: [
-        {
-          title: '这是标题',
-          partnerList: [
-            {
-              name: '王大宝'
-            },
-            {
-              name: '王大宝'
-            },
-            {
-              name: '王大宝'
-            },
-            {
-              name: '王大宝'
-            },
-            {
-              name: '王大宝'
-            }
-          ]
-        },
-        {
-          title: '这是标题',
-          partnerList: [
-            {
-              name: '王大宝'
-            },
-            {
-              name: '王大宝'
-            },
-            {
-              name: '王大宝'
-            },
-            {
-              name: '王大宝'
-            },
-            {
-              name: '王大宝'
-            }
-          ]
-        },
-        {
-          title: '这是标题',
-          partnerList: [
-            {
-              name: '王大宝'
-            },
-            {
-              name: '王大宝'
-            },
-            {
-              name: '王大宝'
-            },
-            {
-              name: '王大宝'
-            },
-            {
-              name: '王大宝'
-            }
-          ]
-        },
-        {
-          title: '这是标题',
-          partnerList: [
-            {
-              name: '王大宝'
-            },
-            {
-              name: '王大宝'
-            },
-            {
-              name: '王大宝'
-            },
-            {
-              name: '王大宝'
-            },
-            {
-              name: '王大宝'
-            }
-          ]
-        }
-      ]
+      partners: null,
+      errorTip: null
     }
+  },
+  methods: {
+    getData () {
+      this.$http(this.$urlPath.partnersList, {}, '', (data) => {
+        this.errorTip = null
+        this.partners = data.data
+      }, (errorCode, error) => {
+        this.errorTip = error
+        this.$toast(error)
+      })
+    }
+  },
+  computed: {
+    titles () {
+      return Object.keys(this.partners['partners'])
+    },
+    countTitle () {
+      return this.partners ? '合作伙伴列表(' + this.partners.total + ')' : '合作伙伴列表'
+    }
+  },
+  mounted () {
+    this.getData()
   }
 }
 </script>
@@ -141,4 +83,10 @@ export default {
                     textStyle(#333, .3)
                 .item-phone
                     textStyle(#888, .28)
+    .error-tip
+        display flex
+        height 100vh
+        align-items center
+        justify-content center
+        textStyle(#888, .32)
 </style>

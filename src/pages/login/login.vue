@@ -76,12 +76,8 @@ export default {
     return {
       showVerifyDialog: false,
       userName: '15006519751',
-      userPassword: '123456'
-    }
-  },
-  computed: {
-    width () {
-      return document.body.clientWidth * 0.9 - 40
+      userPassword: '123456',
+      width: document.body.clientWidth * 0.9 - 40
     }
   },
   beforeRouteEnter (to, from, next) {
@@ -90,6 +86,15 @@ export default {
         vm.$router.replace({name: 'home'})
       }
     })
+  },
+  mounted () {
+    window.onresize = () => {
+      this.width = document.body.clientWidth * 0.9 - 40
+      this.$refs.slideVerfiy.reset()
+    }
+  },
+  destroyed () {
+    window.onreset = null
   }
 }
 </script>

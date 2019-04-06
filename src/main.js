@@ -12,7 +12,6 @@ import Loading from 'common/components/Loading'
 import VueAwesomeSwiper from 'vue-awesome-swiper'
 import 'swiper/dist/css/swiper.css'
 import VueLazyLoad from 'vue-lazyload'
-import logo from 'images/logo.png'
 
 import 'vue2-toast/lib/toast.css'
 import Toast from 'vue2-toast'
@@ -31,8 +30,8 @@ Vue.use(Loading)
 Vue.use(VueAwesomeSwiper)
 Vue.use(VueLazyLoad, {
   preLoad: 1.3,
-  error: logo,
-  loading: logo,
+  error: require('images/img_loading_failed_list.png'),
+  loading: require('images/img_loading_list.png'),
   attempt: 1
 })
 Vue.use(SlideVerify)
