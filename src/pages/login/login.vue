@@ -90,7 +90,9 @@ export default {
   mounted () {
     window.onresize = () => {
       this.width = document.body.clientWidth * 0.9 - 40
-      this.$refs.slideVerfiy.reset()
+      if (this.$refs.slideVerfiy) {
+        this.$refs.slideVerfiy.reset()
+      }
     }
   },
   destroyed () {
