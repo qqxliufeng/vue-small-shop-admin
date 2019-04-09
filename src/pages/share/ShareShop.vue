@@ -7,22 +7,7 @@
             <img class="share-image" :src="image" alt="">
           </template>
           <template slot="shareInfo">
-            <div class="info-content-wrapper">
-                <div class="post-logo">
-                    <img :src="logo">
-                </div>
-                <div class="post-info">
-                  <p><span class="iconfont icon">&#xe736;</span>{{$root.userInfo.state.name}}的店铺</p>
-                  <p><span class="iconfont icon">&#xe613;</span>{{$root.userInfo.state.name}}</p>
-                  <p><span class="iconfont icon">&#xe615;</span>{{$root.userInfo.state.phone}}</p>
-                </div>
-                <div class="post-code-wrapper">
-                  <div class="post-code">
-                    <canvas ref="codeCanvas" class="code-canvas"></canvas>
-                  </div>
-                  <p>长按识别进入</p>
-                </div>
-            </div>
+            <share-code :logo="logo" :url="info.url"></share-code>
           </template>
           <template slot="shareAddress">
             <span class="shop-address-title">店铺链接:</span>
@@ -35,11 +20,12 @@
 
 <script>
 import ShareComponent from '@/pages/share/Share'
-import QRCode from 'qrcode'
+import ShareCode from './components/ShareCode'
 export default {
   name: 'shareShop',
   components: {
-    ShareComponent
+    ShareComponent,
+    ShareCode
   },
   data () {
     return {
@@ -61,18 +47,6 @@ export default {
       }, (errorCode, error) => {
         this.$toast(error)
       })
-    },
-    creatQrCode () {
-      this.$nextTick(() => {
-        let mCanvas = this.$refs.codeCanvas
-        QRCode.toCanvas(mCanvas, this.info.url, (data) => {
-        })
-      })
-    }
-  },
-  watch: {
-    info (newVal, oldVal) {
-      this.creatQrCode()
     }
   },
   mounted () {

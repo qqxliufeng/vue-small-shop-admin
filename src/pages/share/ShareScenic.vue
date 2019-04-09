@@ -7,22 +7,7 @@
           <img class="share-image" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1551767583542&di=c71abe346d8549974662ee3129a1a25f&imgtype=0&src=http%3A%2F%2Fhbimg.b0.upaiyun.com%2F1c527b891defb0ddfe86302ba7f644b63c53d193e801-yE5WDO_fw658" alt="">
       </template>
       <template slot="shareInfo">
-        <div class="info-content-wrapper">
-            <div class="post-logo">
-                <img src="http://img.pconline.com.cn/images/upload/upc/tx/ladyproduct/1501/08/c0/1616021_1420691838105_100x100.jpg" alt="">
-            </div>
-            <div class="post-info">
-              <p><span class="iconfont icon">&#xe736;</span>王大宝的店铺</p>
-              <p><span class="iconfont icon">&#xe613;</span>王大宝</p>
-              <p><span class="iconfont icon">&#xe615;</span>189888888888</p>
-            </div>
-            <div class="post-code-wrapper">
-              <div class="post-code">
-                <img src="http://cli.clewm.net/file/2014/12/10/10febbdfabe543c7dd27d74fb4f411f3.png" alt="">
-              </div>
-              <p>长按识别进入</p>
-            </div>
-        </div>
+        <share-code logo="logo" url="http://192.168.0.103:8080/scenicdetail?scenicId=2&identity=1&storeId=1"></share-code>
       </template>
       <template slot="shareAddress">
         <span class="shop-address-title">景区链接:</span>
@@ -48,10 +33,12 @@
 
 <script>
 import ShareComponent from './Share'
+import ShareCode from './components/ShareCode'
 export default {
   name: 'shareTicket',
   components: {
-    ShareComponent
+    ShareComponent,
+    ShareCode
   },
   data () {
     return {
@@ -90,18 +77,22 @@ export default {
                 color #EEA53A
                 font-size rem(.35)
                 margin-right rem(.1)
-        .post-code-wrapper
+        .code-wrapper
+            position absolute
+            bottom rem(1)
+            left 0
+            right 0
+            width 60%
+            height 0
+            padding-bottom 60%
+            margin 0 auto
             text-align center
-            .post-code
-                width rem(1.2)
-                height rem(1.2)
-                & img
-                    width 100%
-                    height 100%
-            & p
-                margin-top rem(.1)
-                color red
-                font-size rem(.2)
+            margin-bottom rem(.1)
+            .code
+                width 100%!important
+                height 42vw!important
+            .flag
+                textStyle($orangeColor, .28)
         .other-info-wrapper
             padding rem(.2)
             border-top 1px solid #f5f5f5

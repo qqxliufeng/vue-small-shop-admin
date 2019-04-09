@@ -3,24 +3,27 @@
   <my-navi title="景区海报" :isFixed="true"></my-navi>
   <div class="content">
       <div class="search-wrapper" v-if="showSearch">
-        <input type="text" placeholder="请输入要搜索的内容" class="input-content">
-        <button class="button-search">搜索</button>
+        <input type="text" placeholder="请输入要搜索的内容" class="input-content" v-model="scenicName">
+        <button class="button-search" @click="searchPost">搜索</button>
       </div>
-      <ul>
-        <li v-for="(item, index) of scenicPostList" :key="index" class="scenic-post-item-wrapper" @click="startScenicPost(item)">
+      <ul v-if="scenicPostList">
+        <li v-for="item of scenicPostList" :key="item.id" class="scenic-post-item-wrapper" @click="startScenicPost(item)">
           <el-card shadow="always" :bodyStyle="{padding: '0'}">
-            <img class="item-image" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1551767583542&di=c71abe346d8549974662ee3129a1a25f&imgtype=0&src=http%3A%2F%2Fhbimg.b0.upaiyun.com%2F1c527b891defb0ddfe86302ba7f644b63c53d193e801-yE5WDO_fw658" alt="">
+            <img class="item-image" v-lazy="$utils.image.getImagePath(item.poster_image)">
             <div class="item-info-wrapper">
-              <p class="item-title">卧虎山滑雪场卧虎山滑雪场卧虎山滑雪场</p>
-              <p class="item-lvxingshe">旅行社好</p>
+              <p class="item-title">{{item.scenic_name}}</p>
+              <p class="item-lvxingshe">{{item.store_name ? item.store_name : '暂无'}}</p>
               <p class="item-info">
-                <span>4.9分</span>
-                <span>1200人次</span>
+                <span>{{item.score}}分</span>
+                <span>{{item.number_of_people}}人次</span>
               </p>
             </div>
           </el-card>
         </li>
       </ul>
+      <div v-else class="empty-list">
+        暂无景区海报
+      </div>
   </div>
 </div>
 </template>
@@ -32,41 +35,8 @@ export default {
   components: {},
   data () {
     return {
-      scenicPostList: [
-        {
-          name: '1'
-        },
-        {
-          name: '1'
-        },
-        {
-          name: '1'
-        },
-        {
-          name: '1'
-        },
-        {
-          name: '1'
-        },
-        {
-          name: '1'
-        },
-        {
-          name: '1'
-        },
-        {
-          name: '1'
-        },
-        {
-          name: '1'
-        },
-        {
-          name: '1'
-        },
-        {
-          name: '1'
-        }
-      ]
+      scenicPostList: null,
+      scenicName: ''
     }
   },
   computed: {
@@ -76,11 +46,32 @@ export default {
   },
   methods: {
     startScenicPost (item) {
-      this.$router.push({name: 'shareScenic'})
+      this.$router.push({name: 'shareScenic', params: {info: item}})
+    },
+    getData () {
+      this.$http(this.$urlPath.scenicPosterList, {
+        scenic_name: this.scenicName
+      }, '正在加载…', (data) => {
+        this.scenicPostList = data.data
+        if (!this.scenicPostList || this.scenicPostList.length === 0) {
+          this.$toast('暂无景区海报')
+        }
+        this.scenicName = ''
+      }, (errorCode, error) => {
+        this.$toast(error)
+        this.scenicName = ''
+      })
+    },
+    searchPost () {
+      if (this.scenicPostList) {
+        this.scenicPostList.length = 0
+        this.scenicPostList = null
+      }
+      this.getData()
     }
   },
   mounted () {
-    console.log('mounted')
+    this.getData()
   }
 }
 </script>
@@ -135,4 +126,10 @@ export default {
                     & span:nth-child(2)
                         float right
                         textStyle(#888, .25)
+        .empty-list
+            height 80vh
+            display flex
+            align-items center
+            justify-content center
+            textStyle(#888, .32)
 </style>

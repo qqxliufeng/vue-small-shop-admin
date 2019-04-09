@@ -30,3 +30,5 @@ export const fastLogin = distributorModuleUrl + 'mobilelogin'
 export const modifyPassword = distributorModuleUrl + 'resetpwd'
 
 export const partnersList = distributorModuleUrl + 'partners'
+
+export const scenicPosterList = distributorModuleUrl + 'scenic_poster'
