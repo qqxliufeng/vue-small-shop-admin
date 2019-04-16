@@ -47,8 +47,9 @@ export default {
   },
   methods: {
     getData () {
-      this.$http(this.$urlPath.scnicPosterDetail, {
-        scenic_id: this.$route.query.scenic_id
+      this.$http(this.$urlPath.selectScenicPosterDetail, {
+        scenic_id: this.$route.query.scenic_id,
+        store_id: this.$route.query.sid
       }, '', (data) => {
         this.info = data.data
       }, (errorCode, error) => {

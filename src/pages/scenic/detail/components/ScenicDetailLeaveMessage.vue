@@ -1,23 +1,23 @@
 <template>
-    <div class="s-d-l-m-message-container">
+    <div class="s-d-l-m-message-container" v-if="ask">
         <div class="s-d-l-m-message-title">
             <span>留言板</span>
-            <span>1234条留言</span>
+            <span>{{ask.ask_count}}条留言</span>
         </div>
-        <div v-if="messageList.length === 0" class="s-d-l-m-message-empty">
+        <div v-if="showEmpty" class="s-d-l-m-message-empty">
             <span>暂无留言哦~</span>
         </div>
         <div v-else class="s-d-l-m-message-info-wrapper">
             <ul>
-                <li v-for="(item, index) of messageList" :key="index">
+                <li v-for="item of ask.ask_list" :key="item.aid">
                     <div class="s-d-l-m-message-info-item">
                         <span>问</span>
-                        <span>{{item.name}}</span>
-                        <span>共1234条回复</span>
+                        <span>{{item.content}}</span>
+                        <span>共{{item.answer_count}}条回复</span>
                     </div>
                 </li>
             </ul>
-            <div v-if="messageList.length > 2" class="s-d-l-m-message-info-see-more" @click="seeMoreLeaveMessage">
+            <div class="s-d-l-m-message-info-see-more" @click="seeMoreLeaveMessage">
                 查看更多
             </div>
         </div>
@@ -27,24 +27,21 @@
 <script>
 export default {
   name: 'scenicDetailLeaveMessage',
+  props: {
+    ask: Object
+  },
   data () {
     return {
-      messageList: [
-        {
-          name: '这是一个好地方吗？这是一个好地方吗？这是一个好地方吗？这是一个好地方吗？'
-        },
-        {
-          name: '这是一个好地方吗？这是一个好地方吗？这是一个好地方吗？这是一个好地方吗？'
-        },
-        {
-          name: '这是一个好地方吗？这是一个好地方吗？这是一个好地方吗？这是一个好地方吗？'
-        }
-      ]
+    }
+  },
+  computed: {
+    showEmpty () {
+      return this.ask.ask_list && this.ask.ask_list.length === 0
     }
   },
   methods: {
     seeMoreLeaveMessage () {
-      this.$router.push({name: 'leaveMessageList'})
+      this.$router.push({name: 'leaveMessageList', query: {s_id: this.$parent.scenicId}})
     }
   }
 }
@@ -70,7 +67,7 @@ export default {
         justify-content center
         align-items center
         min-height rem(2)
-        normalTextStyle(#888, .35)
+        normalTextStyle(#888, .3)
     .s-d-l-m-message-info-item
         display flex
         align-items center

@@ -4,48 +4,16 @@
              <span>门票类型</span>
         </div>
         <div>
-            <el-tabs>
-                <el-tab-pane label="成人票">
-                    <ul>
-                        <li v-for="(item, index) of ticketList" :key="index">
+            <el-tabs v-if="typeGoodsList">
+                <el-tab-pane v-for="tabItem of typeGoodsList" :label="tabItem.goodsTypeName" :key="tabItem.goodsTypeId">
+                    <ul v-if="tabItem.goods_list && tabItem.goods_list.length > 0">
+                        <li v-for="item of tabItem.goods_list" :key="item.goodsId">
                             <scenic-detail-ticket-item :item="item"></scenic-detail-ticket-item>
                         </li>
                     </ul>
-                </el-tab-pane>
-                <el-tab-pane label="学生票">
-                    <ul>
-                        <li v-for="(item, index) of tempList" :key="index">
-                            <scenic-detail-ticket-item :item="item"></scenic-detail-ticket-item>
-                        </li>
-                    </ul>
-                </el-tab-pane>
-                <el-tab-pane label="特价票">
-                    <ul>
-                        <li v-for="(item, index) of ticketList" :key="index">
-                            <scenic-detail-ticket-item :item="item"></scenic-detail-ticket-item>
-                        </li>
-                    </ul>
-                </el-tab-pane>
-                <el-tab-pane label="双人票">
-                    <ul>
-                        <li v-for="(item, index) of tempList" :key="index">
-                            <scenic-detail-ticket-item :item="item"></scenic-detail-ticket-item>
-                        </li>
-                    </ul>
-                </el-tab-pane>
-                <el-tab-pane label="一日游">
-                    <ul>
-                        <li v-for="(item, index) of ticketList" :key="index">
-                            <scenic-detail-ticket-item :item="item"></scenic-detail-ticket-item>
-                        </li>
-                    </ul>
-                </el-tab-pane>
-                <el-tab-pane label="一日游">
-                    <ul>
-                        <li v-for="(item, index) of tempList" :key="index">
-                            <scenic-detail-ticket-item :item="item"></scenic-detail-ticket-item>
-                        </li>
-                    </ul>
+                    <div v-else class="s-d-l-m-message-empty">
+                        <span>暂无门票</span>
+                    </div>
                 </el-tab-pane>
             </el-tabs>
         </div>
@@ -56,47 +24,14 @@
 import ScenicDetailTicketItem from './ScenicDetailTicketItem'
 export default {
   name: 'scenicDetailTicketType',
+  props: {
+    typeGoodsList: Array
+  },
   components: {
     ScenicDetailTicketItem
   },
   data () {
     return {
-      ticketList: [
-        {
-          name: '成人票',
-          remark: '这是预定须知'
-        },
-        {
-          name: '成人票',
-          remark: '这是预定须知'
-        },
-        {
-          name: '成人票',
-          remark: '这是预定须知'
-        },
-        {
-          name: '成人票',
-          remark: '这是预定须知'
-        },
-        {
-          name: '成人票',
-          remark: '这是预定须知'
-        }
-      ],
-      tempList: [
-        {
-          name: '学生票',
-          remark: '这是预定须知'
-        },
-        {
-          name: '学生票',
-          remark: '这是预定须知'
-        },
-        {
-          name: '学生票',
-          remark: '这是预定须知'
-        }
-      ]
     }
   }
 }
@@ -113,4 +48,12 @@ export default {
         borderBottom()
     .s-d-t-type-wrapper
         padding rem(.2)
+    & >>> .el-tabs__nav-scroll
+        margin 0 rem(.1)
+    .s-d-l-m-message-empty
+        display flex
+        justify-content center
+        align-items center
+        min-height rem(2)
+        normalTextStyle(#888, .3)
 </style>

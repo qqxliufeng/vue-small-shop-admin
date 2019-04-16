@@ -11,24 +11,27 @@
       </div>
       <div class="content-list" v-if="tempMenu"  @scroll="onScroll">
         <p class="list-title">{{tempMenu.name}}</p>
-         <ul>
-           <li v-for="(item, index) of tempMenu.contentList" :key="index" class="content-item">
+         <ul v-if="tempMenu.data && tempMenu.data.length > 0">
+           <li v-for="(content, index) of tempMenu.data" :key="index" class="content-item">
               <div class="content-item-info-wrapper">
                 <div class="item-image-wrapper">
-                  <img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1551767583542&di=c71abe346d8549974662ee3129a1a25f&imgtype=0&src=http%3A%2F%2Fhbimg.b0.upaiyun.com%2F1c527b891defb0ddfe86302ba7f644b63c53d193e801-yE5WDO_fw658" alt="">
+                  <img v-lazy="$utils.image.getImagePath(getPath(content.scenicimages))" :key="getPath(content.scenicimages)">
                 </div>
                 <div class="item-info-wrapper">
-                  <p class="info-title">卧虎山滑雪场卧虎山滑雪场卧虎山滑雪场卧虎山滑雪场卧虎山滑雪场卧虎山滑雪场</p>
-                  <p><span class="info-rating">4.9分</span><span class="info-sale-count">2012人已售</span></p>
-                  <p><span class="info-money">￥89</span><span class="info-money-tag">起</span><span class="info-old-money">￥109</span></p>
+                  <p class="info-title">{{content.s_title}}</p>
+                  <p><span class="info-rating">{{content.score}}分</span><span class="info-sale-count">已售{{content.people_num}}</span></p>
+                  <!-- <p><span class="info-money">￥89</span><span class="info-money-tag">起</span><span class="info-old-money">￥109</span></p> -->
                   <div class="info-action-wrapper">
-                    <button class="info-detail" @click="startScenicDetail">详情</button>
-                    <button class="info-share" @click="selectScenicShare">分享</button>
+                    <button class="info-detail" @click="startScenicDetail(content)">详情</button>
+                    <button class="info-share" @click="selectScenicShare(content)">分享</button>
                   </div>
                 </div>
               </div>
            </li>
         </ul>
+        <div v-else class="scenic-empty">
+          暂无景区
+        </div>
       </div>
   </div>
 </div>
@@ -43,83 +46,52 @@ export default {
     return {
       listTitle: '滑雪',
       tempMenu: null,
-      menuList: [
-        {
-          name: '滑雪',
-          showActiveStyle: true,
-          contentList: [
-            {
-              name: '哈哈'
-            },
-            {
-              name: '哈哈'
-            },
-            {
-              name: '哈哈'
-            },
-            {
-              name: '哈哈'
-            },
-            {
-              name: '哈哈'
-            },
-            {
-              name: '哈哈'
-            },
-            {
-              name: '哈哈'
-            },
-            {
-              name: '哈哈'
-            },
-            {
-              name: '哈哈'
-            }
-          ]
-        },
-        {
-          name: '滑冰',
-          showActiveStyle: false,
-          contentList: [
-            {
-              name: '哈哈'
-            }
-          ]
-        },
-        {
-          name: '秋千',
-          showActiveStyle: false,
-          contentList: [
-            {
-              name: '哈哈'
-            },
-            {
-              name: '哈哈'
-            }
-          ]
-        }
-      ]
+      menuList: null
+    }
+  },
+  watch: {
+    menuList (newVal, oldVal) {
+      if (newVal instanceof Array && newVal.length > 0) {
+        this.tempMenu = this.menuList[0]
+      }
     }
   },
   methods: {
+    getPath (path) {
+      if (path.indexOf(',') === -1) {
+        return path
+      } else {
+        return path.split(',')[0]
+      }
+    },
     menuItemClick (item) {
       this.menuList.forEach(element => {
         element.showActiveStyle = element === item
       })
       this.tempMenu = item
     },
-    startScenicDetail () {
-      this.$router.push({name: 'scenicDetail'})
+    startScenicDetail (item) {
+      this.$router.push({name: 'scenicDetail', query: {identity: '2', storeId: this.$root.userInfo.state.id, scenicId: item.scenic_id}})
     },
-    selectScenicShare () {
-      this.$router.push({name: 'scenicPostList', params: {type: '1'}})
+    selectScenicShare (item) {
+      this.$router.push({name: 'selectScenicPostList', query: {scenic_id: item.scenic_id}})
     },
     onScroll () {
       console.log(1)
+    },
+    getData () {
+      this.$http(this.$urlPath.goodsList, {}, '', (data) => {
+        this.menuList = data.data
+        this.menuList.forEach((item, index) => {
+          item.showActiveStyle = index === 0
+        })
+      }, (errorCode, error) => {
+        this.$toast(error)
+      })
     }
   },
   mounted () {
-    this.tempMenu = this.menuList[0]
+    this.getData()
   }
 }
 </script>
@@ -131,11 +103,17 @@ export default {
         padding-top $headerHeight
         display flex
         position relative
+        .scenic-empty
+            display flex
+            justify-content center
+            align-items center
+            height rem(2)
+            textStyle(#888, .28)
         .menu
             position fixed
             top $headerHeight
             left 0
-            width rem(1.5)
+            width rem(1.8)
             height 100%
             border-right 1px solid #f5f5f5
             .menu-item
@@ -143,12 +121,13 @@ export default {
                 line-height $headerHeight
                 text-align center
                 textStyle(#333, .32)
+                ellipsis()
                 border-bottom 1px solid #f5f5f5
                 .menu-active-style
                     color #64BBAE
         .content-list
             flex 3
-            margin-left rem(1.5)
+            margin-left rem(1.8)
             overflow-y scroll
             box-sizing border-box
             .list-title
@@ -158,12 +137,14 @@ export default {
                 border-bottom 1px solid #f5f5f5
             .content-item
                 padding rem(.2)
+                borderBottom()
                 .content-item-info-wrapper
                     display flex
                     .item-image-wrapper
-                        width rem(2)
-                        height rem(1.8)
+                        width rem(1.5)
+                        height rem(1.5)
                         overflow hidden
+                        border-radius rem(.1)
                         & img
                             width 100%
                             height 100%

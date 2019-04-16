@@ -53,6 +53,9 @@ export default {
     padding rem(.2) rem(.3)
     .post-logo
         width rem(1.5)
+        display flex
+        justify-content center
+        align-items center
         & img
             width 100%
             object-fit cover

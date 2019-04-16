@@ -4,7 +4,10 @@
             <span class="iconfont" :style="{'color': top == 0 ? '#fff' : '#000'}">&#xe625;</span>
         </div>
         <div :style="{ 'background-color': top == 0 ? '#000' : 'transparent'}">
-            <span class="el-icon-star-off" :style="{'color': top == 0 ? '#fff' : '#000'}"></span>
+            <span
+            :class="[ favorites ? 'el-icon-star-on' : 'el-icon-star-off' ]"
+            :style="{'color': top == 0 ? '#fff' : '#000'}"
+            @click="collection"></span>
         </div>
         <div :style="opacityStyle"></div>
     </div>
@@ -13,12 +16,23 @@
 <script>
 export default {
   name: 'scenicDetailHeader',
+  props: {
+    scenicInfo: Object
+  },
   data () {
     return {
       opacityStyle: {
         opacity: 0
       },
       top: 0
+    }
+  },
+  computed: {
+    tempInfo () {
+      return this.scenicInfo
+    },
+    favorites () {
+      return this.tempInfo !== null && this.tempInfo.isFavorites === 1
     }
   },
   methods: {
@@ -30,9 +44,31 @@ export default {
         opacity = Math.min(1, opacity)
         this.opacityStyle.opacity = 1 - opacity
       }
+      if (scrollTop === 0) {
+        this.opacityStyle.opacity = 0
+      }
+    },
+    collection () {
+      if (this.$root.userInfo.isLogin()) {
+        this.$http(this.$urlPath.userUnFavoroteScenicUrl, {
+          scenic_id: this.$parent.scenicId
+        }, '', (data) => {
+          if (this.favorites) {
+            this.$toast('取消收藏成功')
+            this.tempInfo.isFavorites = 0
+          } else {
+            this.$toast('收藏成功')
+            this.tempInfo.isFavorites = 1
+          }
+        }, (errorCode, error) => {
+          this.$toast(error)
+        })
+      } else {
+        this.$router.push({name: 'login'})
+      }
     },
     back () {
-      this.$router.back()
+      this.$emit('back')
     }
   },
   mounted () {

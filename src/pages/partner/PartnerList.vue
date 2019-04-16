@@ -11,7 +11,7 @@
         </template>
         <ul class="list-wrapper">
           <li v-for="(item, index) of partners['partners'][title]" :key="index" class="item-wrapper">
-            <img v-lazy="$utils.image.getImagePath(item.avatar)" class="item-face-icon">
+            <img v-lazy="$utils.image.getImagePath(item.avatar)" class="item-face-icon" :key="item.avatar">
             <div>
               <p class="item-name">{{item.linkname}}</p>
               <p class="item-phone">{{item.phone}}</p>

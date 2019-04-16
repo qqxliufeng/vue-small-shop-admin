@@ -2,25 +2,24 @@
     <div class="s-d-info-container">
         <div class="s-d-info-header-wrapper">
             <div>
-                <span>卧虎山滑雪场</span>
-                <span>4.9分</span>
+                <span>{{scenicInfo.title}}</span>
+                <span>{{scenicInfo.mark}}分</span>
             </div>
-            <div class="s-d-info-header-tags-wrapper">
+            <div class="s-d-info-header-tags-wrapper" v-if="scenicInfo.tags">
                 <span>
-                    <el-tag type="success" class="s-d-info-tag" size="mini">随时退</el-tag>
-                    <el-tag type="success" class="s-d-info-tag" size="mini">即买即用</el-tag>
+                    <el-tag type="success" class="s-d-info-tag" size="mini" v-for="(item, index) of scenicInfo.tags" :key="index">{{item}}</el-tag>
                 </span>
-                <span class="s-d-info-header-saller">已售1234</span>
+                <span class="s-d-info-header-saller">已售{{scenicInfo.totalSales}}</span>
             </div>
             <div class="s-d-info-middle-wrapper">
-                <slot name="info"></slot>
+                <slot name="info" :scenicInfo="scenicInfo"></slot>
                 <div class="s-d-info-scenic-location-wrapper">
                     <span class="iconfont s-d-info-scenic-location-icon">&#xe850;</span>
                     <div class="s-d-info-scenic-location">
-                        <p>济南市历下区济南市历下区</p>
-                        <p>159111111111</p>
+                        <p>{{scenicInfo.city}}</p>
+                        <p>{{scenicInfo.tel}}</p>
                     </div>
-                    <a :href="'tel:159101011111'" class="iconfont s-d-info-scenic-phone">&#xe6a9;</a>
+                    <a :href="'tel:' + scenicInfo.tel" class="iconfont s-d-info-scenic-phone">&#xe6a9;</a>
                 </div>
             </div>
         </div>
@@ -39,6 +38,9 @@
 <script>
 export default {
   name: 'scenicDetailInfo',
+  props: {
+    scenicInfo: Object
+  },
   methods: {
     startScenicInfo (type) {
       this.$router.push({name: 'scenicInfo', params: {selected: type}})
@@ -71,6 +73,7 @@ export default {
             padding-bottom rem(.3)
             borderBottom()
             .s-d-info-tag
+                margin-right rem(.2)
                 normalTextStyle($primary, .2)
             .s-d-info-header-saller
                 float right
@@ -104,7 +107,7 @@ export default {
         .o-i-ticket-info-tag
             overflow hidden
             margin-top .2rem
-            line-height .25rem
+            line-height .3rem
             & span
                 float left
                 color #333333

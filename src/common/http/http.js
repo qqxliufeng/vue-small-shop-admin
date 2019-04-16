@@ -1,9 +1,9 @@
 import axios from 'axios'
 import qs from 'qs'
-import { baseUrl } from './urlConfig'
+import { baseIP } from './urlConfig'
 
 axios.defaults.timeout = 10000
-axios.defaults.baseURL = baseUrl
+axios.defaults.baseURL = baseIP
 
 axios.interceptors.request.use(
   config => {

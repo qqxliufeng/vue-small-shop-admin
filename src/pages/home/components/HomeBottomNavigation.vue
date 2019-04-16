@@ -1,6 +1,6 @@
 <template>
 <div class='h-bottom-navigation-container'>
-    <span>分享小店</span>
+    <span @click="shareShop">分享小店</span>
     <i class="separator"></i>
     <span>商家中心</span>
     <i class="separator"></i>
@@ -22,6 +22,9 @@ export default {
     }
   },
   methods: {
+    shareShop () {
+      this.$router.push({name: 'shareShop'})
+    },
     logout () {
       this.$emit('logout')
     }

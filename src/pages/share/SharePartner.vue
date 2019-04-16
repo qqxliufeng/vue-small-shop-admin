@@ -63,7 +63,7 @@ export default {
   methods: {
     qrCode () {
       this.$nextTick(() => {
-        QRCode.toCanvas(this.$refs.qrcode, 'http://192.168.0.104:8888/registerseller?parentId=2', error => {
+        QRCode.toCanvas(this.$refs.qrcode, 'http://192.168.0.103:8888/registerseller?parentId=2', error => {
           if (error) {
             console.log(error)
           } else {

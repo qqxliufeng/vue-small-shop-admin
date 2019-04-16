@@ -1,8 +1,8 @@
 <template>
     <div class="s-d-images-container">
-        <swiper :options="swiperOption">
+        <swiper :options="swiperOption" v-if="imageList && imageList.length > 0" ref="swiper">
             <swiper-slide v-for="(item, index) of imageList" :key="index">
-                <img :src="item" class="s-d-images-item">
+                <img :src="$utils.image.getImagePath(item)" class="s-d-images-item">
             </swiper-slide>
         </swiper>
     </div>
@@ -11,21 +11,33 @@
 <script>
 export default {
   name: 'scenicDetailImages',
+  props: {
+    imageList: Array
+  },
   data () {
     return {
       swiperOption: {
         loop: true,
+        observer: true,
+        observeParents: true,
         pagination: {
           el: '.swiper-pagination'
         },
         autoplay: {
           delay: 2500,
           disableOnInteraction: false
+        },
+        on: {
+          click: () => {
+            this.imageClick()
+          }
         }
-      },
-      imageList: [
-        'http://pic36.photophoto.cn/20150812/0033033907240876_b.jpg'
-      ]
+      }
+    }
+  },
+  methods: {
+    imageClick () {
+      this.$router.push({name: 'gallary', params: {imgs: this.imageList}})
     }
   }
 }

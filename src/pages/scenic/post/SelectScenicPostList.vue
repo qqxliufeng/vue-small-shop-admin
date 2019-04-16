@@ -1,29 +1,21 @@
 <template>
 <div class='s-p-list-container'>
-  <my-navi title="景区海报" :isFixed="true"></my-navi>
+  <my-navi title="选择要分享的景区" :isFixed="true"></my-navi>
   <div class="content">
-      <div class="search-wrapper" v-if="showSearch">
-        <input type="text" placeholder="请输入要搜索的内容" class="input-content" v-model="scenicName">
-        <button class="button-search" @click="searchPost">搜索</button>
-      </div>
-      <ul v-if="scenicPostList">
-        <li v-for="item of scenicPostList" :key="item.id" class="scenic-post-item-wrapper" @click="startScenicPost(item)">
-          <el-card shadow="always" :bodyStyle="{padding: '0'}">
-            <img class="item-image" v-lazy="$utils.image.getImagePath(item.poster_image)" :key="item.poster_image">
-            <div class="item-info-wrapper">
-              <p class="item-title">{{item.scenic_name}}</p>
-              <p class="item-lvxingshe">{{item.store_name ? item.store_name : '暂无'}}</p>
-              <p class="item-info">
-                <span>{{item.score}}分</span>
-                <span>{{item.number_of_people}}人次</span>
-              </p>
-            </div>
-          </el-card>
-        </li>
-      </ul>
-      <div v-else class="empty-list">
-        暂无景区海报
-      </div>
+    <ul v-if="scenicPostList">
+      <li v-for="item of scenicPostList" :key="item.id" class="scenic-post-item-wrapper" @click="startScenicPost(item)">
+        <el-card shadow="always" :bodyStyle="{padding: '0'}">
+          <img class="item-image" v-lazy="$utils.image.getImagePath(item.poster_image)" :key="item.poster_image">
+          <div class="item-info-wrapper">
+            <p class="item-title">{{item.scenic_name}}</p>
+            <p class="item-lvxingshe">{{item.store_name ? item.store_name : '暂无'}}</p>
+          </div>
+        </el-card>
+      </li>
+    </ul>
+    <div v-else class="empty-list">
+      暂无景区海报
+    </div>
   </div>
 </div>
 </template>
@@ -39,18 +31,13 @@ export default {
       scenicName: ''
     }
   },
-  computed: {
-    showSearch () {
-      return this.$route.params.type !== '1'
-    }
-  },
   methods: {
     startScenicPost (item) {
-      this.$router.push({name: 'shareScenic', query: {scenic_id: item.scenic_id}})
+      this.$router.push({name: 'shareSelectScenic', query: {scenic_id: item.scenic_id, sid: item.store_id}})
     },
     getData () {
-      this.$http(this.$urlPath.scenicPosterList, {
-        scenic_name: this.scenicName
+      this.$http(this.$urlPath.selectScenicPosterList, {
+        scenic_id: this.$route.query.scenic_id
       }, '正在加载…', (data) => {
         this.scenicPostList = data.data
         if (!this.scenicPostList || this.scenicPostList.length === 0) {

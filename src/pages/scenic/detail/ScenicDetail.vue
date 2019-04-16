@@ -1,34 +1,38 @@
 <template>
     <div>
-        <scenic-detail-header></scenic-detail-header>
-        <scenic-detail-images></scenic-detail-images>
-        <scenic-detail-info>
-          <template slot="info">
-            <div class="s-d-info-scenic-info-wrapper">
-                <div @click="startScenicInfo('scenicInfoForIntro')">
-                    <p class="s-d-info-scenic-info-title">景区介绍</p>
-                    <p class="s-d-info-scenic-info-info">景区介绍景区介绍景区介绍景区介绍景区介绍景区介绍</p>
-                </div>
-                <div class="vertical-line"></div>
-                <div @click="startScenicInfo('scenicInfoForOrderNotify')">
-                    <p class="s-d-info-scenic-info-title">预定须知</p>
-                    <p class="s-d-info-scenic-info-info">预定须知预定须知预定须知预定须知预定须知预定须知</p>
-                </div>
-            </div>
-            <div class="s-d-info-scenic-open-time-wrapper">
-                <p>营业时间</p>
-                <p>早上9：00-12：00</p>
-                <p>下午9：00-12：00</p>
-            </div>
-          </template>
-        </scenic-detail-info>
-        <scenic-detail-hot></scenic-detail-hot>
-        <scenic-detail-ticket-type></scenic-detail-ticket-type>
-        <scenic-detail-leave-message></scenic-detail-leave-message>
-        <scenic-detail-comment :commentList="commentList" :tagCanSelected="false" @tagClick="handleTagClick"></scenic-detail-comment>
-         <div class="s-d-l-m-comment-info-see-more" @click="seeMoreComment">
+        <section v-if="loadState">
+          <scenic-detail-header :scenicInfo="scenicInfo" @back="back"></scenic-detail-header>
+          <scenic-detail-images :imageList="imageList"></scenic-detail-images>
+          <scenic-detail-info :scenicInfo="scenicInfo">
+            <template slot="info" slot-scope="slotPropes">
+              <div class="s-d-info-scenic-info-wrapper">
+                  <div @click="startScenicInfo('scenicInfoForIntro')">
+                      <p class="s-d-info-scenic-info-title">景区介绍</p>
+                      <p class="s-d-info-scenic-info-info">{{slotPropes.scenicInfo.brief}}</p>
+                  </div>
+                  <!-- <div class="vertical-line"></div>
+                  <div @click="startScenicInfo('scenicInfoForOrderNotify')">
+                      <p class="s-d-info-scenic-info-title">预定须知</p>
+                      <p class="s-d-info-scenic-info-info">预定须知预定须知预定须知预定须知预定须知预定须知</p>
+                  </div> -->
+              </div>
+              <div class="s-d-info-scenic-open-time-wrapper">
+                  <p>营业时间</p>
+                  <p>{{slotPropes.scenicInfo.open}}</p>
+              </div>
+            </template>
+          </scenic-detail-info>
+          <scenic-detail-hot :hotGoodsList="hotGoodsList"></scenic-detail-hot>
+          <scenic-detail-ticket-type :typeGoodsList="typeGoodsList"></scenic-detail-ticket-type>
+          <scenic-detail-leave-message :ask="ask"></scenic-detail-leave-message>
+          <scenic-detail-comment :comment="comment" :tagCanSelected="false"></scenic-detail-comment>
+          <div class="s-d-l-m-comment-info-see-more" @click="seeMoreComment">
             查看更多
-        </div>
+          </div>
+        </section>
+        <section v-else>
+          <load-fail @reload="reload"></load-fail>
+        </section>
     </div>
 </template>
 
@@ -40,6 +44,7 @@ import ScenicDetailHot from './components/ScenicDetailHot'
 import ScenicDetailTicketType from './components/ScenicDetailTicketType'
 import ScenicDetailLeaveMessage from './components/ScenicDetailLeaveMessage'
 import ScenicDetailComment from './components/ScenicDetailComment'
+import LoadFail from 'common/components/loading/load-fail'
 export default {
   name: 'scenicDetail',
   components: {
@@ -49,18 +54,24 @@ export default {
     ScenicDetailHot,
     ScenicDetailTicketType,
     ScenicDetailLeaveMessage,
-    ScenicDetailComment
+    ScenicDetailComment,
+    LoadFail
   },
   data () {
     return {
-      commentList: [
-        {
-          content: '这是一个好地方，真的是一个好地方这是一个好地方，真的是一个好地方这是一个好地方，真的是一个好地方这是一个好地方，真的是一个好地方这是一个好地方，真的是一个好地方这是一个好地方，真的是一个好地方这是一个好地方，真的是一个好地方这是一个好地方，真的是一个好地方这是一个好地方，真的是一个好地方这是一个好地方，真的是一个好地方这是一个好地方，真的是一个好地方这是一个好地方，真的是一个好地方这是一个好地方，真的是一个好地方这是一个好地方，真的是一个好地方',
-          isShowMore () {
-            return this.content.length > 100
-          }
-        }
-      ]
+      loadState: true,
+      sellerInfo: this.$root.state.getSallerInfo(),
+      comment: {},
+      ask: {},
+      imageList: [],
+      scenicInfo: {},
+      hotGoodsList: [],
+      typeGoodsList: [],
+      scenicId: null,
+      identity: null,
+      storeId: null,
+      show: true,
+      from: null
     }
   },
   methods: {
@@ -68,21 +79,81 @@ export default {
       console.log(item)
     },
     startScenicInfo (type) {
-      this.$router.push({name: 'scenicInfo', params: {selected: type}})
+      this.$router.push({name: 'scenicInfo', query: {id: this.scenicId}})
     },
     seeMoreComment () {
-      this.$router.push({name: 'commentList'})
+      this.$router.push({name: 'commentList', params: {scenicId: this.scenicId}})
     },
-    handleTagClick (tag) {
-      console.log(tag)
+    reload () {
+      this.getData()
+    },
+    getData () {
+      this.$http(this.$urlPath.scenicDetailUrl, {
+        s_id: this.scenicId,
+        identity: this.identity,
+        store_id: this.storeId
+      }, '', (data) => {
+        if (data.data) {
+          this.loadState = true
+          this.imageList = data.data.scenicimages
+          // 景区信息
+          let info = {}
+          info.title = data.data.s_title
+          info.tel = data.data.tel
+          info.totalSales = data.data.totalSales
+          info.address = data.data.address
+          info.city = data.data.city
+          info.mark = data.data.mark
+          info.open = data.data.open
+          info.route = data.data.route
+          info.tags = data.data.sceniclabel
+          info.brief = data.data.brief
+          info.isFavorites = data.data.is_favorites
+          info.content = data.data.s_content
+          this.scenicInfo = info
+          this.hotGoodsList = data.data.hot_goods
+          this.typeGoodsList = data.data.type_list
+          this.comment = data.data.comment
+          this.ask = data.data.ask
+        } else {
+          this.loadState = false
+        }
+      }, (errorCode, error) => {
+        this.loadState = false
+      })
+    },
+    back () {
+      if (this.from) {
+        if (this.from.name) {
+          this.$router.go(-1)
+        } else {
+          this.$router.replace({path: '/'})
+        }
+      } else {
+        this.$router.go(-1)
+      }
     }
+  },
+  created () {
+    this.scenicId = this.$route.query.scenicId
+    let identity = this.$route.query.identity
+    let storeId = this.$route.query.storeId
+    if (identity && storeId) {
+      this.$root.state.saveSallerInfo(identity, storeId)
+      this.sellerInfo = this.$root.state.getSallerInfo()
+    }
+    this.identity = this.sellerInfo.identity
+    this.storeId = this.sellerInfo.storeId
   },
   mounted () {
     this.$root.$on('ticketItemClickOrder', (item) => {
-      this.$router.push({name: 'reseveDetail'})
+      this.$router.push({name: 'reseveDetail', query: { goods_id: item.goodsId }})
     })
-    this.$root.$on('ticketItemClickShare', (item) => {
-      this.$router.push({name: 'shareTicket'})
+    this.getData()
+  },
+  beforeRouteEnter (to, from, next) {
+    next(vm => {
+      vm.from = from
     })
   }
 }
@@ -97,7 +168,7 @@ export default {
     height 100%
     justify-content center
     & p
-        ellipsis()
+        muitlLineEllipsis(2)
     & div:nth-child(1)
         overflow hidden
         flex 1

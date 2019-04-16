@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import Login from '@/pages/login/login'
 import Home from '@/pages/home/Home'
 import ScenicPostList from '@/pages/scenic/post/ScenicPostList'
+import SelectScenicPostList from '@/pages/scenic/post/SelectScenicPostList'
 import ShareShop from '@/pages/share/ShareShop'
 import SharePartner from '@/pages/share/SharePartner'
 import ShareScenic from '@/pages/share/ShareScenic'
@@ -60,6 +61,11 @@ export default new Router({
       component: ScenicPostList
     },
     {
+      path: '/selectscenicpostList',
+      name: 'selectScenicPostList',
+      component: SelectScenicPostList
+    },
+    {
       path: '/shareshop',
       name: 'shareShop',
       component: ShareShop
@@ -73,6 +79,11 @@ export default new Router({
       path: '/sharescenic',
       name: 'shareScenic',
       component: ShareScenic
+    },
+    {
+      path: '/shareselectscenic',
+      name: 'shareSelectScenic',
+      component: () => import('@/pages/share/ShareSelectScenic')
     },
     {
       path: '/shareticket',
