@@ -12,7 +12,7 @@
               <p>账户余额</p>
               <p class="money">￥{{$root.userInfo.state.balance}}</p>
             </div>
-            <el-button type="primary" size="mini">余额提现</el-button>
+            <el-button type="primary" size="mini" v-if="Number($root.userInfo.state.balance) > 0">余额提现</el-button>
           </div>
           <span class="separator-line"></span>
           <div class="other-money-wrapper">

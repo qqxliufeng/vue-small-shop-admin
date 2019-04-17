@@ -7,7 +7,7 @@
             <img class="share-image" :src="image" alt="">
           </template>
           <template slot="shareInfo">
-            <share-code :logo="logo" :url="info.url"></share-code>
+            <share-code :logo="logo" url="http://192.168.0.103:8080/index/1/1"></share-code>
           </template>
           <template slot="shareAddress">
             <span class="shop-address-title">店铺链接:</span>

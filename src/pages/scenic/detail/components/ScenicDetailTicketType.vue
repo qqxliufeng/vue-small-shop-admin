@@ -4,7 +4,7 @@
              <span>门票类型</span>
         </div>
         <div>
-            <el-tabs v-if="typeGoodsList">
+            <el-tabs v-if="typeGoodsList && typeGoodsList.length > 0">
                 <el-tab-pane v-for="tabItem of typeGoodsList" :label="tabItem.goodsTypeName" :key="tabItem.goodsTypeId">
                     <ul v-if="tabItem.goods_list && tabItem.goods_list.length > 0">
                         <li v-for="item of tabItem.goods_list" :key="item.goodsId">
@@ -16,6 +16,9 @@
                     </div>
                 </el-tab-pane>
             </el-tabs>
+            <div v-else class="s-d-l-m-message-empty">
+                <span>暂无门票</span>
+            </div>
         </div>
     </div>
 </template>

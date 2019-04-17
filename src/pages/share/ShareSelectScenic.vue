@@ -8,7 +8,7 @@
             <img class="share-image" :src="$utils.image.getImagePath(info.poster_image)" :key="info.poster_image">
         </template>
         <template slot="shareInfo">
-          <share-code :logo="$utils.image.getImagePath($root.userInfo.state.avatar)" :url="info.url"></share-code>
+          <share-code :logo="$utils.image.getImagePath($root.userInfo.state.avatar)" url="http://192.168.0.103:8080/scenicdetail?scenicId=2&identity=1&storeId=1"></share-code>
         </template>
         <template slot="shareAddress">
           <span class="shop-address-title">景区链接:</span>

@@ -146,9 +146,6 @@ export default {
     this.storeId = this.sellerInfo.storeId
   },
   mounted () {
-    this.$root.$on('ticketItemClickOrder', (item) => {
-      this.$router.push({name: 'reseveDetail', query: { goods_id: item.goodsId }})
-    })
     this.getData()
   },
   beforeRouteEnter (to, from, next) {

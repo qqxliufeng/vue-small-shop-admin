@@ -3,9 +3,9 @@
         <my-navi title="提交订单" :isFixed="true"></my-navi>
         <div class="r-d-detail-wrapper">
             <ticket-info :ticketInfo="ticketInfo" @selected="onSelectedTimeItem" ref="ticketInfo"></ticket-info>
-            <ticket-user-single-info v-if="ticketInfo.goods && ticketInfo.goods.play_info === 1" ref="userSingleInfo" :visitorInfo="ticketInfo.goods.visitor_info"></ticket-user-single-info>
-            <ticket-user-info :contacts="contacts" :touristCount="touristCount" ref="userInfo" v-if="ticketInfo.goods && ticketInfo.goods.play_info === 2" :visitorInfo="ticketInfo.goods.visitor_info"></ticket-user-info>
-            <ticket-discount></ticket-discount>
+            <ticket-user-single-info ref="userSingleInfo"></ticket-user-single-info>
+            <!-- <ticket-user-info :contacts="contacts" :touristCount="touristCount" ref="userInfo" v-if="ticketInfo.goods && ticketInfo.goods.play_info === 2" :visitorInfo="ticketInfo.goods.visitor_info"></ticket-user-info> -->
+            <!-- <ticket-discount></ticket-discount> -->
             <div class="r-d-detail-pay-action-wrapper">
                 <span class="r-d-pay-action-price">总价：<i>￥{{totalPrice}}</i></span>
                 <div class="r-d-pay-action-collection" @click="collection">
@@ -89,43 +89,26 @@ export default {
       }
       const postData = {}
       postData.date = this.tempDate
-      switch (this.ticketInfo.goods.play_info) {
-        case 1: // 只需要一个游玩人信息
-          const userName = this.$refs.userSingleInfo.tempUserInfo.name
-          const userPhone = this.$refs.userSingleInfo.tempUserInfo.phone
-          const idCard = this.$refs.userSingleInfo.tempUserInfo.idCard
-          if (!userName) {
-            this.$toast('请输入游客姓名')
-            return
-          }
-          if (!userPhone) {
-            this.$toast('请输入游客手机号')
-            return
-          }
-          if (!this.$utils.validator.isPhone(userPhone)) {
-            this.$toast('请输入合法的游客手机号')
-            return
-          }
-          if (!idCard) {
-            this.$toast('请输入游客身份证号')
-            return
-          }
-          postData.user = [this.$refs.userSingleInfo.tempUserInfo]
-          break
-        case 2: // 只需要多个游玩人信息
-          const userList = this.$refs.userInfo.userList
-          if (userList.length - 1 !== this.tempDate.num) {
-            this.$toast('游客信息与购买数量不匹配')
-            return
-          }
-          postData.user = []
-          userList.forEach(item => {
-            if (item.type !== 'add') {
-              postData.user.push(item)
-            }
-          })
-          break
+      const userName = this.$refs.userSingleInfo.tempUserInfo.name
+      const userPhone = this.$refs.userSingleInfo.tempUserInfo.phone
+      const idCard = this.$refs.userSingleInfo.tempUserInfo.idCard
+      if (!userName) {
+        this.$toast('请输入游客姓名')
+        return
       }
+      if (!userPhone) {
+        this.$toast('请输入游客手机号')
+        return
+      }
+      if (!this.$utils.validator.isPhone(userPhone)) {
+        this.$toast('请输入合法的游客手机号')
+        return
+      }
+      if (!idCard) {
+        this.$toast('请输入游客身份证号')
+        return
+      }
+      postData.user = [this.$refs.userSingleInfo.tempUserInfo]
       postData.info = {
         identity: this.$root.state.identity,
         store_id: this.$root.state.storeId,
