@@ -28,10 +28,8 @@
 
 export default {
   name: 'homeHeader',
-  components: {},
   data () {
     return {
-
     }
   }
 }
@@ -42,7 +40,7 @@ export default {
 .h-header-container
     // margin-top $headerHeight * 1.5
     height rem(3.8)
-    background $primary
+    background #74D8C9
     overflow hidden
     position relative
     border-bottom rem(.1) solid #f5f5f5

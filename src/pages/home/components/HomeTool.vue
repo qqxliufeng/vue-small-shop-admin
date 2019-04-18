@@ -16,6 +16,9 @@ import imgScenicPostIcon from 'images/img_scenic_info_icon.png'
 import imgShopListIcon from 'images/img_shop_list_icon.png'
 import imgAddPartnerIcon from 'images/img_add_partner_icon.png'
 import imgPartnerListIcon from 'images/img_partner_icon.png'
+import imgOrderListIcon from 'images/img_order_icon.png'
+import imgBackMoneyListIcon from 'images/img_back_money_icon.png'
+import imgCustomServiceIcon from 'images/img_custom_service_icon.png'
 export default {
   name: 'homeTool',
   components: {},
@@ -41,6 +44,24 @@ export default {
           show: true
         },
         {
+          name: '我的订单',
+          icon: imgOrderListIcon,
+          actionUrl: 'orderList',
+          show: true
+        },
+        {
+          name: '我的返利',
+          icon: imgBackMoneyListIcon,
+          actionUrl: 'goodsList',
+          show: true
+        },
+        {
+          name: '联系客服',
+          icon: imgCustomServiceIcon,
+          actionUrl: 'goodsList',
+          show: true
+        },
+        {
           name: '发展伙伴',
           icon: imgAddPartnerIcon,
           actionUrl: 'sharePartner',
@@ -58,7 +79,7 @@ export default {
   computed: {
     computedToolList () {
       this.toolsList.forEach((it, index) => {
-        if (index < 3) {
+        if (index < 6) {
           it.show = true
         } else {
           it.show = Number(this.$root.userInfo.state.rank) < 3

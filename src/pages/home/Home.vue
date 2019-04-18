@@ -9,7 +9,8 @@
       <home-header></home-header>
   </div>
   <home-tools ref="homeTools"></home-tools>
-  <home-bottom-navigation @logout="logout"></home-bottom-navigation>
+  <p class="logout" @click="logout">退出登录</p>
+  <confirm-dialog content="是否要退出登录？" @dialogConfirm="dialogConfirm" ref="confrimDialog"></confirm-dialog>
 </div>
 </template>
 
@@ -18,13 +19,15 @@ import HomeHeader from './components/HomeHeader'
 import HomeNavigation from './components/HomeNavigation'
 import HomeTools from './components/HomeTool'
 import HomeBottomNavigation from './components/HomeBottomNavigation'
+import ConfirmDialog from 'common/components/confirm-dialog'
 export default {
   name: 'home',
   components: {
     HomeNavigation,
     HomeHeader,
     HomeTools,
-    HomeBottomNavigation
+    HomeBottomNavigation,
+    ConfirmDialog
   },
   data () {
     return {
@@ -36,17 +39,17 @@ export default {
     tipClick () {
       this.showTip = false
     },
+    dialogConfirm () {
+      this.$http(this.$urlPath.logoutUrl, {
+      }, '正在退出…', (data) => {
+        this.$root.userInfo.clearInfoAction()
+        this.$router.replace({name: 'login'})
+      }, (errorCode, error) => {
+        this.$toast(error)
+      })
+    },
     logout () {
-      let confirm = window.confirm('是否要退出当前帐号？')
-      if (confirm) {
-        this.$http(this.$urlPath.logoutUrl, {
-        }, '正在退出…', (data) => {
-          this.$root.userInfo.clearInfoAction()
-          this.$router.replace({name: 'login'})
-        }, (errorCode, error) => {
-          this.$toast(error)
-        })
-      }
+      this.$refs.confrimDialog.showDialog()
     }
   }
 }
@@ -63,4 +66,12 @@ export default {
     .close-tip
         float right
         font-size rem(.28)
+.logout
+    width 70%
+    background $primary
+    border-radius rem(.5)
+    margin rem(1.2) auto rem(.3) auto
+    text-align center
+    line-height rem(.8)
+    color #fff
 </style>

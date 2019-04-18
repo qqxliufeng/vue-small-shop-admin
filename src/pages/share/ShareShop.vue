@@ -7,11 +7,11 @@
             <img class="share-image" :src="image" alt="">
           </template>
           <template slot="shareInfo">
-            <share-code :logo="logo" url="http://192.168.0.103:8080/index/1/1"></share-code>
+            <share-code :logo="logo" :url="url"></share-code>
           </template>
           <template slot="shareAddress">
             <span class="shop-address-title">店铺链接:</span>
-            <span class="shop-address" ref="copyUrl">{{info.url}}</span>
+            <span class="shop-address" ref="copyUrl">{{url}}</span>
           </template>
         </share-component>
     </div>
@@ -21,8 +21,10 @@
 <script>
 import ShareComponent from '@/pages/share/Share'
 import ShareCode from './components/ShareCode'
+import IdMixin from 'common/mixins/id-mixin'
 export default {
   name: 'shareShop',
+  mixins: [IdMixin],
   components: {
     ShareComponent,
     ShareCode
@@ -33,6 +35,9 @@ export default {
     }
   },
   computed: {
+    url () {
+      return this.$urlPath.getShareShopUrl(this.identity, this.storeId)
+    },
     image () {
       return this.$utils.image.getImagePath(this.info.image)
     },

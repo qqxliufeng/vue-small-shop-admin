@@ -20,7 +20,7 @@
             </div>
             <div class="code-wrapper">
               <canvas class="code" ref="qrcode"/>
-              <p class="flag" @click="test">长按识别二维码</p>
+              <p class="flag">长按识别二维码</p>
             </div>
           </div>
         </div>
@@ -33,7 +33,7 @@
       </template>
       <template slot="shareAddress">
         <span class="shop-address-title">注册链接:</span>
-        <span class="shop-address">{{info.url}}</span>
+        <span class="shop-address">{{$urlPath.getShareRegisterUrl($root.userInfo.state.id)}}</span>
       </template>
     </share-component>
   </div>
@@ -63,7 +63,7 @@ export default {
   methods: {
     qrCode () {
       this.$nextTick(() => {
-        QRCode.toCanvas(this.$refs.qrcode, 'http://192.168.0.103:8888/registerseller?parentId=2', error => {
+        QRCode.toCanvas(this.$refs.qrcode, this.$urlPath.getShareRegisterUrl(this.$root.userInfo.state.id), error => {
           if (error) {
             console.log(error)
           } else {
@@ -79,9 +79,6 @@ export default {
         }, (errorCode, error) => {
           this.$toast(error)
         })
-    },
-    test () {
-      this.$router.push({name: 'registerDefault', query: {parentId: '2'}})
     }
   },
   mounted () {

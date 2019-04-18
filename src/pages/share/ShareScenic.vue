@@ -8,11 +8,11 @@
             <img class="share-image" :src="$utils.image.getImagePath(info.poster_image)" :key="info.poster_image">
         </template>
         <template slot="shareInfo">
-          <share-code :logo="$utils.image.getImagePath($root.userInfo.state.avatar)" url="http://192.168.0.103:8080/scenicdetail?scenicId=2&identity=1&storeId=1"></share-code>
+          <share-code :logo="$utils.image.getImagePath($root.userInfo.state.avatar)" :url="url"></share-code>
         </template>
         <template slot="shareAddress">
           <span class="shop-address-title">景区链接:</span>
-          <span class="shop-address">{{info.url}}</span>
+          <span class="shop-address">{{url}}</span>
         </template>
         <template slot="otherInfo">
           <div class="other-info-wrapper">
@@ -34,8 +34,10 @@
 <script>
 import ShareComponent from './Share'
 import ShareCode from './components/ShareCode'
+import IdMixin from 'common/mixins/id-mixin'
 export default {
   name: 'shareTicket',
+  mixins: [IdMixin],
   components: {
     ShareComponent,
     ShareCode
@@ -43,6 +45,11 @@ export default {
   data () {
     return {
       info: null
+    }
+  },
+  computed: {
+    url () {
+      return this.$urlPath.getShareScenicUrl(this.identity, this.storeId, this.$route.query.scenic_id)
     }
   },
   methods: {
@@ -57,6 +64,7 @@ export default {
     }
   },
   mounted () {
+    console.log(this.url)
     this.getData()
   }
 }

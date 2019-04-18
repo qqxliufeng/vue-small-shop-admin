@@ -57,18 +57,22 @@ export const ticketPosterDetail = distributorModuleUrl + 'share_goods'
 
 export const goodsList = distributorModuleUrl + 'category'
 
-export function getShareScenicUrl () {
-  return ''
+const orderUrl = baseUrl + 'order/'
+
+export const createOrder = orderUrl + 'create_order'
+
+export function getShareScenicUrl (identity, storeId, sid) {
+  return 'http://192.168.0.103:8080/scenicdetail?scenicId=' + sid + '&identity=' + identity + '&storeId=' + storeId
 }
 
-export function getTicketUrl () {
-  return 'http://192.168.0.103:8080/ticketDetail?s_id=2&identity=1&storeId=1&goods_id=3'
+export function getShareTicketUrl (identity, storeId, sid, goodsId) {
+  return 'http://192.168.0.103:8080/ticketDetail?s_id=' + sid + '&identity=' + identity + '&storeId=' + storeId + '&goods_id=' + goodsId
 }
 
-export function getRegisterUrl () {
-  return ''
+export function getShareRegisterUrl (pid) {
+  return 'http://192.168.0.103:8888/registerseller?pid=' + pid
 }
 
-export function getShopUrl () {
-  return ''
+export function getShareShopUrl (identity, storeId) {
+  return 'http://192.168.0.103:8080/index/' + identity + '/' + storeId
 }

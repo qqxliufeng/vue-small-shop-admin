@@ -1,10 +1,10 @@
 <template>
 <div class='h-navigation-container'>
   <span>个人主页</span>
-  <div class="message-wrapper" @click="messageClick">
+  <!-- <div class="message-wrapper" @click="messageClick">
     <span class="red-notify" v-if="showRedNotify"></span>
     <span class="iconfont">&#xe60c;</span>
-  </div>
+  </div> -->
 </div>
 </template>
 
@@ -36,7 +36,7 @@ export default {
     right 0
     height $headerHeight
     line-height $headerHeight
-    background $primary
+    background #74D8C9
     text-align center
     color #fff
     z-index 2

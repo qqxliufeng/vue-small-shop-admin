@@ -7,11 +7,11 @@
           <img class="share-image" :src="$utils.image.getImagePath(info.share_image)" alt="">
       </template>
       <template slot="shareInfo">
-        <share-code :logo="$utils.image.getImagePath($root.userInfo.state.avatar)" :url="$urlPath.getTicketUrl()"></share-code>
+        <share-code :logo="$utils.image.getImagePath($root.userInfo.state.avatar)" :url="url"></share-code>
       </template>
       <template slot="shareAddress">
         <span class="shop-address-title">门票链接:</span>
-        <span class="shop-address">{{$urlPath.getTicketUrl()}}</span>
+        <span class="shop-address">{{url}}</span>
       </template>
     </share-component>
   </div>
@@ -21,8 +21,10 @@
 <script>
 import ShareCode from './components/ShareCode'
 import ShareComponent from './Share'
+import IdMixin from 'common/mixins/id-mixin'
 export default {
   name: 'shareTicket',
+  mixins: [IdMixin],
   components: {
     ShareComponent,
     ShareCode
@@ -30,6 +32,11 @@ export default {
   data () {
     return {
       info: null
+    }
+  },
+  computed: {
+    url () {
+      return this.$urlPath.getShareTicketUrl(this.identity, this.storeId, this.$route.query.s_id, this.$route.query.goods_id)
     }
   },
   methods: {

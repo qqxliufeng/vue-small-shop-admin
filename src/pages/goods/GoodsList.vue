@@ -92,6 +92,9 @@ export default {
   },
   mounted () {
     this.getData()
+  },
+  activated () {
+    console.log(this)
   }
 }
 </script>

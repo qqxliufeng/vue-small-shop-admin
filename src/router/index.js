@@ -26,6 +26,8 @@ import OrderInfoPay from '@/pages/order/OrderInfoPay'
 import CustomService from '@/pages/home/other/CustomService'
 import Message from '@/pages/home/other/Message'
 
+import OrderList from '@/pages/order/OrderList'
+
 Vue.use(Router)
 
 export default new Router({
@@ -189,6 +191,11 @@ export default new Router({
       path: '/message',
       name: 'message',
       component: Message
+    },
+    {
+      path: '/orderlist',
+      name: 'orderList',
+      component: OrderList
     },
     {
       path: '/city',

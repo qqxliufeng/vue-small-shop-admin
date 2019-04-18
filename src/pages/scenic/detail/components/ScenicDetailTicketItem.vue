@@ -35,7 +35,7 @@ export default {
       this.$router.push({name: 'reseveDetail', query: { goods_id: item.goodsId }})
     },
     itemClickShare (item) {
-      this.$router.push({name: 'shareTicket', query: { goods_id: item.goodsId }})
+      this.$router.push({name: 'shareTicket', query: { s_id: this.$route.query.scenicId, goods_id: item.goodsId }})
     }
   }
 }

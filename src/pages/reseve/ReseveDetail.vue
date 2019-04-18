@@ -8,10 +8,6 @@
             <!-- <ticket-discount></ticket-discount> -->
             <div class="r-d-detail-pay-action-wrapper">
                 <span class="r-d-pay-action-price">总价：<i>￥{{totalPrice}}</i></span>
-                <div class="r-d-pay-action-collection" @click="collection">
-                  <p :class="[collectionState ===  1 ? 'el-icon-star-on' : 'el-icon-star-off']"></p>
-                  <p>收藏</p>
-                </div>
                 <span class="r-d-pay-action-pay" :style="{'background' : totalPrice === 0 ? '#cccccc' : '#E18234', 'pointer-events': totalPrice === 0 ? 'none' : 'auto'}" @click="reserve">立即预定</span>
             </div>
         </div>
@@ -37,7 +33,6 @@ export default {
       totalPrice: 0,
       contacts: [],
       tempDate: null,
-      collectionState: 0,
       touristCount: 1
     }
   },
@@ -49,7 +44,6 @@ export default {
         store_id: this.$root.state.storeId
       }, '', (data) => {
         this.ticketInfo = data.data
-        this.collectionState = data.data.is_favorites
       }, (errorCode, error) => {
         this.$toast(error)
       })
@@ -67,21 +61,6 @@ export default {
         this.totalPrice = (Number(info.item.sale_price) * parseInt(info.num)).toFixed(2)
       }
     },
-    collection () {
-      this.$http(this.$urlPath.userUnFavoroteGoodsUrl, {
-        goods_id: this.$route.query.goods_id
-      }, '正在操作…', (data) => {
-        if (this.collectionState === 1) {
-          this.$toast('取消收藏成功')
-          this.collectionState = 0
-        } else {
-          this.$toast('收藏成功')
-          this.collectionState = 1
-        }
-      }, (errorCode, error) => {
-        this.$toast(error)
-      })
-    },
     reserve () {
       if (!this.tempDate) {
         this.$toast('请选择游玩日期')
@@ -91,7 +70,6 @@ export default {
       postData.date = this.tempDate
       const userName = this.$refs.userSingleInfo.tempUserInfo.name
       const userPhone = this.$refs.userSingleInfo.tempUserInfo.phone
-      const idCard = this.$refs.userSingleInfo.tempUserInfo.idCard
       if (!userName) {
         this.$toast('请输入游客姓名')
         return
@@ -104,23 +82,17 @@ export default {
         this.$toast('请输入合法的游客手机号')
         return
       }
-      if (!idCard) {
-        this.$toast('请输入游客身份证号')
-        return
-      }
-      postData.user = [this.$refs.userSingleInfo.tempUserInfo]
+      postData.user = this.$refs.userSingleInfo.tempUserInfo
       postData.info = {
         identity: this.$root.state.identity,
         store_id: this.$root.state.storeId,
         goods_source: this.ticketInfo.goods.goods_source,
         goods_id: this.$route.query.goods_id
       }
-      this.$http(this.$urlPath.orderCreate, {
+      this.$http(this.$urlPath.createOrder, {
         data: JSON.stringify(postData)
       }, '正在提交…', (data) => {
         this.$toast('订单提交成功')
-        this.$root.$emit('onReload')
-        this.$root.$emit('onGetBadge')
         this.$router.replace({name: 'orderInfoPay', query: {no: data.data.out_trade_no}})
       }, (errorCode, error) => {
         this.$toast(error)

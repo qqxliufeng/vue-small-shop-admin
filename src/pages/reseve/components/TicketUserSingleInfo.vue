@@ -36,10 +36,7 @@ export default {
     return {
       tempUserInfo: {
         name: '',
-        phone: '',
-        idCard: '',
-        schoolName: '',
-        studentId: ''
+        phone: ''
       }
     }
   },
@@ -47,9 +44,6 @@ export default {
     clearUserInfo () {
       this.tempUserInfo.name = null
       this.tempUserInfo.phone = null
-      this.tempUserInfo.idCard = null
-      this.tempUserInfo.schoolName = null
-      this.tempUserInfo.studentId = null
     }
   }
 }
