@@ -52,7 +52,7 @@ export default {
         {
           name: '我的返利',
           icon: imgBackMoneyListIcon,
-          actionUrl: 'goodsList',
+          actionUrl: 'rebateList',
           show: true
         },
         {

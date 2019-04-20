@@ -8,7 +8,7 @@
       <span class="nick-name">{{$root.userInfo.state.name}}</span>
       <div class="info-wrapper">
           <div class="release-money-wrapper">
-            <div class="release-money">
+            <div class="release-money" @click="myBalance">
               <p>账户余额</p>
               <p class="money">￥{{$root.userInfo.state.balance}}</p>
             </div>
@@ -30,6 +30,11 @@ export default {
   name: 'homeHeader',
   data () {
     return {
+    }
+  },
+  methods: {
+    myBalance () {
+      this.$router.push({name: 'myBalance'})
     }
   }
 }

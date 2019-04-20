@@ -22,6 +22,7 @@ export default {
     phoneReg: /^1(3|4|5|7|8)\d{9}$/,
     passwordReg: /^(\w){6,16}$/,
     emailReg: /^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$/,
+    moneyReg: /(^[1-9]([0-9]+)?(\.[0-9]{1,2})?$)|(^(0){1}$)|(^[0-9]\.[0-9]([0-9])?$)/,
     isPhone (phone) {
       return this.phoneReg.test(phone)
     },
@@ -30,6 +31,9 @@ export default {
     },
     isEmail (s) {
       return this.emailReg.test(s)
+    },
+    isMoney (s) {
+      return this.moneyReg.test(s)
     }
   },
   image: {

@@ -57,9 +57,37 @@ export const ticketPosterDetail = distributorModuleUrl + 'share_goods'
 
 export const goodsList = distributorModuleUrl + 'category'
 
+export const withdrawCash = distributorModuleUrl + 'withdraw_cash'
+
+export const balanceLog = distributorModuleUrl + 'balance_log'
+
 const orderUrl = baseUrl + 'order/'
 
 export const createOrder = orderUrl + 'create_order'
+
+export const orderList = orderUrl + 'order_list'
+
+export const orderDetails = orderUrl + 'details'
+
+export const orderCancel = orderUrl + 'cancel'
+
+export const orderDelete = orderUrl + 'del'
+
+export const orderRefundDetail = orderUrl + 'refund_details'
+
+export const orderRefund = orderUrl + 'refund'
+
+export const orderRefundList = orderUrl + 'afer_sales_list'
+
+export const orderRefundAfterDetail = orderUrl + 'afer_sales_details'
+
+export const orderCancelRefund = orderUrl + 'cancel_refund'
+
+const payModuleUrl = baseUrl2 + 'payment/'
+
+export const orderPayUrl = payModuleUrl + 'run_pay'
+
+export const orderPay = payModuleUrl + 'do_pay'
 
 export function getShareScenicUrl (identity, storeId, sid) {
   return 'http://192.168.0.103:8080/scenicdetail?scenicId=' + sid + '&identity=' + identity + '&storeId=' + storeId

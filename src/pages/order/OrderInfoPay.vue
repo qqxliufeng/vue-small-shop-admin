@@ -1,10 +1,10 @@
 <template>
     <div>
         <my-navi title="支付"></my-navi>
-        <div class="o-i-pay-container">
+        <div class="o-i-pay-container" v-if="info">
             <div class="o-i-pay-time-wrapper">
                 <p>剩余支付时间</p>
-                <count-down :time="2 * 24 * 60 * 60 * 1000">
+                <count-down :time="info.timeout_express * 1000" @end="countDownEnd">
                     <template v-slot="props">
                         <div class="time-wrapper">
                             {{ props.hours }}:{{ props.minutes }}:{{ props.seconds }}
@@ -14,16 +14,21 @@
             </div>
             <div class="o-i-pay-goods-info-wrapper">
                 <div>
-                    <img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1550315558341&di=5eb3ae6776ef018e8eadf3eaabbeb16f&imgtype=0&src=http%3A%2F%2Fg.hiphotos.baidu.com%2Fimage%2Fpic%2Fitem%2Fb3119313b07eca8043a138229c2397dda044834a.jpg">
+                    <img v-lazy="$utils.image.getImagePath(info.scenicimages)">
                 </div>
                 <div>
-                    <p>卧虎山滑雪场成人票</p>
-                    <p>￥188</p>
+                    <p>{{info.goods_title}}</p>
+                    <p>￥{{info.price}}</p>
                 </div>
             </div>
             <div class="o-i-pay-goods-info-money">
                 <span>支付金额</span>
-                <span>￥25.50</span>
+                <span>￥{{info.amount}}</span>
+            </div>
+            <div class="sperator-line"></div>
+            <div class="o-i-pay-goods-info-money-add">
+                <span>￥{{info.price}}</span>
+                <span>x{{info.num}}</span>
             </div>
             <div class="sperator-line-height"></div>
             <div class="o-i-pay-goods-info-money">
@@ -37,7 +42,7 @@
                     <i :class="[item.isChecked ? 'el-icon-circle-check' : 'icon-style']"></i>
                 </li>
             </ul>
-            <p class="o-i-pay-action">支付</p>
+            <p class="o-i-pay-action" @click="pay">支付</p>
         </div>
     </div>
 </template>
@@ -80,7 +85,9 @@ export default {
           isChecked: false,
           isShow: true
         }
-      ]
+      ],
+      info: null,
+      payType: 'alipay'
     }
   },
   computed: {
@@ -95,11 +102,42 @@ export default {
     }
   },
   methods: {
+    getData () {
+      this.$http(this.$urlPath.orderPayUrl, {
+        isNoToken: true,
+        out_trade_no: this.$route.query.no
+      }, '', (data) => {
+        this.info = data.data
+        this.info.timeout_express = this.info.timeout_express - data.time
+      }, (errorCode, error) => {
+        this.$toast(error)
+      })
+    },
     payItemClick (item) {
       this.filterPayItemList.forEach(element => {
         element.isChecked = item === element
       })
+    },
+    countDownEnd () {
+      this.$toast('订单结束，未支付，请重新下单')
+      this.$router.go(-1)
+    },
+    pay () {
+      this.$http(this.$urlPath.orderPay, {
+        isNoToken: true,
+        out_trade_no: this.$route.query.no,
+        pay_type: this.payType
+      }, '正在支付…', (data) => {
+        this.$toast('订单支付成功')
+        this.$root.$emit('onReload')
+        this.$router.go(-1)
+      }, (errorCode, error) => {
+        this.$toast(error)
+      })
     }
+  },
+  mounted () {
+    this.getData()
   }
 }
 </script>

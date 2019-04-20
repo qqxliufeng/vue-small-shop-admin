@@ -23,6 +23,9 @@ import * as urlPath from 'common/http/urlConfig'
 import userInfo from 'common/data/user-info'
 import state from 'common/data/state'
 
+import loadingImage from 'images/img_loading_list.png'
+import loadFailedImage from 'images/img_loading_failed_list.png'
+
 Vue.config.productionTip = false
 Vue.use(ElementUI)
 Vue.use(MyNavigation)
@@ -30,8 +33,8 @@ Vue.use(Loading)
 Vue.use(VueAwesomeSwiper)
 Vue.use(VueLazyLoad, {
   preLoad: 1.3,
-  error: require('images/img_loading_failed_list.png'),
-  loading: require('images/img_loading_list.png'),
+  error: loadFailedImage,
+  loading: loadingImage,
   attempt: 1
 })
 Vue.use(SlideVerify)
@@ -50,6 +53,10 @@ Vue.prototype.$http = function (url, params = {}, loadingTip, onRequestSuccess, 
     }
     if (userInfo.isLogin()) {
       params.token = userInfo.state.token
+    }
+    if (params.isNoToken) {
+      delete params.token
+      delete params.isNoToken
     }
     return axios.post(url, params)
       .then(response => {

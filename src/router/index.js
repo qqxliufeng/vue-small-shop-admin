@@ -27,7 +27,14 @@ import CustomService from '@/pages/home/other/CustomService'
 import Message from '@/pages/home/other/Message'
 
 import OrderList from '@/pages/order/OrderList'
+import OrderInfo from '@/pages/order/OrderInfo'
+import OrderBackMoney from '@/pages/order/OrderInfoBackMoney'
 
+import RebateList from '@/pages/rebate/RebateList'
+import MyBalance from '@/pages/balance/MyBalance'
+import RechargeBalance from '@/pages/balance/RechargeBalance'
+import WithdrawBalance from '@/pages/balance/WithdrawBalance'
+import BalanceDetails from '@/pages/balance/BalanceDetails'
 Vue.use(Router)
 
 export default new Router({
@@ -196,6 +203,42 @@ export default new Router({
       path: '/orderlist',
       name: 'orderList',
       component: OrderList
+    },
+    {
+      path: '/orderinfo/:orderId/:orderType',
+      name: 'orderInfo',
+      component: OrderInfo,
+      props: true
+    },
+    {
+      path: '/orderbackmoney',
+      name: 'orderBackMoney',
+      component: OrderBackMoney
+    },
+    {
+      path: '/rebatelist',
+      name: 'rebateList',
+      component: RebateList
+    },
+    {
+      path: '/mybalance',
+      name: 'myBalance',
+      component: MyBalance
+    },
+    {
+      path: '/rechargebalance',
+      name: 'rechargeBalance',
+      component: RechargeBalance
+    },
+    {
+      path: '/withdrawbalance',
+      name: 'withdrawBalance',
+      component: WithdrawBalance
+    },
+    {
+      path: '/balancedetails',
+      name: 'balanceDetails',
+      component: BalanceDetails
     },
     {
       path: '/city',
