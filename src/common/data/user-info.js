@@ -65,6 +65,14 @@ const userInfo = {
     this.state.city = city
     sessionStorage.setItem('city', this.state.city)
   },
+  setUserInfoRebate (rebate) {
+    this.state.rebate = rebate
+    sessionStorage.setItem('rebate', this.state.rebate)
+  },
+  setUserInfoBalance (balance) {
+    this.state.balance = balance
+    sessionStorage.setItem('balance', this.state.balance)
+  },
   clearInfoAction () {
     this.state.id = ''
     this.state.token = ''

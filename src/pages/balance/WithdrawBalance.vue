@@ -8,22 +8,22 @@
       <input class="input-money" type="text" :disabled="!canCrash" v-model="crashMoney" maxlength="10">
       <span class="all-money" @click="allMoneyCrash">全部提现</span>
     </div>
-    <p class="tip-no-input" v-if="!isInput">当前余额：<i>￥{{crashTip.balance}}</i>，提现最底金额：<i>￥{{crashTip.miniCrash}}</i>，账户最底余额：<i>￥{{crashTip.miniBalance}}</i>，提现手续费：<i>{{Number(crashTip.serviceCharge) * 100 + '%'}}</i></p>
-    <p class="tip-no-input" v-else>额外扣除<i>￥{{Number(serviceCharge).toFixed(2)}}</i>服务费（费率{{Number(crashTip.serviceCharge) * 100 + '%'}}）</p>
+    <p class="tip-no-input" v-if="!isInput">当前余额：<i>￥{{$root.userInfo.state.balance || '0.00'}}</i>，提现最底金额：<i>￥{{crashTip.miniCrash || '0.00'}}</i>，账户最底余额：<i>￥{{crashTip.miniBalance || '0.00'}}</i>，提现手续费：<i>{{Number(crashTip.serviceCharge || 0.00) * 100 + '%'}}</i></p>
+    <p class="tip-no-input" v-else>额外扣除<i>￥{{serviceCharge.toFixed(2)}}</i>服务费（费率{{crashTip.serviceCharge * 100 + '%'}}）</p>
   </div>
   <div class="select-type-container">
     <p class="title-tip">提现方式</p>
     <div class="input-wrapper">
-      <div class="type-wrapper" @click="typeClick(1)">
+      <div class="type-wrapper" @click="typeClick('alipay')">
         <img :src="imgZFBIcon" class="img">
         <span class="type-name">支付宝</span>
-        <el-radio v-model="selectType" label="1" class="radio"></el-radio>
+        <el-radio v-model="selectType" label="alipay" class="radio"></el-radio>
       </div>
       <div class="sperator"></div>
-       <div class="type-wrapper" @click="typeClick(2)">
+       <div class="type-wrapper" @click="typeClick('wechat')">
         <img :src="imgWXIcon" class="img">
         <span class="type-name">微信</span>
-        <el-radio v-model="selectType" label="2" class="radio"></el-radio>
+        <el-radio v-model="selectType" label="wechat" class="radio"></el-radio>
       </div>
     </div>
     <div class="sperator"></div>
@@ -44,7 +44,7 @@ export default {
     return {
       imgZFBIcon,
       imgWXIcon,
-      selectType: '1',
+      selectType: 'alipay',
       info: null,
       crashTip: null,
       canCrash: false,
@@ -59,18 +59,18 @@ export default {
       if (newVal) {
         this.crashTip = {
           balance: this.$root.userInfo.state.balance,
-          miniCrash: newVal.minimum_cash,
-          miniBalance: newVal.minimum_balance,
-          serviceCharge: newVal.service_charge
+          miniCrash: Number(newVal.minimum_cash),
+          miniBalance: Number(newVal.minimum_balance),
+          serviceCharge: Number(newVal.service_charge)
         }
-        this.canCrash = Number(this.crashTip.balance) >= Number(this.crashTip.miniCrash) + Number(this.crashTip.miniBalance)
+        this.canCrash = this.crashTip.balance && this.crashTip.balance > 0 && this.crashTip.balance >= this.crashTip.miniCrash + this.crashTip.miniBalance
       }
     },
     crashMoney (newVal, oldVal) {
       if (newVal) {
         this.isInput = true
         if (this.$utils.validator.isMoney(newVal)) {
-          this.serviceCharge = (Number(newVal).toFixed(2) * Number(this.info.service_charge)).toFixed(2)
+          this.serviceCharge = Number(newVal) * Number(this.info.service_charge)
         } else {
           this.serviceCharge = 0
         }
@@ -81,10 +81,12 @@ export default {
   },
   methods: {
     typeClick (type) {
-      this.selectType = type + ''
+      this.selectType = type
     },
     allMoneyCrash () {
-      this.crashMoney = Number(this.$root.userInfo.state.balance).toFixed(2) + ''
+      if (this.canCrash) {
+        this.crashMoney = Number(this.$root.userInfo.state.balance).toFixed(2) + ''
+      }
     },
     getData () {
       this.$http(this.$urlPath.withdrawCash, {}, '', (data) => {
@@ -98,6 +100,10 @@ export default {
         this.$toast('请输入合法的金额')
         return
       }
+      if (Number(this.crashMoney) < Number(this.crashTip.miniCrash)) {
+        this.$toast('提现金额小于最底提现金额')
+        return
+      }
       if (Number(this.crashMoney) > Number(this.$root.userInfo.state.balance)) {
         this.$toast('提现金额大于当前账户余额')
         return
@@ -106,7 +112,18 @@ export default {
         this.$toast('请输入提现账号')
         return
       }
-      console.log('提现')
+      this.$http(this.$urlPath.withdrawCash, {
+        pay_away: this.selectType,
+        account_number: this.crashAccount,
+        amount: this.crashMoney
+      }, '正在操作…', (data) => {
+        this.$toast('提现申请成功')
+        this.$root.userInfo.setUserInfoBalance(data.data.balance)
+        this.crashMoney = ''
+        this.crashAccount = ''
+      }, (errorCode, error) => {
+        this.$toast(error)
+      })
     }
   },
   mounted () {

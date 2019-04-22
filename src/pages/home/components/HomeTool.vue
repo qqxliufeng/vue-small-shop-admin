@@ -52,13 +52,13 @@ export default {
         {
           name: '我的返利',
           icon: imgBackMoneyListIcon,
-          actionUrl: 'rebateList',
+          actionUrl: 'myRebate',
           show: true
         },
         {
           name: '联系客服',
           icon: imgCustomServiceIcon,
-          actionUrl: 'goodsList',
+          actionUrl: 'customService',
           show: true
         },
         {

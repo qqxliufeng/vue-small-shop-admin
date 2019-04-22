@@ -11,6 +11,7 @@ let listHandlerMixin = {
     },
     loadError (mescroll) {
       this.$toast('加载失败')
+      mescroll.endSuccess(0)
       mescroll.endErr()
     }
   }

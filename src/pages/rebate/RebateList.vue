@@ -8,8 +8,11 @@
         <el-tab-pane label="待返利" class="c-tabs-item" name="second" lazy>
            <rebate-list-item state="2"></rebate-list-item>
         </el-tab-pane>
-        <el-tab-pane label="未付款" class="c-tabs-item" name="third" lazy>
+        <el-tab-pane label="伙伴待返利" class="c-tabs-item" name="third" lazy>
            <rebate-list-item state="3"></rebate-list-item>
+        </el-tab-pane>
+        <el-tab-pane label="未付款" class="c-tabs-item" name="fourth" lazy>
+           <rebate-list-item state="4"></rebate-list-item>
         </el-tab-pane>
     </el-tabs>
   </div>

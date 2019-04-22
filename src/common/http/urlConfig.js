@@ -61,6 +61,18 @@ export const withdrawCash = distributorModuleUrl + 'withdraw_cash'
 
 export const balanceLog = distributorModuleUrl + 'balance_log'
 
+export const balanceStatistics = distributorModuleUrl + 'balance_statistics'
+
+export const rebateStatistics = distributorModuleUrl + 'rebate_statistics'
+
+export const rebateTransferBalance = distributorModuleUrl + 'rebate_transfer_balance'
+
+export const transferBalanceLog = distributorModuleUrl + 'transfer_balance_log'
+
+export const rebateLog = distributorModuleUrl + 'rebate_log'
+
+export const customerService = distributorModuleUrl + 'customer_service'
+
 const orderUrl = baseUrl + 'order/'
 
 export const createOrder = orderUrl + 'create_order'

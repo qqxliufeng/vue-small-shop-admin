@@ -23,14 +23,16 @@ import RegisterSeller from '@/pages/register/RegisterSeller'
 
 import OrderInfoPay from '@/pages/order/OrderInfoPay'
 
-import CustomService from '@/pages/home/other/CustomService'
 import Message from '@/pages/home/other/Message'
 
 import OrderList from '@/pages/order/OrderList'
 import OrderInfo from '@/pages/order/OrderInfo'
 import OrderBackMoney from '@/pages/order/OrderInfoBackMoney'
 
+import MyRebate from '@/pages/rebate/MyRebate'
 import RebateList from '@/pages/rebate/RebateList'
+import RebateDetails from '@/pages/rebate/RebateDetails'
+import RebateToBalance from '@/pages/rebate/RebateToBalance'
 import MyBalance from '@/pages/balance/MyBalance'
 import RechargeBalance from '@/pages/balance/RechargeBalance'
 import WithdrawBalance from '@/pages/balance/WithdrawBalance'
@@ -38,7 +40,7 @@ import BalanceDetails from '@/pages/balance/BalanceDetails'
 Vue.use(Router)
 
 export default new Router({
-  mode: 'history',
+  // mode: 'history',
   routes: [
     {
       path: '/',
@@ -190,11 +192,6 @@ export default new Router({
       component: OrderInfoPay
     },
     {
-      path: '/customservice',
-      name: 'customService',
-      component: CustomService
-    },
-    {
       path: '/message',
       name: 'message',
       component: Message
@@ -216,9 +213,24 @@ export default new Router({
       component: OrderBackMoney
     },
     {
+      path: '/myrebate',
+      name: 'myRebate',
+      component: MyRebate
+    },
+    {
       path: '/rebatelist',
       name: 'rebateList',
       component: RebateList
+    },
+    {
+      path: '/rebatedetails',
+      name: 'rebateDetails',
+      component: RebateDetails
+    },
+    {
+      path: '/rebatetobalance',
+      name: 'rebateToBalance',
+      component: RebateToBalance
     },
     {
       path: '/mybalance',
@@ -239,6 +251,11 @@ export default new Router({
       path: '/balancedetails',
       name: 'balanceDetails',
       component: BalanceDetails
+    },
+    {
+      path: '/customservice',
+      name: 'customService',
+      component: () => import('@/pages/home/CustomService')
     },
     {
       path: '/city',

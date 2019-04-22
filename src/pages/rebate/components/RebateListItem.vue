@@ -2,19 +2,19 @@
   <div class='r-l-item-container' :id="'rebate-list-item-container' + state">
       <mescroll-vue ref="mescroll" :down="mescrollConfig.mescrollDown" :up="mescrollConfig.mescrollUp">
         <ul>
-          <li v-for="(item, index) of list" :key="index">
+          <li v-for="item of list" :key="item.id">
             <el-card shadow="always"  :body-style="{ padding: '.2rem' }" class="item-card">
               <div class="info-container">
-                <img src="" class="img">
+                <img v-lazy="$utils.image.getImagePath(imagePath(item.scenic_image))" class="img" :key="item.scenic_image">
                 <div class="info-wrapper">
-                  <p class="title">济南市济南市济南市济南市济南市济南市济南市济南市济南市济南市济南市济南市济南市济南市济南市济南市济南市济南市济南市济南市</p>
-                  <p class="vip">会员号：1999</p>
-                  <p class="num">购买数量：2张</p>
-                  <p class="time">消费时间：2019-1-1 19:10:10</p>
+                  <p class="title">{{item.ord_product_name || '暂无'}}</p>
+                  <p class="vip">会员号：{{item.ord_uid || '暂无'}}</p>
+                  <p class="num">购买数量：{{item.number || 0}}张</p>
+                  <p class="time">消费时间：{{item.create_time || '暂无'}}</p>
                 </div>
               </div>
               <div class="status-wrapper">
-                <el-button size="mini" class="status" :type="buttonStateType" round>{{buttonStateTip}}：￥2</el-button>
+                <el-button size="mini" class="status" :type="buttonStateType" round>{{buttonStateTip}}：￥{{item.rebate_amount}}</el-button>
               </div>
             </el-card>
           </li>
@@ -50,6 +50,8 @@ export default {
         case '2':
           return 'warning'
         case '3':
+          return 'primary'
+        case '4':
           return 'danger'
       }
     },
@@ -60,35 +62,28 @@ export default {
         case '2':
           return '待返利'
         case '3':
+          return '伙伴待返利'
+        case '4':
           return '未付款'
       }
     }
   },
   methods: {
+    imagePath (srcImage) {
+      if (srcImage) {
+        return srcImage.split(',')[0]
+      }
+      return ''
+    },
     upCallBack (page, mescroll) {
-      setTimeout(() => {
-        this.list = [
-          {
-            name: 1
-          },
-          {
-            name: 1
-          },
-          {
-            name: 1
-          },
-          {
-            name: 1
-          },
-          {
-            name: 1
-          },
-          {
-            name: 1
-          }
-        ]
-        mescroll.endSuccess(2)
-      }, 1000)
+      this.$http(this.$urlPath.rebateLog, {
+        type: this.state + ''
+      }, null, (data) => {
+        console.log(data)
+        this.loadSuccess(page, mescroll, data.data)
+      }, (errorCode, error) => {
+        this.loadError(mescroll)
+      })
     }
   }
 }
@@ -113,6 +108,7 @@ export default {
                 height rem(1.8)
                 border-radius rem(.1)
                 background #f5f5f5
+                border 0px solid #f5f5f5
                 object-fit cover
             .info-wrapper
                 flex 1

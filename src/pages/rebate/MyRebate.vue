@@ -1,34 +1,29 @@
 <template>
 <div class='m-b-balance-container'>
-  <div class="header-container" v-if="info">
+  <div class="header-container">
     <div class="navigation">
       <span class="iconfont navi-back" @click="back">&#xe625;</span>
-      <span class="details" @click="balanceDetail">明细</span>
+      <span class="details" @click="rebateDetail">明细</span>
     </div>
-    <div class="balance-container">
-      <p class="balance">￥{{$root.userInfo.state.balance || '0.00'}}</p>
-      <p class="balance-tip">当前余额</p>
+    <div class="balance-container" v-if="info">
+      <p class="balance">￥{{$root.userInfo.state.rebate || '0.00'}}</p>
+      <p class="balance-tip">当前返利</p>
       <div class="balance-wrapper">
         <div>
-          <p class="total-money">￥{{Number(info.gain_balance_total).toFixed(2)}}</p>
-          <p class="total-tip">累计获取余额</p>
+          <p class="total-money">￥{{Number(info.rebate_total).toFixed(2)}}</p>
+          <p class="total-tip">累计返利</p>
         </div>
         <span class="sperator"></span>
         <div>
-          <p class="total-money">￥{{Number(info.withdraw_cash_total).toFixed(2)}}</p>
-          <p class="total-tip">累计提现余额</p>
+          <p class="total-money">￥{{Number(info.estimate_rebate_total).toFixed(2)}}</p>
+          <p class="total-tip">预计返利</p>
         </div>
       </div>
     </div>
   </div>
-  <div class="recharge-wrapper" @click="balanceRecharge">
+  <div class="recharge-wrapper" @click="rebateToBalance">
     <img :src="rechargeIcon" class="img">
-    <span class="tip">充值</span>
-    <span class="el-icon-arrow-right right-arrow"></span>
-  </div>
-  <div class="recharge-wrapper" @click="balanceWithdraw">
-    <img :src="withdrawIcon" class="img">
-    <span class="tip">提现</span>
+    <span class="tip">返利转余额</span>
     <span class="el-icon-arrow-right right-arrow"></span>
   </div>
   <p class="question" @click="balanceQuestion">常见问题<span class="el-icon-question"></span></p>
@@ -39,7 +34,7 @@
 import rechargeIcon from 'images/img_charge_icon.png'
 import withdrawIcon from 'images/img_withdraw_icon.png'
 export default {
-  name: 'myBalance',
+  name: 'myRebate',
   components: {},
   data () {
     return {
@@ -52,20 +47,17 @@ export default {
     back () {
       this.$router.back()
     },
-    balanceDetail () {
-      this.$router.push({name: 'balanceDetails'})
+    rebateDetail () {
+      this.$router.push({name: 'rebateList'})
     },
-    balanceRecharge () {
-      this.$router.push({name: 'rechargeBalance'})
-    },
-    balanceWithdraw () {
-      this.$router.push({name: 'withdrawBalance'})
+    rebateToBalance () {
+      this.$router.push({name: 'rebateToBalance'})
     },
     balanceQuestion () {
       this.$router.push({name: 'questionBalance'})
     },
     getData () {
-      this.$http(this.$urlPath.balanceStatistics, {}, '', (data) => {
+      this.$http(this.$urlPath.rebateStatistics, {}, '', (data) => {
         console.log(data)
         this.info = data.data
       }, (errorCode, error) => {
