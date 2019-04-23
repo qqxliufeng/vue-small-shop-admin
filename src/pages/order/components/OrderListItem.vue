@@ -1,7 +1,7 @@
 <template>
-    <div id="#order_list_item_all">
+    <div>
          <mescroll-vue ref="mescroll" :down="mescrollConfig.mescrollDown" :up="mescrollConfig.mescrollUp">
-             <ul>
+             <ul id="order_list_item_all">
                  <li v-for="(item,index) of list" :key="index">
                      <el-card shadow="always"  :body-style="{ padding: '.2rem' }" class="o-l-item-card">
                         <div class="o-l-item-container" @click="orderItemClick(item)">
@@ -60,7 +60,7 @@ export default {
   },
   data () {
     return {
-      mescrollConfig: mescrollConfig('#order_list_item_all', this.upCallBack),
+      mescrollConfig: mescrollConfig('order_list_item_all', this.upCallBack),
       list: [],
       serverTime: 0
     }
@@ -312,7 +312,7 @@ export default {
         }
         this.loadSuccess(page, mescroll, data.data)
       }, (errorCode, error) => {
-        this.loadError(mescroll)
+        this.loadError(mescroll, errorCode, error)
       })
     },
     countDownEnd (item) {

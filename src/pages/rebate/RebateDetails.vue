@@ -1,5 +1,5 @@
 <template>
-  <div class='b-d-detail-container' id="rebate-detail-container">
+  <div class='b-d-detail-container'>
     <my-navi title="返利转出记录" :isFixed="true"></my-navi>
     <mescroll-vue ref="mescroll" :down="mescrollConfig.mescrollDown" :up="mescrollConfig.mescrollUp">
       <ul v-if="list && list.length > 0">
@@ -16,6 +16,7 @@
            </el-card>
         </li>
       </ul>
+      <div v-else id="rebate-detail-container"></div>
     </mescroll-vue>
   </div>
 </template>
@@ -43,7 +44,7 @@ export default {
       }, null, (data) => {
         this.loadSuccess(page, mescroll, data.data)
       }, (errorCode, error) => {
-        this.loadError(mescroll)
+        this.loadError(mescroll, errorCode, error)
       })
     }
   }

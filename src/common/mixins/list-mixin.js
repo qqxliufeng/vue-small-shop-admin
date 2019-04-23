@@ -9,10 +9,13 @@ let listHandlerMixin = {
         mescroll.endSuccess(0)
       }
     },
-    loadError (mescroll) {
-      this.$toast('加载失败')
-      mescroll.endSuccess(0)
-      mescroll.endErr()
+    loadError (mescroll, errorCode = -1, error = '加载失败') {
+      this.$toast(error)
+      if (errorCode !== 200) {
+        mescroll.endErr()
+      } else {
+        mescroll.endSuccess(0)
+      }
     }
   }
 }

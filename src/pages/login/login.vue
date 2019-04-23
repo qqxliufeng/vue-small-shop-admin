@@ -35,6 +35,9 @@ export default {
       this.$router.push({name: 'home'})
     },
     onSlideSuccess () {
+      if (this.$refs.slideVerfiy) {
+        this.$refs.slideVerfiy.reset()
+      }
       this.showVerifyDialog = false
       this.$http(this.$urlPath.loginUrl, {
         mobile: this.userName,

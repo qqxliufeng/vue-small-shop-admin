@@ -101,10 +101,10 @@ export default {
         padding 0
         .share-img-post-wrapper
             width 100%
-            height 117vw
             & img
                 width 100%
                 height 100%
+                object-fit cover
     .v-modal
         position: fixed
         left 0

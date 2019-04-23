@@ -82,7 +82,7 @@ export default {
         console.log(data)
         this.loadSuccess(page, mescroll, data.data)
       }, (errorCode, error) => {
-        this.loadError(mescroll)
+        this.loadError(mescroll, errorCode, error)
       })
     }
   }

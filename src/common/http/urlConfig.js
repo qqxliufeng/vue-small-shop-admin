@@ -101,18 +101,22 @@ export const orderPayUrl = payModuleUrl + 'run_pay'
 
 export const orderPay = payModuleUrl + 'do_pay'
 
+const baseShareShopUrl = 'http://www.store.youdaike.com/'
+
+const baseShareAdminUrl = 'http://www.test.youdaike.com/'
+
 export function getShareScenicUrl (identity, storeId, sid) {
-  return 'http://192.168.0.103:8080/scenicdetail?scenicId=' + sid + '&identity=' + identity + '&storeId=' + storeId
+  return baseShareShopUrl + 'scenicdetail?scenicId=' + sid + '&identity=' + identity + '&storeId=' + storeId
 }
 
 export function getShareTicketUrl (identity, storeId, sid, goodsId) {
-  return 'http://192.168.0.103:8080/ticketDetail?s_id=' + sid + '&identity=' + identity + '&storeId=' + storeId + '&goods_id=' + goodsId
+  return baseShareShopUrl + 'ticketDetail?s_id=' + sid + '&identity=' + identity + '&storeId=' + storeId + '&goods_id=' + goodsId
 }
 
 export function getShareRegisterUrl (pid) {
-  return 'http://192.168.0.103:8888/registerseller?pid=' + pid
+  return baseShareAdminUrl + 'registerseller?pid=' + pid
 }
 
 export function getShareShopUrl (identity, storeId) {
-  return 'http://192.168.0.103:8080/index/' + identity + '/' + storeId
+  return baseShareShopUrl + 'index/' + identity + '/' + storeId
 }

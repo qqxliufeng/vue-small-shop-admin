@@ -1,6 +1,10 @@
 <template>
     <div class="o-a-list-container">
-        <my-navi title="我的订单" :isFixed="true"></my-navi>
+        <my-navi title="我的订单" :isFixed="true">
+          <template slot="rightAction">
+            <span @click="refundList">退款/售后</span>
+          </template>
+        </my-navi>
         <order-list-item ref="allItem" :state="0"></order-list-item>
     </div>
 </template>
@@ -15,6 +19,11 @@ export default {
   data () {
     return {
       currentRefs: null
+    }
+  },
+  methods: {
+    refundList () {
+      this.$router.push({name: 'orderRufundList'})
     }
   },
   beforeRouteEnter (to, from, next) {

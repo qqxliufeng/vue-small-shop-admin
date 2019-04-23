@@ -22,12 +22,12 @@
     </div>
   </div>
   <div class="recharge-wrapper" @click="balanceRecharge">
-    <img :src="rechargeIcon" class="img">
+    <img v-webp="rechargeIcon" class="img">
     <span class="tip">充值</span>
     <span class="el-icon-arrow-right right-arrow"></span>
   </div>
   <div class="recharge-wrapper" @click="balanceWithdraw">
-    <img :src="withdrawIcon" class="img">
+    <img v-webp="withdrawIcon" class="img">
     <span class="tip">提现</span>
     <span class="el-icon-arrow-right right-arrow"></span>
   </div>

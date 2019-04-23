@@ -99,7 +99,7 @@ export default {
             .header-content
                 position relative
                 width 70%
-                height 80%
+                height 70%
                 margin 0 auto
                 margin-top rem(.5)
                 background #fff
@@ -166,7 +166,7 @@ export default {
           padding-left rem(.3)
           padding-right rem(.3)
           padding-bottom rem(.3)
-          margin-top rem(-.6)
+          margin-top rem(-1.6)
           box-sizing border-box
     .loading-fail
         margin-top rem(1)

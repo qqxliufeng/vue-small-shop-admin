@@ -26,6 +26,7 @@ import OrderInfoPay from '@/pages/order/OrderInfoPay'
 import Message from '@/pages/home/other/Message'
 
 import OrderList from '@/pages/order/OrderList'
+import OrderRufundList from '@/pages/order/components/OrderRefundListItem'
 import OrderInfo from '@/pages/order/OrderInfo'
 import OrderBackMoney from '@/pages/order/OrderInfoBackMoney'
 
@@ -200,6 +201,11 @@ export default new Router({
       path: '/orderlist',
       name: 'orderList',
       component: OrderList
+    },
+    {
+      path: '/orderrufundlist',
+      name: 'orderRufundList',
+      component: OrderRufundList
     },
     {
       path: '/orderinfo/:orderId/:orderType',

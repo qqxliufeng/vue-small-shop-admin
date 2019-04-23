@@ -141,9 +141,9 @@
                 const img = document.createElement('img');
                 img.crossOrigin = "Anonymous";
                 img.onload = onload;
-                img.onerror = () => {
-                    img.src = this.getRandomImg()
-                }
+                // img.onerror = () => {
+                //     img.src = this.getRandomImg()
+                // }
                 img.src = this.getRandomImg()
                 return img;
             },

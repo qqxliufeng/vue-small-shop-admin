@@ -79,7 +79,7 @@ export default {
         })
         this.loadSuccess(page, mescroll, data.data)
       }, (errorCode, error) => {
-        this.loadError(mescroll)
+        this.loadError(mescroll, errorCode, error)
       })
     }
   }

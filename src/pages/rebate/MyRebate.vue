@@ -22,7 +22,7 @@
     </div>
   </div>
   <div class="recharge-wrapper" @click="rebateToBalance">
-    <img :src="rechargeIcon" class="img">
+    <img v-webp="rechargeIcon" class="img">
     <span class="tip">返利转余额</span>
     <span class="el-icon-arrow-right right-arrow"></span>
   </div>
@@ -32,14 +32,12 @@
 
 <script>
 import rechargeIcon from 'images/img_charge_icon.png'
-import withdrawIcon from 'images/img_withdraw_icon.png'
 export default {
   name: 'myRebate',
   components: {},
   data () {
     return {
       rechargeIcon,
-      withdrawIcon,
       info: null
     }
   },
