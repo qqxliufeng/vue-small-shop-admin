@@ -122,7 +122,6 @@ export default {
   },
   mounted () {
     this.$root.state.registerInfo = this.registerInfo
-    console.log(this.registerInfo)
     window.addEventListener('resize', function () {
       if (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA') {
         window.setTimeout(function () {

@@ -2,7 +2,7 @@
 <div class='p-list-container'>
   <my-navi :title="countTitle" :isFixed="true"></my-navi>
   <div class="content" v-if="partners">
-    <el-collapse accordion value="0">
+    <el-collapse value="0">
       <el-collapse-item :name="index" v-for="(title, index) of titles" :key="index">
         <template slot="title">
           <div class="item-title-wrapper">
@@ -71,8 +71,8 @@ export default {
             padding 0 rem(.2)
             .item-wrapper
                 display flex
-                padding rem(.2) 0
-                border-bottom 1px solid #f5f5f5
+                // padding rem(.2) 0
+                // border-bottom 1px solid #f5f5f5
                 .item-face-icon
                     border-radius 50%
                     width rem(1)

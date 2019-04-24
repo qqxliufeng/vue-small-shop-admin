@@ -89,7 +89,7 @@ export default {
                   },
                   action1: {
                     title: '联系客服',
-                    show: true,
+                    show: false,
                     action: () => {
                     }
                   },
@@ -123,7 +123,7 @@ export default {
                   },
                   action1: {
                     title: '联系客服',
-                    show: true,
+                    show: false,
                     action: () => {
                     }
                   },
@@ -144,7 +144,7 @@ export default {
                   },
                   action1: {
                     title: '联系客服',
-                    show: true,
+                    show: false,
                     action: () => {
                     }
                   },
@@ -165,7 +165,7 @@ export default {
                   },
                   action1: {
                     title: '联系客服',
-                    show: true,
+                    show: false,
                     action: () => {
                     }
                   },
@@ -206,7 +206,7 @@ export default {
                   },
                   action1: {
                     title: '联系客服',
-                    show: true,
+                    show: false,
                     action: () => {
                     }
                   },

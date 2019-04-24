@@ -6,22 +6,14 @@
                     <p class="o-i-use-info-title">{{title}}</p>
                 </template>
                 <div class="o-i-user-info-wrapper">
-                    <div v-for="(item, index) of tourist" :key="index" class="user-info-container">
+                    <div class="user-info-container" v-if="!remarks">
                         <p class="wrapper">
                             <span class="user-key">姓名</span>
-                            <span class="user-value">{{item.t_username ? item.t_username : '暂无'}}</span>
+                            <span class="user-value">{{username ? username : '暂无'}}</span>
                         </p>
                         <p class="wrapper">
                             <span class="user-key">手机号</span>
-                            <span class="user-value">{{item.t_phone ? item.t_phone : '暂无'}}</span>
-                        </p>
-                        <p class="wrapper">
-                            <span class="user-key">身份证</span>
-                            <span class="user-value">{{item.t_id_no ? item.t_id_no : '暂无'}}</span>
-                        </p>
-                        <p class="wrapper">
-                            <span class="user-key">学校</span>
-                            <span class="user-value">{{item.t_school ? item.t_school : '暂无'}}</span>
+                            <span class="user-value">{{phone ? phone : '暂无'}}</span>
                         </p>
                     </div>
                     <ticket-remark v-for="(item, index) of remarks" :key="index" :remark="item"></ticket-remark>
@@ -41,7 +33,8 @@ export default {
       type: String,
       default: ''
     },
-    tourist: Array,
+    username: String,
+    phone: String,
     remarks: Array
   },
   components: {

@@ -78,8 +78,8 @@ export default {
   data () {
     return {
       showVerifyDialog: false,
-      userName: '15006519752',
-      userPassword: '123456',
+      userName: '',
+      userPassword: '',
       width: document.body.clientWidth * 0.9 - 40
     }
   },

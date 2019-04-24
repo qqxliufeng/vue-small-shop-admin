@@ -3,11 +3,11 @@
         <div :style="{ 'background-color': top == 0 ? '#000' : 'transparent'}" @click="back">
             <span class="iconfont" :style="{'color': top == 0 ? '#fff' : '#000'}">&#xe625;</span>
         </div>
-        <div :style="{ 'background-color': top == 0 ? '#000' : 'transparent'}">
-            <span
+        <div style="background-color': 'transparent'">
+            <!-- <span
             :class="[ favorites ? 'el-icon-star-on' : 'el-icon-star-off' ]"
             :style="{'color': top == 0 ? '#fff' : '#000'}"
-            @click="collection"></span>
+            @click="collection"></span> -->
         </div>
         <div :style="opacityStyle"></div>
     </div>
@@ -48,25 +48,6 @@ export default {
         this.opacityStyle.opacity = 0
       }
     },
-    collection () {
-      if (this.$root.userInfo.isLogin()) {
-        this.$http(this.$urlPath.userUnFavoroteScenicUrl, {
-          scenic_id: this.$parent.scenicId
-        }, '', (data) => {
-          if (this.favorites) {
-            this.$toast('取消收藏成功')
-            this.tempInfo.isFavorites = 0
-          } else {
-            this.$toast('收藏成功')
-            this.tempInfo.isFavorites = 1
-          }
-        }, (errorCode, error) => {
-          this.$toast(error)
-        })
-      } else {
-        this.$router.push({name: 'login'})
-      }
-    },
     back () {
       this.$emit('back')
     }
@@ -100,7 +81,7 @@ export default {
         // background-color #000000
         opacity .5
         display inline-block
-        background-color transparentify
+        background-color transparent
         width rem(.66)
         height rem(.66)
         border-radius 50%
@@ -118,7 +99,7 @@ export default {
         right 0
         margin-right rem(.2)
         transform translateY(rem(.1))
-        background-color #000000
+        background-color trans
         opacity .5
         display inline-block
         width rem(.66)

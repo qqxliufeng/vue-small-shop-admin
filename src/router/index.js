@@ -125,10 +125,7 @@ export default new Router({
     {
       path: '/goodslist',
       name: 'goodsList',
-      component: GoodsList,
-      meta: {
-        keepAlive: true
-      }
+      component: GoodsList
     },
     {
       path: '/scenicdetail',
@@ -201,6 +198,12 @@ export default new Router({
       path: '/orderlist',
       name: 'orderList',
       component: OrderList
+    },
+    {
+      path: '/ordercodeinfo',
+      name: 'orderCodeInfo',
+      component: () => import('@/pages/order/OrderCodeInfo'),
+      props: true
     },
     {
       path: '/orderrufundlist',

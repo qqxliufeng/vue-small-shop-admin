@@ -26,18 +26,8 @@ export default {
         autoplay: {
           delay: 2500,
           disableOnInteraction: false
-        },
-        on: {
-          click: () => {
-            this.imageClick()
-          }
         }
       }
-    }
-  },
-  methods: {
-    imageClick () {
-      this.$router.push({name: 'gallary', params: {imgs: this.imageList}})
     }
   }
 }

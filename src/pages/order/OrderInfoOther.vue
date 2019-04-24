@@ -20,7 +20,7 @@
         <order-ticket-info v-for="item of detail.voucher" :key="item.v_id" :itemInfo="item" :ticketName="detail.ord_product_name" :refundNum="detail.refund_num">
         </order-ticket-info>
         <div class="sperator-line"></div>
-        <order-info-user-info title="游客信息" :tourist="detail.tourist">
+        <order-info-user-info title="收票人信息" :username="detail.ord_check_taker_name" :phone="detail.ord_check_taker_phone">
         </order-info-user-info>
         <order-info-user-info title="预定须知" :remarks="remarks">
         </order-info-user-info>
@@ -81,6 +81,10 @@ export default {
           case 'USE_STATUS_REVOKE': // 已退款
             this.stateModel.stateTip = '已退款'
             this.stateModel.discription = '感谢您的本次消费，订单已经退款，请耐心等待！'
+            break
+          case 'USE_STATUS_NO': // 待使用
+            this.stateModel.stateTip = '待使用'
+            this.stateModel.discription = '产品已出票，请尽快使用产品。'
             break
           // case 'PAY_STATUS_YES': // 已支付
           //   this.stateTip = '已支付'

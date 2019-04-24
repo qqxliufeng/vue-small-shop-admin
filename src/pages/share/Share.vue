@@ -63,6 +63,12 @@ export default {
 <style lang='stylus' scoped>
 @import '~styles/varibles.styl'
 @import '~styles/mixin.styl'
+>>> .el-dialog__header
+    padding rem(.15)
+>>> .el-dialog__headerbtn
+    top rem(.15)
+>>> .el-dialog__title
+    font-size rem(.28)
 .share-container
     overflow-y scroll
     .share-header

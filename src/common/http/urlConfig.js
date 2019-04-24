@@ -11,6 +11,8 @@ const scenicDetailModuleUrl = baseUrl2 + 'details/'
 
 export const scenicDetailUrl = scenicDetailModuleUrl + 'scenic_details'
 
+export const scenicNotesUrl = scenicDetailModuleUrl + 'scenic_notes'
+
 const orderModuleUrl = baseUrl2 + 'order/'
 
 // 获取商品详情（日期，价格等）
@@ -103,7 +105,7 @@ export const orderPay = payModuleUrl + 'do_pay'
 
 const baseShareShopUrl = 'http://www.store.youdaike.com/'
 
-const baseShareAdminUrl = 'http://www.test.youdaike.com/'
+const baseShareAdminUrl = 'http://www.test.youdaike.com/distributor_manage/#/'
 
 export function getShareScenicUrl (identity, storeId, sid) {
   return baseShareShopUrl + 'scenicdetail?scenicId=' + sid + '&identity=' + identity + '&storeId=' + storeId

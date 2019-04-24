@@ -1,5 +1,5 @@
 <template>
-  <div class='b-d-detail-container' id="balance-detail-container">
+  <div class='b-d-detail-container'>
     <my-navi title="余额明细" :isFixed="true"></my-navi>
     <mescroll-vue ref="mescroll" :down="mescrollConfig.mescrollDown" :up="mescrollConfig.mescrollUp">
       <ul v-if="list && list.length > 0">
@@ -16,6 +16,7 @@
            </el-card>
         </li>
       </ul>
+      <div id="balance-detail-container" v-else></div>
     </mescroll-vue>
   </div>
 </template>
