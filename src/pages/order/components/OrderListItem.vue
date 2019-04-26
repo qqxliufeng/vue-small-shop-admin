@@ -67,7 +67,7 @@ export default {
   },
   methods: {
     orderItemClick (item) {
-      if (item.refund) {
+      if (item.refund && item.stateModel.orderType === '4') {
         this.$router.push({name: 'orderInfo', params: {orderId: item.refund.rid.toString(), orderType: item.stateModel.orderType}})
       } else {
         this.$router.push({name: 'orderInfo', params: {orderId: item.ord_id.toString(), orderType: item.stateModel.orderType}})
@@ -269,7 +269,7 @@ export default {
                 break
               case 'USE_STATUS_REVOKE': // 退款
                 it.stateModel = {
-                  orderType: '10',
+                  orderType: '4',
                   stateTip: '已退款',
                   time: {
                     title: '下单时间：',

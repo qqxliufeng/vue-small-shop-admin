@@ -167,7 +167,7 @@ export default {
         ord_id: this.$route.query.id
       }, '', (data) => {
         this.info = data.data
-        this.backNum = this.info.ord_ticket_num
+        this.backNum = this.info.remain_num
         this.moneyDetailList()
       }, (errorCode, error) => {
         this.$toast(error)
@@ -187,6 +187,7 @@ export default {
         return
       }
       this.$http(this.$urlPath.orderRefund, {
+        isNoToken: true,
         ord_id: this.$route.query.id,
         num: this.backNum,
         reason: this.reason,

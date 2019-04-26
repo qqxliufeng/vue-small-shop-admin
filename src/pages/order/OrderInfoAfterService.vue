@@ -26,7 +26,7 @@
         <order-ticket-info v-for="item of detail.orders.voucher" :key="item.v_id" :itemInfo="item" :ticketName="detail.ord_product_name" :refundNum="detail.refund_num">
         </order-ticket-info>
         <div class="sperator-line"></div>
-        <order-info-user-info title="收票人信息" :username="detail.ord_check_taker_name" :phone="detail.ord_check_taker_phone">
+        <order-info-user-info title="收票人信息" :username="detail.orders.ord_check_taker_name" :phone="detail.orders.ord_check_taker_phone">
         </order-info-user-info>
         <order-info-user-info title="预定须知" :remarks="remarks">
         </order-info-user-info>

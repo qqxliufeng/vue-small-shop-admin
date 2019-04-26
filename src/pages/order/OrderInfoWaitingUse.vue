@@ -6,6 +6,12 @@
                     产品已出票，请尽快使用产品。
                 </p>
             </template>
+            <template slot="headerBottomInfo">
+                <div class="after-service-wrapper">
+                    <span>退票记录：2</span>
+                    <span @click="orderBackProgress">查看进度></span>
+                </div>
+            </template>
         </order-info-header>
         <order-ticket-money-info :storeInfo="storeInfo">
             <template slot="ticketMoneyDetail" slot-scope="props">
@@ -98,6 +104,9 @@ export default {
   methods: {
     backMoney () {
       this.$router.push({name: 'orderBackMoney', query: {id: this.detail.ord_id}})
+    },
+    orderBackProgress () {
+      this.$router.push({name: 'orderBackProgress'})
     }
   },
   mounted () {
@@ -108,6 +117,7 @@ export default {
 </script>
 <style lang="stylus" scoped>
 @import '~styles/varibles.styl'
+@import '~styles/mixin.styl'
 .o-i-use-info
     color #eeeeee
     font-size .25rem
@@ -159,4 +169,18 @@ export default {
     .span-color-4
         color $orangeColor
         font-size .28rem
+.after-service-wrapper
+    margin-top rem(.2)
+    border-radius rem(.08)
+    background #ffffff
+    opacity .8
+    line-height rem(.3)
+    padding rem(.2)
+    overflow hidden
+    color #888
+    font-size rem(.25)
+    & span:nth-of-type(1)
+        float left
+    & span:nth-of-type(2)
+        float right
 </style>

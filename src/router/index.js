@@ -206,6 +206,11 @@ export default new Router({
       props: true
     },
     {
+      path: '/orderbackprogress',
+      name: 'orderBackProgress',
+      component: () => import('@/pages/order/OrderBackProgress')
+    },
+    {
       path: '/orderrufundlist',
       name: 'orderRufundList',
       component: OrderRufundList

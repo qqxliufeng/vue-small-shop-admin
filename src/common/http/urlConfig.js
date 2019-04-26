@@ -5,19 +5,6 @@ export const baseUrl = 'distributor_api/'
 
 export const distributorModuleUrl = baseUrl + 'distributor/'
 
-export const baseUrl2 = 'store_api/v1/'
-
-const scenicDetailModuleUrl = baseUrl2 + 'details/'
-
-export const scenicDetailUrl = scenicDetailModuleUrl + 'scenic_details'
-
-export const scenicNotesUrl = scenicDetailModuleUrl + 'scenic_notes'
-
-const orderModuleUrl = baseUrl2 + 'order/'
-
-// 获取商品详情（日期，价格等）
-export const orderReserve = orderModuleUrl + 'reserve'
-
 // 创建订单
 export const orderCreate = distributorModuleUrl + 'create'
 
@@ -89,19 +76,33 @@ export const orderDelete = orderUrl + 'del'
 
 export const orderRefundDetail = orderUrl + 'refund_details'
 
-export const orderRefund = orderUrl + 'refund'
-
 export const orderRefundList = orderUrl + 'afer_sales_list'
 
 export const orderRefundAfterDetail = orderUrl + 'afer_sales_details'
 
 export const orderCancelRefund = orderUrl + 'cancel_refund'
 
+//  用小店接口的api
+
+export const baseUrl2 = 'store_api/v1/'
+
+const scenicDetailModuleUrl = baseUrl2 + 'details/'
+
+export const scenicDetailUrl = scenicDetailModuleUrl + 'scenic_details'
+
+export const scenicNotesUrl = scenicDetailModuleUrl + 'scenic_notes'
+
 const payModuleUrl = baseUrl2 + 'payment/'
 
 export const orderPayUrl = payModuleUrl + 'run_pay'
 
 export const orderPay = payModuleUrl + 'do_pay'
+
+const orderModuleUrl = baseUrl2 + 'order/'
+
+export const orderReserve = orderModuleUrl + 'reserve'
+
+export const orderRefund = orderModuleUrl + 'refund'
 
 const baseShareShopUrl = 'http://www.store.youdaike.com/'
 
