@@ -6,6 +6,12 @@
                     {{stateModel.discription}}
                 </p>
             </template>
+            <template slot="headerBottomInfo" v-if="detail.refund_mark !== 0">
+                <div class="after-service-wrapper">
+                    <span>退票记录：{{detail.refund_count}}</span>
+                    <span @click="orderBackProgress">查看进度></span>
+                </div>
+            </template>
         </order-info-header>
         <order-ticket-money-info :storeInfo="storeInfo">
             <template slot="ticketMoneyDetail" slot-scope="props">
@@ -82,10 +88,6 @@ export default {
             this.stateModel.stateTip = '已退款'
             this.stateModel.discription = '感谢您的本次消费，订单已经退款，请耐心等待！'
             break
-          case 'USE_STATUS_NO': // 待使用
-            this.stateModel.stateTip = '待使用'
-            this.stateModel.discription = '产品已出票，请尽快使用产品。'
-            break
           // case 'PAY_STATUS_YES': // 已支付
           //   this.stateTip = '已支付'
           //   break
@@ -116,11 +118,17 @@ export default {
         }
       }
     }
+  },
+  methods: {
+    orderBackProgress () {
+      this.$router.push({name: 'orderBackProgress', query: {id: this.detail.ord_id}})
+    }
   }
 }
 </script>
 <style lang="stylus" scoped>
 @import '~styles/varibles.styl'
+@import '~styles/mixin.styl'
 .o-i-use-info
     color #eeeeee
     font-size .25rem
@@ -169,4 +177,18 @@ export default {
     .span-color-4
         color $orangeColor
         font-size .28rem
+.after-service-wrapper
+    margin-top rem(.2)
+    border-radius rem(.08)
+    background #ffffff
+    opacity .8
+    line-height rem(.3)
+    padding rem(.2)
+    overflow hidden
+    color #888
+    font-size rem(.25)
+    & span:nth-of-type(1)
+        float left
+    & span:nth-of-type(2)
+        float right
 </style>

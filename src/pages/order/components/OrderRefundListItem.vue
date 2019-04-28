@@ -11,25 +11,16 @@
                             </div>
                             <div class="o-l-item-info-container">
                                 <p>
-                                  <span>{{item.orders.ord_product_name}}</span>
+                                  <span>{{item.ord_product_name}}</span>
                                   <span class="o-l-item-info-state">{{item.stateModel.stateTip}}</span>
                                 </p>
                                 <p>
                                   <span>{{item.stateModel.time.title}}
-                                    <count-down :time="item.stateModel.time.time"
-                                                v-if="item.status === 'PAY_STATUS_NO'"
-                                                @end="countDownEnd(item)">
-                                        <template slot-scope="props">
-                                            <span class="time-wrapper">
-                                                {{ props.hours }}:{{ props.minutes }}:{{ props.seconds }}
-                                            </span>
-                                        </template>
-                                    </count-down>
-                                    <span v-else>{{item.stateModel.time.time}}</span>
+                                  <span>{{item.stateModel.time.time}}</span>
                                   </span>
                                 </p>
-                                <p>退票数量:{{item.refund_num}}张</p>
-                                <p>退款金额:￥{{item.refund_amount}}</p>
+                                <p>数量:{{item.ord_ticket_num}}张</p>
+                                <p>金额:￥{{item.ord_amount}}</p>
                             </div>
                         </div>
                         <div class="sperator-line" v-if="item.stateModel.action1.show || item.stateModel.action2.show"></div>
@@ -68,157 +59,178 @@ export default {
   },
   methods: {
     orderItemClick (item) {
-      this.$router.push({name: 'orderInfo', params: {orderId: item.rid.toString(), orderType: item.stateModel.orderType}})
+      this.$router.push({name: 'orderInfo', params: {orderId: item.ord_id.toString(), orderType: item.stateModel.orderType}})
     },
     upCallBack (page, mescroll) {
-      this.$http(this.$urlPath.orderRefundList, {
-        status: this.state,
+      this.$http(this.$urlPath.orderList, {
+        status: '4',
         page: page.num
       }, null, (data) => {
         this.serverTime = data.time
         if (data.data && data.data instanceof Array) {
-          data.data.forEach(it => {
-            switch (it.status) {
-              case 'REFUND_STATUS': // 退款待审核
-                it.stateModel = {
-                  stateTip: '退款待审核',
-                  orderType: '4',
-                  time: {
-                    title: '申请时间:',
-                    time: it.refund_create_time
-                  },
-                  action1: {
-                    title: '联系客服',
-                    show: false,
-                    action: () => {
-                    }
-                  },
-                  action2: {
-                    title: '取消退款',
-                    show: true,
-                    action: () => {
-                      let confirm = window.confirm('是否要取消退款？')
-                      if (confirm) {
-                        this.$http(this.$urlPath.orderCancelRefund, {
-                          rid: it.rid
-                        }, '正在取消…', (result) => {
-                          this.reload()
-                          this.$root.$emit('onReload')
-                          this.$toast('取消退款成功')
-                        }, (errorCode, error) => {
-                          this.$toast(error)
-                        })
-                      }
-                    }
-                  }
-                }
-                break
-              case 'REFUND_STATUS_YES': // 退款审核成功
-                it.stateModel = {
-                  stateTip: '审核成功',
-                  orderType: '4',
-                  time: {
-                    title: '申请时间:',
-                    time: it.refund_create_time
-                  },
-                  action1: {
-                    title: '联系客服',
-                    show: false,
-                    action: () => {
-                    }
-                  },
-                  action2: {
-                    title: '取消退款',
-                    show: false,
-                    action: null
-                  }
-                }
-                break
-              case 'REFUND_STATUS_NO': // 退款审核失败
-                it.stateModel = {
-                  stateTip: '审核失败',
-                  orderType: '4',
-                  time: {
-                    title: '申请时间:',
-                    time: it.refund_create_time
-                  },
-                  action1: {
-                    title: '联系客服',
-                    show: false,
-                    action: () => {
-                    }
-                  },
-                  action2: {
-                    title: '取消退款',
-                    show: false,
-                    action: null
-                  }
-                }
-                break
-              case 'REFUND_PAY': // 退款待支付
-                it.stateModel = {
-                  stateTip: '审核成功',
-                  orderType: '4',
-                  time: {
-                    title: '申请时间:',
-                    time: it.refund_create_time
-                  },
-                  action1: {
-                    title: '联系客服',
-                    show: false,
-                    action: () => {
-                    }
-                  },
-                  action2: {
-                    title: '取消退款',
-                    show: false,
-                    action: null
-                  }
-                }
-                break
-              case 'REFUND_PAY_YES': // 退款支付成功
-                it.stateModel = {
-                  stateTip: '审核成功',
-                  orderType: '4',
-                  time: {
-                    title: '申请时间:',
-                    time: it.refund_create_time
-                  },
-                  action1: {
-                    title: '',
-                    show: false,
-                    action: null
-                  },
-                  action2: {
-                    title: '取消退款',
-                    show: false,
-                    action: null
-                  }
-                }
-                break
-              case 'REFUND_PAY_NO': // 退款支付失败
-                it.stateModel = {
-                  stateTip: '审核失败',
-                  orderType: '6',
-                  time: {
-                    title: '申请时间:',
-                    time: it.refund_create_time
-                  },
-                  action1: {
-                    title: '联系客服',
-                    show: false,
-                    action: () => {
-                    }
-                  },
-                  action2: {
-                    title: '取消退款',
-                    show: false,
-                    action: null
-                  }
-                }
-                break
+          console.log(data.data)
+          data.data.forEach((it, index) => {
+            it.stateModel = {
+              orderType: '2',
+              stateTip: '已退款',
+              time: {
+                title: '下单时间：',
+                time: it.ord_add_time
+              },
+              action1: {
+                title: '',
+                show: false,
+                action: null
+              },
+              action2: {
+                title: '',
+                show: false,
+                action: null
+              }
             }
           })
+          // data.data.forEach(it => {
+          //   switch (it.status) {
+          //     case 'REFUND_STATUS': // 退款待审核
+          //       it.stateModel = {
+          //         stateTip: '退款待审核',
+          //         orderType: '4',
+          //         time: {
+          //           title: '申请时间:',
+          //           time: it.refund_create_time
+          //         },
+          //         action1: {
+          //           title: '联系客服',
+          //           show: false,
+          //           action: () => {
+          //           }
+          //         },
+          //         action2: {
+          //           title: '取消退款',
+          //           show: true,
+          //           action: () => {
+          //             let confirm = window.confirm('是否要取消退款？')
+          //             if (confirm) {
+          //               this.$http(this.$urlPath.orderCancelRefund, {
+          //                 rid: it.rid
+          //               }, '正在取消…', (result) => {
+          //                 this.reload()
+          //                 this.$root.$emit('onReload')
+          //                 this.$toast('取消退款成功')
+          //               }, (errorCode, error) => {
+          //                 this.$toast(error)
+          //               })
+          //             }
+          //           }
+          //         }
+          //       }
+          //       break
+          //     case 'REFUND_STATUS_YES': // 退款审核成功
+          //       it.stateModel = {
+          //         stateTip: '审核成功',
+          //         orderType: '4',
+          //         time: {
+          //           title: '申请时间:',
+          //           time: it.refund_create_time
+          //         },
+          //         action1: {
+          //           title: '联系客服',
+          //           show: false,
+          //           action: () => {
+          //           }
+          //         },
+          //         action2: {
+          //           title: '取消退款',
+          //           show: false,
+          //           action: null
+          //         }
+          //       }
+          //       break
+          //     case 'REFUND_STATUS_NO': // 退款审核失败
+          //       it.stateModel = {
+          //         stateTip: '审核失败',
+          //         orderType: '4',
+          //         time: {
+          //           title: '申请时间:',
+          //           time: it.refund_create_time
+          //         },
+          //         action1: {
+          //           title: '联系客服',
+          //           show: false,
+          //           action: () => {
+          //           }
+          //         },
+          //         action2: {
+          //           title: '取消退款',
+          //           show: false,
+          //           action: null
+          //         }
+          //       }
+          //       break
+          //     case 'REFUND_PAY': // 退款待支付
+          //       it.stateModel = {
+          //         stateTip: '审核成功',
+          //         orderType: '4',
+          //         time: {
+          //           title: '申请时间:',
+          //           time: it.refund_create_time
+          //         },
+          //         action1: {
+          //           title: '联系客服',
+          //           show: false,
+          //           action: () => {
+          //           }
+          //         },
+          //         action2: {
+          //           title: '取消退款',
+          //           show: false,
+          //           action: null
+          //         }
+          //       }
+          //       break
+          //     case 'REFUND_PAY_YES': // 退款支付成功
+          //       it.stateModel = {
+          //         stateTip: '审核成功',
+          //         orderType: '4',
+          //         time: {
+          //           title: '申请时间:',
+          //           time: it.refund_create_time
+          //         },
+          //         action1: {
+          //           title: '',
+          //           show: false,
+          //           action: null
+          //         },
+          //         action2: {
+          //           title: '取消退款',
+          //           show: false,
+          //           action: null
+          //         }
+          //       }
+          //       break
+          //     case 'REFUND_PAY_NO': // 退款支付失败
+          //       it.stateModel = {
+          //         stateTip: '审核失败',
+          //         orderType: '6',
+          //         time: {
+          //           title: '申请时间:',
+          //           time: it.refund_create_time
+          //         },
+          //         action1: {
+          //           title: '联系客服',
+          //           show: false,
+          //           action: () => {
+          //           }
+          //         },
+          //         action2: {
+          //           title: '取消退款',
+          //           show: false,
+          //           action: null
+          //         }
+          //       }
+          //       break
+          //   }
+          // })
         }
         this.loadSuccess(page, mescroll, data.data)
       }, (errorCode, error) => {

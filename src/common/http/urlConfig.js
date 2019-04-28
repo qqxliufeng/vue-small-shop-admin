@@ -104,6 +104,8 @@ export const orderReserve = orderModuleUrl + 'reserve'
 
 export const orderRefund = orderModuleUrl + 'refund'
 
+export const orderAfterSalesLog = orderModuleUrl + 'after_sales_log'
+
 const baseShareShopUrl = 'http://www.store.youdaike.com/'
 
 const baseShareAdminUrl = 'http://www.test.youdaike.com/distributor_manage/#/'

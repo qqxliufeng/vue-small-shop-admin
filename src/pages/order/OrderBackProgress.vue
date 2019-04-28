@@ -3,136 +3,162 @@
     <my-navi title="退款进度" :isFixed="true"></my-navi>
     <div class="content-container">
       <ul>
-        <li>
+        <li v-for="(item, index) in list" :key="item.rid">
           <el-card :body-style="{padding : '.2rem'}" class="el-card">
-            <p class="title">退款审核中……</p>
-            <p class="time">退款申请时间：2019-4-12</p>
+            <p class="title">
+              <span>{{item.stateTip}}</span>
+              <el-button type="primary" size="small" class="cancel-back" v-if="item.status === 'REFUND_STATUS'" @click="cancelBack(item)">取消退款</el-button>
+            </p>
+            <p class="time">申请时间：{{item.refund_create_time}}</p>
+            <p class="time">更新时间：{{item.refund_update_time || '暂无'}}</p>
             <div class="line"></div>
             <div class="money-wrapper">
-              <span class="money">退款金额<i>￥1900</i></span>
-              <span class="open" @click="openInfo">展开<i :class="{'el-icon-arrow-down' : !opened, 'el-icon-arrow-up' : opened}"></i></span>
+              <span class="money">退款金额<i>￥{{item.refund_actual_amount}}</i><strong>（{{item.refund_num}}张）</strong></span>
+              <span class="open" @click="openInfo(item)">{{item.opened ? '收起' : '展开'}}<i :class="{'el-icon-arrow-down' : !item.opened, 'el-icon-arrow-up' : item.opened}"></i></span>
             </div>
-            <div v-show="opened">
-              <p class="time">退款账户：原路退回</p>
-              <p class="time">退款流水号：1223344546</p>
+            <div v-show="item.opened">
+              <p class="time">退款账户：{{getBackPay(item)}}</p>
+              <p class="time">退款单号：{{item.out_refund_no}}</p>
               <div class="time-line-wrapper">
                 <el-timeline>
                     <el-timeline-item
-                      v-for="(activity, index) in activities"
-                      :key="index"
-                      :icon="activity.icon"
-                      :type="activity.type"
-                      :color="activity.color"
-                      :size="activity.size"
-                      :timestamp="activity.timestamp">
-                      {{activity.content}}
+                      v-for="progressItem in item.refund_log"
+                      :key="progressItem.id"
+                      :icon="progressItem.icon"
+                      :type="progressItem.stateType"
+                      :size="progressItem.size"
+                      :timestamp="progressItem.ctime">
+                      {{progressItem.des}}
                     </el-timeline-item>
                 </el-timeline>
               </div>
             </div>
-            <span class="index-tag">1</span>
-          </el-card>
-        </li>
-        <li>
-          <el-card :body-style="{padding : '.2rem'}" class="el-card">
-            <p class="title">退款审核中……</p>
-            <p class="time">退款申请时间：2019-4-12</p>
-            <div class="line"></div>
-            <div class="money-wrapper">
-              <span class="money">退款金额<i>￥1900</i><strong>（1张）</strong></span>
-              <span class="open" @click="openInfo">{{opened ? '收起' : '展开'}}<i :class="{'el-icon-arrow-down' : !opened, 'el-icon-arrow-up' : opened}"></i></span>
-            </div>
-            <div v-show="opened">
-              <p class="time">退款账户：原路退回</p>
-              <p class="time">退款流水号：1223344546</p>
-              <div class="time-line-wrapper">
-                <el-timeline>
-                    <el-timeline-item
-                      v-for="(activity, index) in activities"
-                      :key="index"
-                      :icon="activity.icon"
-                      :type="activity.type"
-                      :color="activity.color"
-                      :size="activity.size"
-                      :timestamp="activity.timestamp">
-                      {{activity.content}}
-                    </el-timeline-item>
-                </el-timeline>
-              </div>
-            </div>
-            <span class="index-tag">1</span>
-          </el-card>
-        </li>
-        <li>
-          <el-card :body-style="{padding : '.2rem'}" class="el-card">
-            <p class="title">退款审核中……</p>
-            <p class="time">退款申请时间：2019-4-12</p>
-            <div class="line"></div>
-            <div class="money-wrapper">
-              <span class="money">退款金额<i>￥1900</i></span>
-              <span class="open" @click="openInfo">展开<i :class="{'el-icon-arrow-down' : !opened, 'el-icon-arrow-up' : opened}"></i></span>
-            </div>
-            <div v-show="opened">
-              <p class="time">退款账户：原路退回</p>
-              <p class="time">退款流水号：1223344546</p>
-              <div class="time-line-wrapper">
-                <el-timeline>
-                    <el-timeline-item
-                      v-for="(activity, index) in activities"
-                      :key="index"
-                      :icon="activity.icon"
-                      :type="activity.type"
-                      :color="activity.color"
-                      :size="activity.size"
-                      :timestamp="activity.timestamp">
-                      {{activity.content}}
-                    </el-timeline-item>
-                </el-timeline>
-              </div>
-            </div>
-            <span class="index-tag">1</span>
+            <span class="index-tag">{{++index}}</span>
           </el-card>
         </li>
       </ul>
     </div>
+    <confirm-dialog content="是否要取消退款？" ref="confirmDialog" @dialogConfirm="dialogConfirm"></confirm-dialog>
   </div>
 </template>
 
 <script>
+import confirmDialog from 'common/components/confirm-dialog'
 export default {
   name: 'orderBackProgress',
+  components: {
+    confirmDialog
+  },
   data () {
     return {
-      opened: false,
-      activities: [
-        {
-          content: '支持使用',
-          timestamp: '2018-04-12 20:46',
-          size: 'large',
-          type: 'primary',
-          icon: 'el-icon-success'
-        },
-        {
-          content: '支持自定义颜色',
-          timestamp: '2018-04-03 20:46',
-          color: '#0bbd87'
-        },
-        {
-          content: '支持自定义尺寸',
-          timestamp: '2018-04-03 20:46',
-          size: 'large'
-        },
-        {
-          content: '默认样式的节点',
-          timestamp: '2018-04-03 20:46'
-        }
-      ]
+      list: null,
+      tempItem: null
     }
   },
   methods: {
-    openInfo () {
-      this.opened = !this.opened
+    openInfo (item) {
+      item.opened = !item.opened
+    },
+    getBackPay (item) {
+      switch (item.refund_pay_type) {
+        case 'alipay':
+          return '支付宝'
+        case 'wechatpay':
+          return '微信'
+        case 'credit':
+          return '授信'
+        case 'balance':
+          return '余额'
+      }
+    },
+    getData () {
+      this.$http(this.$urlPath.orderAfterSalesLog, {
+        ord_id: this.$route.query.id
+      }, '', (data) => {
+        if (data.data && data.data instanceof Array) {
+          this.list = data.data
+          this.list.forEach(item => {
+            this.$set(item, 'opened', false)
+            switch (item.status) {
+              case 'REFUND_STATUS':
+                item.stateTip = '退款审核中'
+                break
+              case 'REFUND_STATUS_YES':
+                item.stateTip = '审核成功'
+                break
+              case 'REFUND_STATUS_NO':
+                item.stateTip = '审核失败'
+                break
+              case 'REFUND_STATUS_CANCEL':
+                item.stateTip = '取消退款'
+                break
+              case 'REFUND_PAY':
+                item.stateTip = '待退款'
+                break
+              case 'REFUND_PAY_YES':
+                item.stateTip = '退款完成'
+                break
+              case 'REFUND_PAY_NO':
+                item.stateTip = '退款失败'
+                break
+            }
+            item.refund_log.forEach(item => {
+              switch (item.type) {
+                case 1:
+                  item.des = '提交退款申请'
+                  break
+                case 2:
+                  item.des = '退款审核通过'
+                  item.icon = 'el-icon-success'
+                  item.stateType = 'primary'
+                  item.size = 'large'
+                  break
+                case 3:
+                  item.des = '退款审核失败'
+                  item.stateType = 'danger'
+                  item.icon = 'el-icon-error'
+                  item.size = 'large'
+                  break
+                case 4:
+                  item.des = '退款支付成功'
+                  item.icon = 'el-icon-success'
+                  item.stateType = 'primary'
+                  item.size = 'large'
+                  break
+                case 5:
+                  item.des = '取消退款成功'
+                  item.icon = 'el-icon-success'
+                  item.stateType = 'primary'
+                  item.size = 'large'
+                  break
+              }
+            })
+          })
+        }
+      }, (errorCode, error) => {
+        this.$toast(error)
+      })
+    },
+    cancelBack (item) {
+      this.tempItem = item
+      this.$refs.confirmDialog.showDialog()
+    },
+    dialogConfirm () {
+      if (this.tempItem) {
+        this.$http(this.$urlPath.orderCancelRefund, {
+          rid: this.tempItem.rid
+        }, '正在取消…', (result) => {
+          this.$root.$emit('onReload')
+          this.$toast('取消退款成功')
+          this.getData()
+        }, (errorCode, error) => {
+          this.$toast(error)
+        })
+      }
     }
+  },
+  mounted () {
+    this.getData()
   }
 }
 </script>
@@ -147,6 +173,11 @@ export default {
         position relative
         .title
             textStyle(#333, .35)
+            line-height rem(.5)
+            .cancel-back
+                height rem(.5)
+                line-height 0
+                margin 0 rem(.2)
         .time
             textStyle(#555, .28)
             margin rem(.3) 0

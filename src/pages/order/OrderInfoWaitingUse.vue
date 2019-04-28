@@ -1,14 +1,14 @@
 <template>
     <div v-if="detail">
-      <order-info-header stateTip="待使用">
+      <order-info-header :stateTip="tipTitle">
             <template slot="headerTitleInfo">
                 <p class="o-i-use-info">
-                    产品已出票，请尽快使用产品。
+                    {{tipContent}}
                 </p>
             </template>
-            <template slot="headerBottomInfo">
+            <template slot="headerBottomInfo" v-if="detail.refund_mark !== 0">
                 <div class="after-service-wrapper">
-                    <span>退票记录：2</span>
+                    <span>退票记录：{{detail.refund_count}}</span>
                     <span @click="orderBackProgress">查看进度></span>
                 </div>
             </template>
@@ -32,7 +32,7 @@
         </order-info-user-info>
         <div class="sperator-line"></div>
         <order-time-info :shopName="detail.shop_name" :outTradeNo="detail.out_trade_no" :remarks="times"></order-time-info>
-        <div class="o-i-waiting-use-action-wrapper" v-if="detail.is_refund === 1">
+        <div class="o-i-waiting-use-action-wrapper" v-if="detail.is_refund === 1 && detail.refund_mark !== 2">
             <span @click="backMoney">申请退款</span>
             <!-- <span @click="isShowCanlendarDialog = true">变更时间</span> -->
         </div>
@@ -94,11 +94,19 @@ export default {
       isShowCanlendarDialog: false
     }
   },
-  watch: {
-    detail (newVal, oldVal) {
-      if (newVal.status !== 'USE_STATUS_NO') {
-        this.$router.go(-1)
-      }
+  // watch: {
+  //   detail (newVal, oldVal) {
+  //     if (newVal.status !== 'USE_STATUS_NO') {
+  //       this.$router.go(-1)
+  //     }
+  //   }
+  // },
+  computed: {
+    tipTitle () {
+      return this.detail.refund_mark === 2 ? '已退款' : '待使用'
+    },
+    tipContent () {
+      return this.detail.refund_mark === 2 ? '您的订单已退款' : '产品已出票，请尽快使用产品'
     }
   },
   methods: {
@@ -106,7 +114,7 @@ export default {
       this.$router.push({name: 'orderBackMoney', query: {id: this.detail.ord_id}})
     },
     orderBackProgress () {
-      this.$router.push({name: 'orderBackProgress'})
+      this.$router.push({name: 'orderBackProgress', query: {id: this.detail.ord_id}})
     }
   },
   mounted () {

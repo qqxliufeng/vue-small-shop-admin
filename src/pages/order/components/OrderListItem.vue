@@ -67,11 +67,7 @@ export default {
   },
   methods: {
     orderItemClick (item) {
-      if (item.refund && item.stateModel.orderType === '4') {
-        this.$router.push({name: 'orderInfo', params: {orderId: item.refund.rid.toString(), orderType: item.stateModel.orderType}})
-      } else {
-        this.$router.push({name: 'orderInfo', params: {orderId: item.ord_id.toString(), orderType: item.stateModel.orderType}})
-      }
+      this.$router.push({name: 'orderInfo', params: {orderId: item.ord_id.toString(), orderType: item.stateModel.orderType}})
     },
     upCallBack (page, mescroll) {
       this.$http(this.$urlPath.orderList, {
@@ -136,25 +132,25 @@ export default {
                     } : null
                   }
                 }
-                if (it.refund && it.refund.refund_status === 0) {
-                  it.stateModel.stateTip = '退款中'
-                  it.stateModel.action2.title = '取消退款'
-                  it.stateModel.action2.show = true
-                  it.stateModel.action2.action = () => {
-                    let confirm = window.confirm('是否要取消退款？')
-                    if (confirm) {
-                      this.$http(this.$urlPath.orderCancelRefund, {
-                        rid: it.refund.rid
-                      }, '正在取消…', (result) => {
-                        this.reload()
-                        this.$root.$emit('onReload')
-                        this.$toast('取消退款成功')
-                      }, (errorCode, error) => {
-                        this.$toast(error)
-                      })
-                    }
-                  }
-                }
+                // if (it.refund && it.refund.refund_status === 0) {
+                //   it.stateModel.stateTip = '退款中'
+                //   it.stateModel.action2.title = '取消退款'
+                //   it.stateModel.action2.show = true
+                //   it.stateModel.action2.action = () => {
+                //     let confirm = window.confirm('是否要取消退款？')
+                //     if (confirm) {
+                //       this.$http(this.$urlPath.orderCancelRefund, {
+                //         rid: it.refund.rid
+                //       }, '正在取消…', (result) => {
+                //         this.reload()
+                //         this.$root.$emit('onReload')
+                //         this.$toast('取消退款成功')
+                //       }, (errorCode, error) => {
+                //         this.$toast(error)
+                //       })
+                //     }
+                //   }
+                // }
                 break
               case 'NO_COMMENT':
               case 'USE_STATUS': // 已使用
