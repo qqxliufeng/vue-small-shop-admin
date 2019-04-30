@@ -65,25 +65,29 @@ export default {
           name: '支付宝',
           icon: imgZFBIcon,
           isChecked: true,
-          isShow: !this.$isWeiXin
+          isShow: !this.$isWeiXin,
+          payType: 'alipay'
         },
         {
           name: '微信',
           icon: imgWXIcon,
           isChecked: true,
-          isShow: this.$isWeiXin
+          isShow: this.$isWeiXin,
+          payType: 'wechatpay'
         },
         {
           name: '余额支付',
           icon: imgYEIcon,
           isChecked: false,
-          isShow: true
+          isShow: true,
+          payType: 'balance'
         },
         {
           name: '授信支付',
           icon: imgSXIcon,
           isChecked: false,
-          isShow: true
+          isShow: true,
+          payType: 'credit'
         }
       ],
       info: null,
@@ -114,6 +118,7 @@ export default {
       })
     },
     payItemClick (item) {
+      this.payType = item.payType
       this.filterPayItemList.forEach(element => {
         element.isChecked = item === element
       })
@@ -138,6 +143,7 @@ export default {
   },
   mounted () {
     this.getData()
+    this.payType = this.$isWeiXin ? 'wechatpay' : 'alipay'
   }
 }
 </script>

@@ -1,5 +1,5 @@
 let token = ''
-let identity = '1'
+let identity = '2'
 let storeId = '1'
 let registerInfo = null
 try {

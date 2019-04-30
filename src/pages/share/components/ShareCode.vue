@@ -4,8 +4,8 @@
           <img :src="logo">
       </div>
       <div class="post-info">
-        <p><span class="iconfont icon">&#xe736;</span>{{$root.userInfo.state.name}}的店铺</p>
-        <p><span class="iconfont icon">&#xe613;</span>{{$root.userInfo.state.name}}</p>
+        <p><span class="iconfont icon">&#xe736;</span>{{$root.userInfo.state.name}}</p>
+        <p><span class="iconfont icon">&#xe613;</span>{{$root.userInfo.state.linkname}}</p>
         <p><span class="iconfont icon">&#xe615;</span>{{$root.userInfo.state.phone}}</p>
       </div>
       <div class="post-code-wrapper">

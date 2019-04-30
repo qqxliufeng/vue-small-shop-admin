@@ -7,7 +7,7 @@
       <span class="info-tag">(必填)</span>
     </div>
     <div class="info-content-wrapper">
-      <input type="text" class="input" placeholder="请输入店铺名称" v-model="registerInfo.shopName">
+      <input type="text" class="input" placeholder="请输入店铺名称" v-model="registerInfo.shopName" maxlength="8">
     </div>
   </div>
   <div class="info-wrapper">
@@ -49,6 +49,10 @@ export default {
     submit () {
       if (!this.registerInfo.shopName) {
         this.$toast('请输入店铺名称')
+        return
+      }
+      if (this.registerInfo.shopName.length > 8) {
+        this.$toast('店铺名称最多8位')
         return
       }
       if (!this.registerInfo.shopArea) {

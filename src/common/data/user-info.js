@@ -1,3 +1,4 @@
+import state from './state.js'
 const userInfo = {
   debug: true,
   state: {
@@ -12,7 +13,8 @@ const userInfo = {
     balance: sessionStorage.getItem('balance'),
     rebate: sessionStorage.getItem('rebate'),
     credit: sessionStorage.getItem('credit'),
-    rank: sessionStorage.getItem('rank')
+    rank: sessionStorage.getItem('rank'),
+    linkname: sessionStorage.getItem('linkname')
   },
   isLogin () {
     // return this.state.id !== '' && this.state.id !== null && this.state.token !== '' && this.state.token !== null && this.state.phone !== '' && this.state.phone !== null
@@ -31,6 +33,7 @@ const userInfo = {
     this.state.rebate = userInfo.rebate
     this.state.credit = userInfo.line_of_credit
     this.state.rank = userInfo.rank
+    this.state.linkname = userInfo.linkname
 
     sessionStorage.setItem('id', this.state.id)
     sessionStorage.setItem('token', this.state.token)
@@ -44,6 +47,8 @@ const userInfo = {
     sessionStorage.setItem('rebate', this.state.rebate)
     sessionStorage.setItem('credit', this.state.credit)
     sessionStorage.setItem('rank', this.state.rank)
+    sessionStorage.setItem('linkname', this.state.linkname)
+    state.saveSallerInfo('2', this.state.id)
   },
   setUserInfoAvatar (avatar) {
     this.state.avatar = avatar
