@@ -129,6 +129,7 @@ export default {
             color #aaaaaa
         .user-password
             font-size .3rem
+            width 70%
         .input-password-container
             margin-top .6rem
             border: 0 none

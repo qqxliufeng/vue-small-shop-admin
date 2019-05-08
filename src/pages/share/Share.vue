@@ -10,6 +10,7 @@
             <slot name="shareAddress"></slot>
         </p>
         <slot name="otherInfo"></slot>
+        <div class="seperator-line"></div>
         <div class="post-action-wrapper">
           <span class="action action1" @click="savePost">保存图片</span>
           <span class="action action2" @click="sharePost">分享图片</span>
@@ -89,11 +90,19 @@ export default {
             padding rem(.2)
             width 70%
             vertical-align text-top
+    .seperator-line
+        width 100%
+        height rem(1)
     .post-action-wrapper
         display flex
-        padding rem(.3)
+        position fixed
+        right 0
+        left 0
+        bottom 0
+        padding rem(.15) rem(.3)
         justify-content space-around
         border-top 1px solid #f5f5f5
+        background #ffffff
         .action
             border-radius rem(.1)
             padding rem(.2) rem(.3)

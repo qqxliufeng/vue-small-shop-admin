@@ -8,7 +8,7 @@
             </template>
             <template slot="headerBottomInfo" v-if="detail.refund_mark !== 0">
                 <div class="after-service-wrapper">
-                    <span>退票记录：{{detail.refund_count}}</span>
+                    <span>退款记录：{{detail.refund_count}}</span>
                     <span @click="orderBackProgress">查看进度></span>
                 </div>
             </template>
@@ -94,19 +94,12 @@ export default {
       isShowCanlendarDialog: false
     }
   },
-  // watch: {
-  //   detail (newVal, oldVal) {
-  //     if (newVal.status !== 'USE_STATUS_NO') {
-  //       this.$router.go(-1)
-  //     }
-  //   }
-  // },
   computed: {
     tipTitle () {
-      return this.detail.refund_mark === 2 ? '已退款' : '待使用'
+      return this.detail.refund_mark === 2 ? '退款/售后' : '待使用'
     },
     tipContent () {
-      return this.detail.refund_mark === 2 ? '您的订单已退款' : '产品已出票，请尽快使用产品'
+      return this.detail.refund_mark === 2 ? '您的订单有退款申请，请及时查看' : '产品已出票，请尽快使用产品'
     }
   },
   methods: {

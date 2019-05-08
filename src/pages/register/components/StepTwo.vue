@@ -1,63 +1,63 @@
 <template>
-<div class='r-s-two-container'>
-  <p class="title">请填写您的身份信息</p>
-  <div class="info-wrapper">
-    <div class="info-item-wrapper">
-      <p class="info-title">真实姓名：</p>
-      <span class="info-tag">(必填)</span>
+  <div class='r-s-two-container'>
+    <p class="title">请填写您的身份信息</p>
+    <div class="info-wrapper">
+      <div class="info-item-wrapper">
+        <p class="info-title">真实姓名：</p>
+        <!-- <span class="info-tag">(必填)</span> -->
+      </div>
+      <div class="info-content-wrapper">
+        <input type="text" class="input" placeholder="请输入真实姓名" maxlength="6" v-model="registerInfo.realName">
+      </div>
     </div>
-    <div class="info-content-wrapper">
-      <input type="text" class="input" placeholder="请输入真实姓名" maxlength="6" v-model="registerInfo.realName">
+    <div class="info-wrapper">
+      <div class="info-item-wrapper">
+        <span class="info-title">您的身份:</span>
+      </div>
+      <div class="info-code-wrapper">
+        <el-radio-group v-model="registerInfo.idCard" @change='onChange'>
+          <el-radio :label="1">社会</el-radio>
+          <el-radio :label="2">学生</el-radio>
+        </el-radio-group>
+      </div>
     </div>
+    <div class="info-wrapper">
+      <div class="info-item-wrapper">
+        <p class="info-title">单位/学校名称：</p>
+        <!-- <span class="info-tag">(必填)</span> -->
+      </div>
+      <div class="info-content-wrapper">
+        <input type="text" class="input" placeholder="请输入单位/学校名称" v-model="registerInfo.workName">
+      </div>
+    </div>
+    <p class="image-title-wrapper" v-show="showIdCard">身份证上传（可选）：<span>（正反照各一张）</span></p>
+    <div class="upload-wrapper" v-show="showIdCard">
+      <el-upload
+        :action="$urlPath.registerImageActionUrl"
+        list-type="picture-card"
+        :before-upload="beforeUpload"
+        :on-success="uploadSuccess"
+        :on-error="uploadError"
+        :on-exceed="onExceed"
+        :limit="2">
+        <i class="el-icon-plus"></i>
+      </el-upload>
+    </div>
+    <p class="image-title-wrapper" v-show="!showIdCard">学生证上传（可选）：</p>
+    <div class="upload-wrapper" v-show="!showIdCard">
+      <el-upload
+        :action="$urlPath.registerImageActionUrl"
+        list-type="picture-card"
+        :before-upload="beforeUpload"
+        :on-success="uploadSuccess"
+        :on-error="uploadError"
+        :on-exceed="onExceed"
+        :limit="1">
+        <i class="el-icon-plus"></i>
+      </el-upload>
+    </div>
+    <el-button class="next-step" @click="nextStep">下一步</el-button>
   </div>
-  <div class="info-wrapper">
-    <div class="info-item-wrapper">
-      <span class="info-title">您的身份:</span>
-    </div>
-    <div class="info-code-wrapper">
-      <el-radio-group v-model="registerInfo.idCard" @change='onChange'>
-        <el-radio :label="1">社会</el-radio>
-        <el-radio :label="2">学生</el-radio>
-      </el-radio-group>
-    </div>
-  </div>
-  <div class="info-wrapper">
-    <div class="info-item-wrapper">
-      <p class="info-title">单位/学校名称：</p>
-      <span class="info-tag">(必填)</span>
-    </div>
-    <div class="info-content-wrapper">
-      <input type="text" class="input" placeholder="请输入单位/学校名称" v-model="registerInfo.workName">
-    </div>
-  </div>
-  <p class="image-title-wrapper" v-show="showIdCard">身份证上传：<span>（正反照各一张）</span></p>
-  <div class="upload-wrapper" v-show="showIdCard">
-    <el-upload
-      :action="$urlPath.registerImageActionUrl"
-      list-type="picture-card"
-      :before-upload="beforeUpload"
-      :on-success="uploadSuccess"
-      :on-error="uploadError"
-      :on-exceed="onExceed"
-      :limit="2">
-      <i class="el-icon-plus"></i>
-    </el-upload>
-  </div>
-  <p class="image-title-wrapper" v-show="!showIdCard">学生证上传：</p>
-  <div class="upload-wrapper" v-show="!showIdCard">
-    <el-upload
-      :action="$urlPath.registerImageActionUrl"
-      list-type="picture-card"
-      :before-upload="beforeUpload"
-      :on-success="uploadSuccess"
-      :on-error="uploadError"
-      :on-exceed="onExceed"
-      :limit="1">
-      <i class="el-icon-plus"></i>
-    </el-upload>
-  </div>
-  <p class="next-step" @click="nextStep">下一步</p>
-</div>
 </template>
 
 <script>
@@ -105,7 +105,6 @@ export default {
         } else {
           this.registerInfo.studentCard = response.data.url
         }
-        console.log(this.registerInfo)
         this.$toast('上传成功')
         this.$loading.close()
       } else {
@@ -126,7 +125,7 @@ export default {
 @import '~styles/varibles.styl'
 @import '~styles/mixin.styl'
 .r-s-two-container
-    background #f5f5f5
+    background #ffffff
     padding rem(.4) rem(.4) $headerHeight rem(.4)
     box-sizing border-box
     height auto
@@ -162,11 +161,9 @@ export default {
     .next-step
         background $primary
         color #fff
-        text-align center
-        margin rem(1) rem(.5) rem(.2) rem(.5)
-        border-radius rem(.5)
-        height $headerHeight
-        line-height $headerHeight
+        width 80%
+        display block
+        margin rem(1) auto
     .upload-wrapper
         margin rem(.5) 0
         & >>> .el-upload--picture-card

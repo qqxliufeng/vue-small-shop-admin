@@ -26,6 +26,8 @@ import state from 'common/data/state'
 import loadingImage from 'images/img_loading_list.png'
 import loadFailedImage from 'images/img_loading_failed_list.png'
 import WebpPlugun from 'vue-webp-plugin'
+import 'common/utils/weixin.js'
+
 Vue.use(WebpPlugun)
 
 Vue.config.productionTip = false

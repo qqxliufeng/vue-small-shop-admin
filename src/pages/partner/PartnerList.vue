@@ -71,6 +71,7 @@ export default {
             padding 0 rem(.2)
             .item-wrapper
                 display flex
+                padding rem(.15)
                 // padding rem(.2) 0
                 // border-bottom 1px solid #f5f5f5
                 .item-face-icon

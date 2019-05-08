@@ -2,31 +2,31 @@
 <div class='r-s-one-container'>
   <p class="title">请填写您的身份信息</p>
   <div class="info-wrapper">
-    <span class="info-title">手机号<i>(必填)</i>：</span>
+    <span class="info-title">手机号：</span>
     <div class="info-content-wrapper">
       <input type="text" class="input" placeholder="请输入手机号" v-model="registerInfo.phone" maxlength="11">
     </div>
   </div>
   <div class="info-wrapper">
-    <span class="info-title">验证码<i>(必填)</i>：</span>
+    <span class="info-title">验证码：</span>
     <div class="info-code-wrapper">
       <input type="text" class="input" placeholder="请输入验证码" v-model="registerInfo.verifyCode">
       <button class="bt-code" @click="getCode" :disabled="disabled">{{countDownText}}</button>
     </div>
   </div>
   <div class="info-wrapper">
-    <span class="info-title">密码<i>(必填)</i>：</span>
+    <span class="info-title">密码：</span>
     <div class="info-content-wrapper">
       <input type="password" class="input" placeholder="请输入密码" v-model="registerInfo.password" maxlength="16">
     </div>
   </div>
   <div class="info-wrapper">
-    <span class="info-title">确认密码<i>(必填)</i>：</span>
+    <span class="info-title">确认密码：</span>
     <div class="info-content-wrapper">
       <input type="password" class="input" placeholder="请再次输入密码" v-model="registerInfo.confirmPassword">
     </div>
   </div>
-  <p class="next-step" @click="nextStep">下一步</p>
+  <el-button class="next-step" @click="nextStep">下一步</el-button>
 </div>
 </template>
 
@@ -102,6 +102,7 @@ export default {
         mobile: this.registerInfo.phone,
         event: 'register'
       }, '正在发送验证码…', (data) => {
+        this.$toast('验证码发送成功')
         this.disabled = true
         let count = 60
         let time = setInterval(() => {
@@ -139,7 +140,7 @@ export default {
 @import '~styles/varibles.styl'
 @import '~styles/mixin.styl'
 .r-s-one-container
-    background #f5f5f5
+    background #ffffff
     padding rem(.4)
     padding-bottom 0
     height auto
@@ -192,9 +193,7 @@ export default {
     .next-step
         background $primary
         color #fff
-        text-align center
-        margin rem(1) rem(.5) rem(.2) rem(.5)
-        border-radius rem(.5)
-        height $headerHeight
-        line-height $headerHeight
+        width 80%
+        display block
+        margin rem(1) auto
 </style>

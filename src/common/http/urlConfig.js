@@ -14,7 +14,8 @@ const commonModuleUrl = baseUrl + 'common/'
 
 export const imageActionUrl = commonModuleUrl + 'upload'
 
-export const registerImageActionUrl = commonModuleUrl + 'upload_register'
+// 注册分销商上传的图片地址
+export const registerImageActionUrl = baseIP + commonModuleUrl + 'upload_register'
 
 export const loginUrl = distributorModuleUrl + 'login'
 
@@ -110,12 +111,14 @@ const baseShareShopUrl = 'http://www.store.youdaike.com/'
 
 const baseShareAdminUrl = 'http://www.test.youdaike.com/distributor_manage/#/'
 
+// const baseShareAdminUrl = 'http://192.168.0.107:8888/distributor_manage/#/'
+
 export function getShareScenicUrl (identity, storeId, sid) {
   return baseShareShopUrl + 'scenicdetail?scenicId=' + sid + '&identity=' + identity + '&storeId=' + storeId
 }
 
 export function getShareTicketUrl (identity, storeId, sid, goodsId) {
-  return baseShareShopUrl + 'ticketDetail?s_id=' + sid + '&identity=' + identity + '&storeId=' + storeId + '&goods_id=' + goodsId
+  return baseShareShopUrl + 'ticketDetail?scenicId=' + sid + '&identity=' + identity + '&storeId=' + storeId + '&goods_id=' + goodsId
 }
 
 export function getShareRegisterUrl (pid) {

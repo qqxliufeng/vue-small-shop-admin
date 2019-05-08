@@ -266,7 +266,7 @@ export default {
               case 'USE_STATUS_REVOKE': // 退款
                 it.stateModel = {
                   orderType: '4',
-                  stateTip: '已退款',
+                  stateTip: '退款/售后',
                   time: {
                     title: '下单时间：',
                     time: it.ord_add_time
