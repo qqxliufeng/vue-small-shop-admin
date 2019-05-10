@@ -1,4 +1,5 @@
 
+// 迁移到正式的服务器的时候，一定要更换这个地址，要不然会炸的
 export const baseIP = 'http://www.test.youdaike.com/'
 
 export const baseUrl = 'distributor_api/'
@@ -107,8 +108,10 @@ export const orderRefund = orderModuleUrl + 'refund'
 
 export const orderAfterSalesLog = orderModuleUrl + 'after_sales_log'
 
+// 迁移到正式服务器的时候，一定要更换这个地址
 const baseShareShopUrl = 'http://www.store.youdaike.com/'
 
+// 迁移到正式的服务器的时候，一定要更换这个地址，要不然会炸的
 const baseShareAdminUrl = 'http://www.test.youdaike.com/distributor_manage/#/'
 
 // const baseShareAdminUrl = 'http://192.168.0.107:8888/distributor_manage/#/'
@@ -118,7 +121,7 @@ export function getShareScenicUrl (identity, storeId, sid) {
 }
 
 export function getShareTicketUrl (identity, storeId, sid, goodsId) {
-  return baseShareShopUrl + 'ticketDetail?scenicId=' + sid + '&identity=' + identity + '&storeId=' + storeId + '&goods_id=' + goodsId
+  return baseShareShopUrl + 'ticketdetail?scenicId=' + sid + '&identity=' + identity + '&storeId=' + storeId + '&goods_id=' + goodsId
 }
 
 export function getShareRegisterUrl (pid) {

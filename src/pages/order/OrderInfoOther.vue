@@ -80,6 +80,7 @@ export default {
             this.stateModel.stateTip = '已过期'
             this.stateModel.discription = '订单已经过期，如有需要请重新下单购买'
             break
+          case 'NO_COMMENT':
           case 'ALREADY_COMMENT': // 已经评价
             this.stateModel.stateTip = '已完成'
             this.stateModel.discription = '感谢您的本次消费，订单已经完结'
@@ -91,6 +92,7 @@ export default {
           case 'USE_STATUS_NO':
             this.stateModel.stateTip = '待使用'
             this.stateModel.discription = '产品已出票，请尽快使用产品'
+            break
           // case 'PAY_STATUS_YES': // 已支付
           //   this.stateTip = '已支付'
           //   break

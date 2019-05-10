@@ -156,7 +156,7 @@ export default {
               case 'USE_STATUS': // 已使用
                 it.stateModel = {
                   orderType: '3',
-                  stateTip: '待评价',
+                  stateTip: '已完成',
                   time: {
                     title: '下单时间：',
                     time: it.ord_add_time
@@ -168,7 +168,7 @@ export default {
                   },
                   action2: {
                     title: '去评价',
-                    show: true,
+                    show: false,
                     action: () => {
                       this.$router.push({name: 'orderComment', query: {orderId: it.ord_id.toString()}})
                     }

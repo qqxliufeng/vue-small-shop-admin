@@ -96,10 +96,18 @@ export default {
   },
   computed: {
     tipTitle () {
-      return this.detail.refund_mark === 2 ? '退款/售后' : '待使用'
+      if (this.detail.status === 'USE_STATUS_NO') {
+        return this.detail.refund_mark === 2 ? '退款/售后' : '待使用'
+      } else {
+        return '已完成'
+      }
     },
     tipContent () {
-      return this.detail.refund_mark === 2 ? '您的订单有退款申请，请及时查看' : '产品已出票，请尽快使用产品'
+      if (this.detail.status === 'USE_STATUS_NO') {
+        return this.detail.refund_mark === 2 ? '您的订单有退款申请，请及时查看' : '产品已出票，请尽快使用产品'
+      } else {
+        return '感谢您的本次消费，订单已经完结'
+      }
     }
   },
   methods: {
