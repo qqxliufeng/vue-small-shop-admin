@@ -79,7 +79,6 @@ export default {
       this.$http(this.$urlPath.rebateLog, {
         type: this.state + ''
       }, null, (data) => {
-        console.log(data)
         this.loadSuccess(page, mescroll, data.data)
       }, (errorCode, error) => {
         this.loadError(mescroll, errorCode, error)

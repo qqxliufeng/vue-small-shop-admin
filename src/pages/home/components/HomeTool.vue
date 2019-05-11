@@ -82,7 +82,7 @@ export default {
         if (index < 6) {
           it.show = true
         } else {
-          it.show = Number(this.$root.userInfo.state.rank) < 3
+          it.show = Number(this.$root.userInfo.state.rank) < 3 && this.$root.userInfo.state.authset && this.$root.userInfo.state.authset.indexOf('3') !== -1
         }
       })
       return this.toolsList.filter((it) => it.show)

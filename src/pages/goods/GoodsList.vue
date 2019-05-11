@@ -23,7 +23,7 @@
                   <!-- <p><span class="info-money">￥89</span><span class="info-money-tag">起</span><span class="info-old-money">￥109</span></p> -->
                   <div class="info-action-wrapper">
                     <button class="info-detail" @click="startScenicDetail(content)">详情</button>
-                    <button class="info-share" @click="selectScenicShare(content)">分享</button>
+                    <button class="info-share" @click="selectScenicShare(content)" v-if="isCanShare">分享</button>
                   </div>
                 </div>
               </div>
@@ -54,6 +54,11 @@ export default {
       if (newVal instanceof Array && newVal.length > 0) {
         this.tempMenu = this.menuList[0]
       }
+    }
+  },
+  computed: {
+    isCanShare () {
+      return this.$root.userInfo.state.authset && this.$root.userInfo.state.authset.indexOf('1') !== -1
     }
   },
   methods: {

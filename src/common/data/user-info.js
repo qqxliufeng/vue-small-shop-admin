@@ -3,6 +3,7 @@ const userInfo = {
   debug: true,
   state: {
     id: sessionStorage.getItem('id'),
+    authset: sessionStorage.getItem('auth_set'),
     token: sessionStorage.getItem('token'),
     name: sessionStorage.getItem('name'),
     phone: sessionStorage.getItem('phone'),
@@ -22,6 +23,7 @@ const userInfo = {
   },
   setUserInfo (userInfo) {
     this.state.id = userInfo.id
+    this.state.authset = userInfo.auth_set
     this.state.token = userInfo.token
     this.state.phone = userInfo.phone
     this.state.name = userInfo.name
@@ -36,6 +38,7 @@ const userInfo = {
     this.state.linkname = userInfo.linkname
 
     sessionStorage.setItem('id', this.state.id)
+    sessionStorage.setItem('authset', this.state.authset)
     sessionStorage.setItem('token', this.state.token)
     sessionStorage.setItem('name', this.state.name)
     sessionStorage.setItem('phone', this.state.phone)

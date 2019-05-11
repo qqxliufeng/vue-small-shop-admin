@@ -37,6 +37,7 @@ export default {
     return {
       registerInfo: {
         parentId: this.$route.query.pid,
+        storeId: this.$route.query.storeId || '',
         // parentId: 2,
         phone: '',
         verifyCode: '',

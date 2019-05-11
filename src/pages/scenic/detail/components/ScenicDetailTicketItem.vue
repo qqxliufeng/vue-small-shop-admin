@@ -16,8 +16,8 @@
                     </p>
                 </div>
                 <div class="s-d-hot-item-info-info-action">
-                    <el-button type="primary" size="mini" @click="itemClickShare(item)">立即分享</el-button>
-                    <el-button type="primary" size="mini" @click="itemClickOrder(item)" class="button">立即预定</el-button>
+                    <el-button type="primary" size="mini" @click="itemClickShare(item)" v-if="isCanShare">立即分享</el-button>
+                    <el-button type="primary" size="mini" @click="itemClickOrder(item)" class="button" v-if="isCanReseve">立即预定</el-button>
                 </div>
             </div>
         </div>
@@ -29,6 +29,14 @@ export default {
   name: 'scenicDetailTicketItem',
   props: {
     item: Object
+  },
+  computed: {
+    isCanShare () {
+      return this.$root.userInfo.state.authset && this.$root.userInfo.state.authset.indexOf('1') !== -1
+    },
+    isCanReseve () {
+      return this.$root.userInfo.state.authset && this.$root.userInfo.state.authset.indexOf('2') !== -1
+    }
   },
   methods: {
     itemClickOrder (item) {
