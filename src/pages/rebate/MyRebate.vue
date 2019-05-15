@@ -6,7 +6,7 @@
       <span class="details" @click="rebateDetail">明细</span>
     </div>
     <div class="balance-container" v-if="info">
-      <p class="balance">￥{{$root.userInfo.state.rebate || '0.00'}}</p>
+      <p class="balance">￥{{Number(info.now_rebate).toFixed(2) || '0.00'}}</p>
       <p class="balance-tip">当前返利</p>
       <div class="balance-wrapper">
         <div>

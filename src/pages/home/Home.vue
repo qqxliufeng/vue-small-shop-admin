@@ -6,7 +6,7 @@
         温馨提示：更多功能敬请登录电脑端进行查看。
         <span class="el-icon-error close-tip"></span>
       </p>
-      <home-header></home-header>
+      <home-header :amount="amount"></home-header>
   </div>
   <home-tools ref="homeTools"></home-tools>
   <p class="logout" @click="logout">退出登录</p>
@@ -32,7 +32,8 @@ export default {
   data () {
     return {
       msg: '',
-      showTip: true
+      showTip: true,
+      amount: null
     }
   },
   methods: {
@@ -48,9 +49,20 @@ export default {
         this.$toast(error)
       })
     },
+    getData () {
+      this.$http(this.$urlPath.getAmount, {
+      }, null, (data) => {
+        this.amount = data.data
+      }, (errorCode, error) => {
+        this.$toast(error)
+      })
+    },
     logout () {
       this.$refs.confrimDialog.showDialog()
     }
+  },
+  mounted () {
+    this.getData()
   }
 }
 </script>

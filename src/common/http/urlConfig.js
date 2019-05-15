@@ -52,6 +52,8 @@ export const withdrawCash = distributorModuleUrl + 'withdraw_cash'
 
 export const balanceLog = distributorModuleUrl + 'balance_log'
 
+export const getAmount = distributorModuleUrl + 'get_amount'
+
 export const balanceStatistics = distributorModuleUrl + 'balance_statistics'
 
 export const rebateStatistics = distributorModuleUrl + 'rebate_statistics'

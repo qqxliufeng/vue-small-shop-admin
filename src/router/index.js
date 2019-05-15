@@ -48,8 +48,7 @@ export default new Router({
       name: 'home',
       component: Home,
       meta: {
-        auth: true,
-        keepAlive: true
+        auth: true
       }
     },
     {

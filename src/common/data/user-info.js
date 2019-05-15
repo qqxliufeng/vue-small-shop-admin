@@ -3,7 +3,7 @@ const userInfo = {
   debug: true,
   state: {
     id: sessionStorage.getItem('id'),
-    authset: sessionStorage.getItem('auth_set'),
+    authset: sessionStorage.getItem('authset'),
     token: sessionStorage.getItem('token'),
     name: sessionStorage.getItem('name'),
     phone: sessionStorage.getItem('phone'),

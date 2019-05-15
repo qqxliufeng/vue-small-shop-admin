@@ -47,7 +47,7 @@ export default {
       })
     },
     transfer () {
-      if (Number(this.$root.userInfo.state.balance) < Number(this.minimun)) {
+      if (Number(this.$root.userInfo.state.rebate) < Number(this.minimun)) {
         this.$toast('当前返利金额小于最底数额')
         return
       }

@@ -2,7 +2,7 @@
     <div class="s-d-comment-item-container">
         <div class="s-d-comment-item-title-wrapper">
             <img v-lazy="$utils.image.getImagePath(item.avatar)" :key="item.avatar">
-            <span class="s-d-comment-item-title-nickname">{{item.username}}</span>
+            <span class="s-d-comment-item-title-nickname">{{$utils.common.hiddenMobile(item.username)}}</span>
             <span></span>
             <span class="s-d-comment-item-title-rating">
                 <el-rate disabled :value="item.mark"></el-rate>

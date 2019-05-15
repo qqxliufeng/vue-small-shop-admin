@@ -6,16 +6,16 @@
       <span class="details" @click="balanceDetail">明细</span>
     </div>
     <div class="balance-container">
-      <p class="balance">￥{{$root.userInfo.state.balance || '0.00'}}</p>
+      <p class="balance">￥{{Number(info.now_balance).toFixed(2) || '0.00'}}</p>
       <p class="balance-tip">当前余额</p>
       <div class="balance-wrapper">
         <div>
-          <p class="total-money">￥{{Number(info.gain_balance_total).toFixed(2)}}</p>
+          <p class="total-money">￥{{Number(info.gain_balance_total).toFixed(2) || '0.00'}}</p>
           <p class="total-tip">累计获取余额</p>
         </div>
         <span class="sperator"></span>
         <div>
-          <p class="total-money">￥{{Number(info.withdraw_cash_total).toFixed(2)}}</p>
+          <p class="total-money">￥{{Number(info.withdraw_cash_total).toFixed(2) || '0.00'}}</p>
           <p class="total-tip">累计提现余额</p>
         </div>
       </div>
