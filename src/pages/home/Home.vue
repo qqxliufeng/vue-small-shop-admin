@@ -53,6 +53,8 @@ export default {
       this.$http(this.$urlPath.getAmount, {
       }, null, (data) => {
         this.amount = data.data
+        this.$root.userInfo.setUserInfoBalance(this.amount.balance)
+        this.$root.userInfo.setUserInfoRebate(this.amount.rebate)
       }, (errorCode, error) => {
         this.$toast(error)
       })
