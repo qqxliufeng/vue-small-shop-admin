@@ -64,7 +64,7 @@ export default {
         case '3':
           return '伙伴待返利'
         case '4':
-          return '未付款'
+          return '未付款待返利'
       }
     }
   },
@@ -77,7 +77,8 @@ export default {
     },
     upCallBack (page, mescroll) {
       this.$http(this.$urlPath.rebateLog, {
-        type: this.state + ''
+        type: this.state + '',
+        page: page.num
       }, null, (data) => {
         this.loadSuccess(page, mescroll, data.data)
       }, (errorCode, error) => {

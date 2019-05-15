@@ -5,7 +5,7 @@
     <p class="title-tip">充值金额</p>
     <div class="input-wrapper">
       <span class="input-money-tag">￥</span>
-      <input class="input-money" type="text">
+      <input class="input-money" type="text" v-model="rechargeMoney">
     </div>
   </div>
   <div class="select-type-container">
@@ -24,7 +24,7 @@
       </div>
     </div>
   </div>
-  <el-button type="primary" class="submit">确定</el-button>
+  <el-button type="primary" class="submit" @click="recharge">确定</el-button>
 </div>
 </template>
 
@@ -38,12 +38,24 @@ export default {
     return {
       imgZFBIcon,
       imgWXIcon,
-      selectType: '1'
+      selectType: '1',
+      rechargeMoney: ''
     }
   },
   methods: {
     typeClick (type) {
       this.selectType = type + ''
+    },
+    recharge () {
+      if (!this.rechargeMoney) {
+        this.$toast('请输入充值金额')
+        return
+      }
+      if (!this.$utils.validator.isMoney(this.rechargeMoney)) {
+        this.$toast('请输入合法的金额')
+        return
+      }
+      this.$toast('充值')
     }
   }
 }
