@@ -58,6 +58,7 @@ export default {
         align-items center
         & img
             width 100%
+            height 100%
             object-fit cover
     .post-info
         flex 1

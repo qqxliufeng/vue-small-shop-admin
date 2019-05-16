@@ -36,7 +36,7 @@ export default {
     return {
       mescrollConfig: mescrollConfig('commentList', this.upCallback),
       mescroll: null,
-      comment: {},
+      comment: null,
       list: [],
       mark: 0,
       tagsList: [

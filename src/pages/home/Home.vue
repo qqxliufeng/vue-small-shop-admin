@@ -10,6 +10,7 @@
   </div>
   <home-tools ref="homeTools"></home-tools>
   <p class="logout" @click="logout">退出登录</p>
+  <p class="pc">更多功能请登录电脑端：http://www.baidu.com</p>
   <confirm-dialog content="是否要退出登录？" @dialogConfirm="dialogConfirm" ref="confrimDialog"></confirm-dialog>
 </div>
 </template>
@@ -88,4 +89,12 @@ export default {
     text-align center
     line-height rem(.8)
     color #fff
+.pc
+    text-align center
+    textStyle(#aaa, .25)
+    position absolute
+    left 0
+    right 0
+    bottom 0
+    margin-bottom rem(.2)
 </style>

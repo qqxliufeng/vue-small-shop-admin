@@ -25,7 +25,7 @@
       <!-- <span class="info-tag">(必填)</span> -->
     </div>
     <div class="info-content-wrapper">
-      <input type="text" class="input" placeholder="请输入客服电话"  v-model="registerInfo.shopPhone">
+      <input type="text" class="input" placeholder="请输入客服电话"  v-model="registerInfo.shopPhone" maxlength="11">
     </div>
   </div>
   <el-button class="next-step" @click="submit">提交</el-button>
@@ -61,6 +61,10 @@ export default {
       }
       if (!this.registerInfo.shopPhone) {
         this.$toast('请输入客服电话')
+        return
+      }
+      if (!this.$utils.validator.isPhone(this.registerInfo.shopPhone)) {
+        this.$toast('请输入合法的客服电话')
         return
       }
       if (!this.registerInfo.parentId) {
