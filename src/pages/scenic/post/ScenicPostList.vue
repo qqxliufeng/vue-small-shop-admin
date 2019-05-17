@@ -9,7 +9,7 @@
       <ul v-if="scenicPostList">
         <li v-for="item of scenicPostList" :key="item.id" class="scenic-post-item-wrapper" @click="startScenicPost(item)">
           <el-card shadow="always" :bodyStyle="{padding: '0'}">
-            <img class="item-image" v-lazy="$utils.image.getImagePath(item.poster_image)" :key="item.poster_image">
+            <img class="item-image" v-lazy="getScenicImage(item)" :key="getScenicImage(item)">
             <div class="item-info-wrapper">
               <p class="item-title">{{item.scenic_name}}</p>
               <p class="item-lvxingshe">{{item.store_name ? item.store_name : '暂无'}}</p>
@@ -68,6 +68,13 @@ export default {
         this.scenicPostList = null
       }
       this.getData()
+    },
+    getScenicImage (item) {
+      if (item.poster_image) {
+        return this.$utils.image.getImagePath(item.poster_image)
+      } else {
+        return this.$utils.image.getImagePath(item.share_image)
+      }
     }
   },
   mounted () {
