@@ -31,10 +31,10 @@ export default {
   },
   computed: {
     isCanShare () {
-      return this.$root.userInfo.state.authset && this.$root.userInfo.state.authset.indexOf('1') !== -1
+      return Boolean(this.$root.state.canShareTicket)
     },
     isCanReseve () {
-      return this.$root.userInfo.state.authset && this.$root.userInfo.state.authset.indexOf('2') !== -1
+      return Boolean(this.$root.state.canFloorBuyTicket)
     }
   },
   methods: {

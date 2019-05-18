@@ -21,6 +21,9 @@ import imgBackMoneyListIcon from 'images/img_back_money_icon.png'
 import imgCustomServiceIcon from 'images/img_custom_service_icon.png'
 export default {
   name: 'homeTool',
+  props: {
+    authInfo: Object
+  },
   components: {},
   data () {
     return {
@@ -82,7 +85,7 @@ export default {
         if (index < 6) {
           it.show = true
         } else {
-          it.show = Number(this.$root.userInfo.state.rank) < 3 && this.$root.userInfo.state.authset && this.$root.userInfo.state.authset.indexOf('3') !== -1
+          it.show = this.isShowSharePartner()
         }
       })
       return this.toolsList.filter((it) => it.show)
@@ -91,6 +94,23 @@ export default {
   methods: {
     itemClick (item) {
       this.$router.push({name: item.actionUrl})
+    },
+    isShowSharePartner () {
+      if (this.authInfo) { // 是否获取到数据了
+        let auth = Number(this.authInfo.auth)
+        let authSet = this.authInfo.auth_set
+        if (Number(this.$root.userInfo.state.rank) < 3) { // 当前账号是不是三级分销商
+          if (auth === 1) { // 是否是做任务开启权限
+            return Number(this.authInfo.finish_order_number) <= Number(this.authInfo.lower_level_buy_number) // 判断任务是否是完成了
+          } else if (auth === 2) { // 手动开启权限
+            return authSet && authSet.indexOf('3') !== -1
+          }
+        } else {
+          return false
+        }
+      } else {
+        return false
+      }
     }
   }
 }

@@ -8,7 +8,7 @@
       </p>
       <home-header :amount="amount"></home-header>
   </div>
-  <home-tools ref="homeTools"></home-tools>
+  <home-tools ref="homeTools" :authInfo="authInfo"></home-tools>
   <p class="logout" @click="logout">退出登录</p>
   <p class="pc">更多功能请登录电脑端：http://www.baidu.com</p>
   <confirm-dialog content="是否要退出登录？" @dialogConfirm="dialogConfirm" ref="confrimDialog"></confirm-dialog>
@@ -34,7 +34,8 @@ export default {
     return {
       msg: '',
       showTip: true,
-      amount: null
+      amount: null,
+      authInfo: null
     }
   },
   methods: {
@@ -54,8 +55,26 @@ export default {
       this.$http(this.$urlPath.getAmount, {
       }, null, (data) => {
         this.amount = data.data
+        this.authInfo = this.amount
         this.$root.userInfo.setUserInfoBalance(this.amount.balance)
         this.$root.userInfo.setUserInfoRebate(this.amount.rebate)
+        // start************根据接口返回来的数据判断是不是有对应的权限************
+        let canShareTicket = false
+        let canFloorBuyTicket = false
+        if (this.authInfo) { // 是否获取到数据了
+          let auth = Number(this.authInfo.auth)
+          let authSet = this.authInfo.auth_set
+          if (auth === 1) { // 是否是做任务开启权限
+            canShareTicket = Number(this.authInfo.finish_order_number) <= Number(this.authInfo.photo_sharing_order_number) // 判断任务是否是完成了，能不能分享单个商品
+            canFloorBuyTicket = Number(this.authInfo.finish_order_number) <= Number(this.authInfo.floor_buy_number) // 判断任务是否是完成了，能不能低价购买商品
+          } else if (auth === 2) { // 手动开启权限
+            canShareTicket = authSet && authSet.indexOf('1') !== -1 // 是不是能分享图片
+            canFloorBuyTicket = authSet && authSet.indexOf('2') !== -1 // 是不是能低价购买
+          }
+        }
+        this.$root.state.saveCanShareTicket(canShareTicket)
+        this.$root.state.saveCanFloorBuyTicket(canFloorBuyTicket)
+        // end************根据接口返回来的数据判断是不是有对应的权限************
       }, (errorCode, error) => {
         this.$toast(error)
       })

@@ -2,11 +2,15 @@ let token = ''
 let identity = '2'
 let storeId = '1'
 let registerInfo = null
+let canShareTicket = false
+let canFloorBuyTicket = false
 try {
   if (localStorage) {
     token = localStorage.getItem('token')
     identity = localStorage.getItem('identity')
     storeId = localStorage.getItem('storeId')
+    canShareTicket = sessionStorage.getItem('canShareTicket')
+    canFloorBuyTicket = sessionStorage.getItem('canFloorBuyTicket')
   }
 } catch (error) {
   console.log(error)
@@ -17,6 +21,16 @@ export default {
   identity,
   storeId,
   registerInfo,
+  canShareTicket,
+  canFloorBuyTicket,
+  saveCanShareTicket (enable) {
+    this.canShareTicket = enable
+    sessionStorage.setItem('canShareTicket', enable)
+  },
+  saveCanFloorBuyTicket (enable) {
+    this.canFloorBuyTicket = enable
+    sessionStorage.setItem('canFloorBuyTicket', enable)
+  },
   saveUserInfo (token) {
     this.token = token
     try {

@@ -58,7 +58,7 @@ export default {
   },
   computed: {
     isCanShare () {
-      return this.$root.userInfo.state.authset && this.$root.userInfo.state.authset.indexOf('1') !== -1
+      return Boolean(this.$root.state.canShareTicket)
     }
   },
   methods: {
