@@ -13,8 +13,6 @@
               <span class="iconfont l-q-footer-time" v-if="tempItem.answer">&#xe790; {{tempItem.answer.create_time}}</span>
               <p class="l-q-footer">
                 <span v-if="tempItem.answer" @click="startMessageInfo">查看其它答案</span>
-                <span v-if="tempItem.answer">|</span>
-                <span @click="replyMessage" class="l-q-footer-to-answer">我要回答</span>
               </p>
           </div>
       </el-card>

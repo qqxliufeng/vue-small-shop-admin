@@ -1,6 +1,6 @@
 <template>
 <div class='l-m-info-container'>
-  <navi title="留言板详情" :isFixed="true"></navi>
+  <my-navi title="留言板详情" :isFixed="true"></my-navi>
   <div class="content-container" v-if="ask">
       <el-card :body-style="{ padding: '.2rem' }" shadow="always">
         <scenic-info :scenicInfo="scenicInfo"></scenic-info>
@@ -25,7 +25,6 @@
                 <p class="item-content">{{item.answer_text}}</p>
                 <div class="item-info-container">
                   <span class="iconfont l-q-footer-time">&#xe790; {{item.create_time}}</span>
-                  <span class="iconfont zan" :style="{color: item.is_like === 0 ? '#888' : '#64BBAE'}" @click="likeClick(item)">&#xe605; {{item.like}}</span>
                 </div>
               </div>
             </li>
@@ -33,17 +32,14 @@
         </div>
     </el-card>
   </div>
-  <div class="reply" @click="reply">我要回复</div>
 </div>
 </template>
 
 <script>
-import navi from 'common/components/navigation'
 import scenicInfo from './components/LeaveMessageScenicInfo'
 export default {
   name: 'leaveMessageInfo',
   components: {
-    navi,
     scenicInfo
   },
   data () {
@@ -70,19 +66,6 @@ export default {
       }, (errorCode, error) => {
         this.$toast(error)
       })
-    },
-    likeClick (item) {
-      if (item.is_like === 0) {
-        this.$http(this.$urlPath.askAnswerLikeUrl, {
-          id: item.id,
-          like: 1
-        }, null, (data) => {
-          item.is_like = 1
-          item.like = parseInt(item.like) + 1
-        }, (errorCode, error) => {
-          this.$toast('操作失败')
-        })
-      }
     }
   },
   mounted () {

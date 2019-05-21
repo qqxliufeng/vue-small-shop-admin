@@ -8,9 +8,6 @@
         </li>
       </ul>
     </mescroll-vue>
-    <router-link :to="{name: 'askMessage', query: {s_id: $route.query.s_id}}">
-      <p class="l-m-list-ask">我要提问</p>
-    </router-link>
   </div>
 </template>
 

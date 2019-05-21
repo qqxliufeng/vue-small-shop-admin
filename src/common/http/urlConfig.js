@@ -112,6 +112,12 @@ export const orderAfterSalesLog = orderModuleUrl + 'after_sales_log'
 
 export const commentListUrl = baseUrl2 + 'comment/comment_list'
 
+export const askListUrl = baseUrl2 + 'ask/ask_list'
+
+export const askAnswerListUrl = baseUrl2 + 'ask/answer_list'
+
+export const askAnserGetScenicUrl = baseUrl2 + 'ask/get_scenic'
+
 // 迁移到正式服务器的时候，一定要更换这个地址
 const baseShareShopUrl = 'http://www.store.youdaike.com/'
 

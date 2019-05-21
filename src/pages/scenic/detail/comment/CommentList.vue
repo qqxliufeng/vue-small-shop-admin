@@ -2,8 +2,8 @@
     <div id="commentList" class='c-l-comment-list-container'>
         <my-navi title="评论列表" :isFixed="true"></my-navi>
         <mescroll-vue ref="mescroll" :down="mescrollConfig.mescrollDown" :up="mescrollConfig.mescrollUp" @init="mescrollInit">
-          <div class="s-d-comment-container">
-              <div class="s-d-comment-title-wrapper" v-if="comment">
+          <div class="s-d-comment-container" v-if="comment">
+              <div class="s-d-comment-title-wrapper">
                   <span>综合评价：<i>{{comment.avg_mark}}</i></span>
                   <span>{{comment.count}}次评价</span>
               </div>

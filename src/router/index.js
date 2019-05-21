@@ -19,6 +19,7 @@ import ReseveDetail from '@/pages/reseve/ReseveDetail'
 import ScenicInfo from '@/pages/scenic/detail/ScenicInfo'
 import CommentList from '@/pages/scenic/detail/comment/CommentList'
 import LeaveMessageList from '@/pages/scenic/detail/leavemessage/LeaveMessageList'
+import LeaveMessageInfo from '@/pages/scenic/detail/leavemessage/LeaveMessageInfo'
 import RegisterSeller from '@/pages/register/RegisterSeller'
 
 import OrderInfoPay from '@/pages/order/OrderInfoPay'
@@ -156,6 +157,11 @@ export default new Router({
       path: '/leavemessagelist',
       name: 'leaveMessageList',
       component: LeaveMessageList
+    },
+    {
+      path: '/leavemessageinfo',
+      name: 'leaveMessageInfo',
+      component: LeaveMessageInfo
     },
     {
       path: '/registerseller',
