@@ -10,7 +10,7 @@
   </div>
   <home-tools ref="homeTools" :authInfo="authInfo"></home-tools>
   <p class="logout" @click="logout">退出登录</p>
-  <p class="pc">更多功能请登录电脑端：http://www.baidu.com</p>
+  <p class="pc">更多功能请登录电脑端：http://www.test.youdaike.com/distributor/dashboard?ref=addtabs</p>
   <confirm-dialog content="是否要退出登录？" @dialogConfirm="dialogConfirm" ref="confrimDialog"></confirm-dialog>
 </div>
 </template>
@@ -65,8 +65,8 @@ export default {
           let auth = Number(this.authInfo.auth)
           let authSet = this.authInfo.auth_set
           if (auth === 1) { // 是否是做任务开启权限
-            canShareTicket = Number(this.authInfo.finish_order_number) <= Number(this.authInfo.photo_sharing_order_number) // 判断任务是否是完成了，能不能分享单个商品
-            canFloorBuyTicket = Number(this.authInfo.finish_order_number) <= Number(this.authInfo.floor_buy_number) // 判断任务是否是完成了，能不能低价购买商品
+            canShareTicket = Number(this.authInfo.finish_order_number) >= Number(this.authInfo.photo_sharing_order_number) // 判断任务是否是完成了，能不能分享单个商品
+            canFloorBuyTicket = Number(this.authInfo.finish_order_number) >= Number(this.authInfo.floor_buy_number) // 判断任务是否是完成了，能不能低价购买商品
           } else if (auth === 2) { // 手动开启权限
             canShareTicket = authSet && authSet.indexOf('1') !== -1 // 是不是能分享图片
             canFloorBuyTicket = authSet && authSet.indexOf('2') !== -1 // 是不是能低价购买
@@ -116,4 +116,5 @@ export default {
     right 0
     bottom 0
     margin-bottom rem(.2)
+    line-height rem(.4)
 </style>

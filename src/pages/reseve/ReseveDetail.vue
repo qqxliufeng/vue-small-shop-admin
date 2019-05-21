@@ -6,6 +6,7 @@
             <ticket-user-single-info ref="userSingleInfo"></ticket-user-single-info>
             <!-- <ticket-user-info :contacts="contacts" :touristCount="touristCount" ref="userInfo" v-if="ticketInfo.goods && ticketInfo.goods.play_info === 2" :visitorInfo="ticketInfo.goods.visitor_info"></ticket-user-info> -->
             <!-- <ticket-discount></ticket-discount> -->
+            <div class="resever-tip">最终支付价格以下单结算为准</div>
             <div class="r-d-detail-pay-action-wrapper">
                 <span class="r-d-pay-action-price">总价：<i>￥{{totalPrice}}</i></span>
                 <span class="r-d-pay-action-pay" :style="{'background' : totalPrice === 0 ? '#cccccc' : '#E18234', 'pointer-events': totalPrice === 0 ? 'none' : 'auto'}" @click="reserve">立即预定</span>
@@ -147,6 +148,15 @@ export default {
     .r-d-detail-wrapper
         contentFixed()
         padding-bottom $headerHeight * 2
+        .resever-tip
+            position fixed
+            left 0
+            right 0
+            bottom $headerHeight
+            padding rem(.2) 0
+            text-align center
+            background #F9EFC4
+            textStyle($orangeColor, .25)
         .r-d-detail-pay-action-wrapper
             display flex
             height $headerHeight

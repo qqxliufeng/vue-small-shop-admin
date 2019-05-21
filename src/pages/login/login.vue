@@ -14,7 +14,7 @@
           <span class="input-fast-phone" @click="fastLogin">手机快捷登录</span>
       </div>
   </div>
-  <p class="pc">更多功能请登录电脑端：http://www.baidu.com</p>
+  <p class="pc">更多功能请登录电脑端：http://www.test.youdaike.com/distributor/dashboard?ref=addtabs</p>
   <el-dialog :visible.sync="showVerifyDialog" modal width="90%">
     <slide-verify
     :w="width"
@@ -170,4 +170,5 @@ export default {
         right 0
         bottom 0
         margin-bottom rem(.2)
+        line-height rem(.4)
 </style>

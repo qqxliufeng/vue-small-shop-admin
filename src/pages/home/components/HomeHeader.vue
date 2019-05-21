@@ -10,14 +10,14 @@
           <div class="release-money-wrapper">
             <div class="release-money" @click="myBalance">
               <p>账户余额</p>
-              <p class="money">￥{{amount && Number(amount.balance).toFixed(2) || '0.00'}}</p>
+              <p class="money">￥{{(amount && Number(amount.balance).toFixed(2)) || '0.00'}}</p>
             </div>
             <el-button type="primary" size="mini" @click="myBalance">详情</el-button>
           </div>
           <span class="separator-line"></span>
           <div class="other-money-wrapper">
-            <p><span>账户返利  </span><span class="money">￥{{amount && Number(amount.rebate).toFixed(2) || '0.00'}}</span></p>
-            <p><span>授信额度  </span><span class="money">￥{{amount && Number(amount.line_of_credit).toFixed(2) || '0.00'}}</span></p>
+            <p><span>账户返利  </span><span class="money">￥{{(amount && Number(amount.rebate).toFixed(2)) || '0.00'}}</span></p>
+            <p><span>授信额度  </span><span class="money">￥{{(amount && Number(amount.line_of_credit).toFixed(2)) || '0.00'}}</span></p>
           </div>
       </div>
   </div>

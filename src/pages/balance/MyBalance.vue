@@ -62,11 +62,11 @@ export default {
       this.$router.push({name: 'withdrawBalance'})
     },
     balanceQuestion () {
-      this.$router.push({name: 'questionBalance'})
+      // 余额常见问题
+      this.$router.push({name: 'protocol', params: {title: '常见问题', qtype: 2}})
     },
     getData () {
       this.$http(this.$urlPath.balanceStatistics, {}, '', (data) => {
-        console.log(data)
         this.info = data.data
       }, (errorCode, error) => {
         this.$toast(error)

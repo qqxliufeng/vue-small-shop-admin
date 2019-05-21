@@ -110,6 +110,8 @@ export const orderRefund = orderModuleUrl + 'refund'
 
 export const orderAfterSalesLog = orderModuleUrl + 'after_sales_log'
 
+export const commentListUrl = baseUrl2 + 'comment/comment_list'
+
 // 迁移到正式服务器的时候，一定要更换这个地址
 const baseShareShopUrl = 'http://www.store.youdaike.com/'
 

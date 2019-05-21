@@ -52,7 +52,8 @@ export default {
       this.$router.push({name: 'rebateToBalance'})
     },
     balanceQuestion () {
-      this.$router.push({name: 'questionBalance'})
+      // 返利常见问题
+      this.$router.push({name: 'protocol', params: {title: '常见问题', qtype: 1}})
     },
     getData () {
       this.$http(this.$urlPath.rebateStatistics, {}, '', (data) => {

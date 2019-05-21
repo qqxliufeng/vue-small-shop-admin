@@ -275,6 +275,12 @@ export default new Router({
       name: 'city',
       component: () => import('@/pages/city/City'),
       props: true
+    },
+    {
+      path: '/protocol',
+      name: 'protocol',
+      component: () => import('@/pages/protocol/Protocol'),
+      props: true
     }
   ],
   scrollBehavior (to, from, saveTop) {
