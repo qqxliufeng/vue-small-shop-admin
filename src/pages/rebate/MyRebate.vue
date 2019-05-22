@@ -57,7 +57,6 @@ export default {
     },
     getData () {
       this.$http(this.$urlPath.rebateStatistics, {}, '', (data) => {
-        console.log(data)
         this.info = data.data
       }, (errorCode, error) => {
         this.$toast(error)

@@ -1,7 +1,7 @@
 <template>
-  <div class='r-l-item-container' :id="'rebate-list-item-container' + state">
+  <div class='r-l-item-container'>
       <mescroll-vue ref="mescroll" :down="mescrollConfig.mescrollDown" :up="mescrollConfig.mescrollUp">
-        <ul>
+        <ul :id="'rebate-list-item-container' + state">
           <li v-for="item of list" :key="item.id">
             <el-card shadow="always"  :body-style="{ padding: '.2rem' }" class="item-card">
               <div class="info-container">
@@ -76,6 +76,9 @@ export default {
       return ''
     },
     upCallBack (page, mescroll) {
+      if (page.num === 1) {
+        this.list = []
+      }
       this.$http(this.$urlPath.rebateLog, {
         type: this.state + '',
         page: page.num
