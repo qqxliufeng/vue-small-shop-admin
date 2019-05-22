@@ -10,27 +10,27 @@
           </div>
       </el-card>
       <el-card :body-style="{ padding: '.2rem' }" shadow="always" class="ask-content-card" >
-        <div class="a-m-message-ask-info-wrapper">
-          <div class="ask-title-wrapper">
-              <span>答</span>
-              <span>共计{{ask.answer.length}}条回复</span>
+          <div class="a-m-message-ask-info-wrapper">
+            <div class="ask-title-wrapper">
+                <span>答</span>
+                <span>共计{{ask.answer.length}}条回复</span>
+            </div>
+            <ul>
+              <li v-for="item of ask.answer" :key="item.aid">
+                <div class="item-container">
+                  <div class="user-info-container">
+                    <img v-lazy="$utils.image.getImagePath(item.avatar)">
+                    <span>{{$utils.common.hiddenMobile(item.username)}}</span>
+                  </div>
+                  <p class="item-content">{{item.answer_text}}</p>
+                  <div class="item-info-container">
+                    <span class="iconfont l-q-footer-time">&#xe790; {{item.create_time}}</span>
+                  </div>
+                </div>
+              </li>
+            </ul>
           </div>
-          <ul>
-            <li v-for="item of ask.answer" :key="item.aid">
-              <div class="item-container">
-                <div class="user-info-container">
-                  <img v-lazy="$utils.image.getImagePath(item.avatar)">
-                  <span>{{item.username}}</span>
-                </div>
-                <p class="item-content">{{item.answer_text}}</p>
-                <div class="item-info-container">
-                  <span class="iconfont l-q-footer-time">&#xe790; {{item.create_time}}</span>
-                </div>
-              </div>
-            </li>
-          </ul>
-        </div>
-    </el-card>
+      </el-card>
   </div>
 </div>
 </template>

@@ -59,18 +59,27 @@ export default {
         this.$root.userInfo.setUserInfoBalance(this.amount.balance)
         this.$root.userInfo.setUserInfoRebate(this.amount.rebate)
         // start************根据接口返回来的数据判断是不是有对应的权限************
+        // let canShareTicket = false
+        // let canFloorBuyTicket = false
+        // if (this.authInfo) { // 是否获取到数据了
+        //   let auth = Number(this.authInfo.auth)
+        //   let authSet = this.authInfo.auth_set
+        //   if (auth === 1) { // 是否是做任务开启权限
+        //     canShareTicket = Number(this.authInfo.finish_order_number) >= Number(this.authInfo.photo_sharing_order_number) // 判断任务是否是完成了，能不能分享单个商品
+        //     canFloorBuyTicket = Number(this.authInfo.finish_order_number) >= Number(this.authInfo.floor_buy_number) // 判断任务是否是完成了，能不能低价购买商品
+        //   } else if (auth === 2) { // 手动开启权限
+        //     canShareTicket = authSet && authSet.indexOf('1') !== -1 // 是不是能分享图片
+        //     canFloorBuyTicket = authSet && authSet.indexOf('2') !== -1 // 是不是能低价购买
+        //   }
+        // }
+        // this.$root.state.saveCanShareTicket(canShareTicket)
+        // this.$root.state.saveCanFloorBuyTicket(canFloorBuyTicket)
         let canShareTicket = false
         let canFloorBuyTicket = false
         if (this.authInfo) { // 是否获取到数据了
-          let auth = Number(this.authInfo.auth)
           let authSet = this.authInfo.auth_set
-          if (auth === 1) { // 是否是做任务开启权限
-            canShareTicket = Number(this.authInfo.finish_order_number) >= Number(this.authInfo.photo_sharing_order_number) // 判断任务是否是完成了，能不能分享单个商品
-            canFloorBuyTicket = Number(this.authInfo.finish_order_number) >= Number(this.authInfo.floor_buy_number) // 判断任务是否是完成了，能不能低价购买商品
-          } else if (auth === 2) { // 手动开启权限
-            canShareTicket = authSet && authSet.indexOf('1') !== -1 // 是不是能分享图片
-            canFloorBuyTicket = authSet && authSet.indexOf('2') !== -1 // 是不是能低价购买
-          }
+          canShareTicket = authSet && authSet.indexOf('1') !== -1 // 是不是能分享图片
+          canFloorBuyTicket = authSet && authSet.indexOf('2') !== -1 // 是不是能低价购买
         }
         this.$root.state.saveCanShareTicket(canShareTicket)
         this.$root.state.saveCanFloorBuyTicket(canFloorBuyTicket)
