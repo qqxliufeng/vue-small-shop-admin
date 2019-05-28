@@ -287,6 +287,12 @@ export default new Router({
       name: 'protocol',
       component: () => import('@/pages/protocol/Protocol'),
       props: true
+    },
+    {
+      path: '/gallary',
+      name: 'gallary',
+      component: () => import('@/common/components/gallary/Gallary'),
+      props: true
     }
   ],
   scrollBehavior (to, from, saveTop) {
