@@ -71,7 +71,7 @@ export default {
           data.data.forEach((it, index) => {
             it.stateModel = {
               orderType: '2',
-              stateTip: '已退款',
+              stateTip: '退款/售后',
               time: {
                 title: '下单时间：',
                 time: it.ord_add_time

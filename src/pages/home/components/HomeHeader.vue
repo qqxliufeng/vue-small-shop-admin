@@ -6,19 +6,23 @@
         <img :src="$utils.image.getImagePath($root.userInfo.state.avatar)">
       </div>
       <span class="nick-name">{{$root.userInfo.state.name}}</span>
-      <div class="info-wrapper">
-          <div class="release-money-wrapper">
-            <div class="release-money" @click="myBalance">
-              <p>账户余额</p>
-              <p class="money">￥{{(amount && Number(amount.balance).toFixed(2)) || '0.00'}}</p>
-            </div>
-            <el-button type="primary" size="mini" @click="myBalance">详情</el-button>
-          </div>
-          <span class="separator-line"></span>
-          <div class="other-money-wrapper">
-            <p><span>账户返利  </span><span class="money">￥{{(amount && Number(amount.rebate).toFixed(2)) || '0.00'}}</span></p>
-            <p><span>授信额度  </span><span class="money">￥{{(amount && Number(amount.line_of_credit).toFixed(2)) || '0.00'}}</span></p>
-          </div>
+      <div class="other-money-wrapper">
+        <div class="money-info-wrapper">
+          <p class="money-title">账户余额</p>
+          <p class="money">￥{{(amount && Number(amount.balance).toFixed(2)) || '0.00'}}</p>
+        </div>
+        <div class="money-info-wrapper">
+          <p class="money-title">账户返利</p>
+          <p class="money">￥{{(amount && Number(amount.rebate).toFixed(2)) || '0.00'}}</p>
+        </div>
+        <div class="money-info-wrapper">
+          <p class="money-title">预计返利</p>
+          <p class="money">￥{{(amount && Number(amount.rebate).toFixed(2)) || '0.00'}}</p>
+        </div>
+        <div class="money-info-wrapper">
+          <p class="money-title">授信额度</p>
+          <p class="money">￥{{(amount && Number(amount.line_of_credit).toFixed(2)) || '0.00'}}</p>
+        </div>
       </div>
   </div>
 </div>
@@ -89,35 +93,19 @@ export default {
                 object-fit cover
         .nick-name
             normalTextStyle(#333, .32)
-        .info-wrapper
+        .other-money-wrapper
+            font-size rem(.3)
             display flex
             flex-direction row
             margin-top rem(.5)
-            align-items center
-            justify-content center
-            .separator-line
-                display inline-block
-                width rem(.05)
-                height rem(.5)
-                background #f5f5f5
-                margin 0 rem(.5)
-            .release-money-wrapper
-                display flex
-                align-items center
-                .release-money
-                    margin-right rem(.5)
-                    font-size rem(.3)
-                    text-align center
-                    & p:nth-child(2)
-                        margin-top rem(.2)
-                        font-size rem(.32)
-                & >>> .el-button
-                    height rem(.6)
-            .other-money-wrapper
+            width 100%
+            .money-info-wrapper
                 flex 1
-                font-size rem(.3)
-                & p:nth-child(1)
-                    margin-bottom rem(.2)
-.money
-    color $primary
+                text-align center
+                .money-title
+                    color #666
+                    font-size rem(.28)
+                .money
+                    color $primary
+                    margin-top rem(.2)
 </style>

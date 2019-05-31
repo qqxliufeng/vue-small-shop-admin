@@ -123,6 +123,11 @@ export default new Router({
       component: AddPartner
     },
     {
+      path: '/teamflow',
+      name: 'teamFlow',
+      component: () => import('@/pages/partner/TeamFlow')
+    },
+    {
       path: '/goodslist',
       name: 'goodsList',
       component: GoodsList
@@ -293,6 +298,21 @@ export default new Router({
       name: 'gallary',
       component: () => import('@/common/components/gallary/Gallary'),
       props: true
+    },
+    {
+      path: '/accountSet',
+      name: 'accountSet',
+      component: () => import('@/pages/account/AccountSet')
+    },
+    {
+      path: '/personalinfo',
+      name: 'personalInfo',
+      component: () => import('@/pages/account/PersonalInfo')
+    },
+    {
+      path: '/authinfo',
+      name: 'authInfo',
+      component: () => import('@/pages/account/AuthInfo')
     }
   ],
   scrollBehavior (to, from, saveTop) {

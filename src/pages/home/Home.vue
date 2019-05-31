@@ -8,8 +8,12 @@
       </p>
       <home-header :amount="amount"></home-header>
   </div>
-  <home-tools ref="homeTools" :authInfo="authInfo"></home-tools>
-  <p class="logout" @click="logout">退出登录</p>
+  <home-order-info @orderClick="orderClick"></home-order-info>
+  <home-menu :menu="menus.makeMoney"></home-menu>
+  <home-menu :menu="menus.myTeam" v-if="Number(this.$root.userInfo.state.rank) < 3"></home-menu>
+  <home-menu :menu="menus.mySetting"></home-menu>
+  <!-- <home-tools ref="homeTools" :authInfo="authInfo"></home-tools> -->
+  <!-- <p class="logout" @click="logout">退出登录</p> -->
   <p class="pc">更多功能请登录电脑端：http://www.test.youdaike.com/distributor/dashboard?ref=addtabs</p>
   <confirm-dialog content="是否要退出登录？" @dialogConfirm="dialogConfirm" ref="confrimDialog"></confirm-dialog>
 </div>
@@ -19,6 +23,8 @@
 import HomeHeader from './components/HomeHeader'
 import HomeNavigation from './components/HomeNavigation'
 import HomeTools from './components/HomeTool'
+import HomeOrderInfo from './components/HomeOrderInfo'
+import HomeMenu from './components/HomeMenu'
 import HomeBottomNavigation from './components/HomeBottomNavigation'
 import ConfirmDialog from 'common/components/confirm-dialog'
 export default {
@@ -27,15 +33,110 @@ export default {
     HomeNavigation,
     HomeHeader,
     HomeTools,
+    HomeOrderInfo,
     HomeBottomNavigation,
-    ConfirmDialog
+    ConfirmDialog,
+    HomeMenu
   },
   data () {
     return {
       msg: '',
       showTip: true,
       amount: null,
-      authInfo: null
+      authInfo: null,
+      menus: {
+        makeMoney: {
+          title: '我要赚钱',
+          menus: [
+            {
+              icon: '&#xe7d6;',
+              iconColor: '#EC8E8B',
+              title: '分享小店',
+              callBack: () => {
+                this.$router.push({name: 'shareShop'})
+              }
+            },
+            {
+              icon: '&#xe652;',
+              iconColor: '#EC8E8B',
+              title: '分享海报',
+              callBack: () => {
+                this.$router.push({name: 'scenicPostList'})
+              }
+            },
+            {
+              icon: '&#xe670;',
+              iconColor: '#EC8E8B',
+              title: '商品列表',
+              callBack: () => {
+                this.$router.push({name: 'goodsList'})
+              }
+            }
+          ]
+        },
+        myTeam: {
+          title: '我的团队',
+          menus: [
+            {
+              icon: '&#xe63f;',
+              iconColor: '#99DCFB',
+              title: '发展团队',
+              callBack: () => {
+                if (this.authInfo && this.authInfo.auth_set && this.authInfo.auth_set.indexOf('3') !== -1) {
+                  this.$router.push({name: 'sharePartner'})
+                } else {
+                  this.$toast('当前帐号暂无此权限')
+                }
+              }
+            },
+            {
+              icon: '&#xe654;',
+              iconColor: '#99DCFB',
+              title: '如何发展团队',
+              callBack: () => {
+                this.$router.push('teamFlow')
+              }
+            },
+            {
+              icon: '&#xe655;',
+              iconColor: '#99DCFB',
+              title: '团队列表',
+              callBack: () => {
+                this.$router.push({name: 'partnerList'})
+              }
+            }
+          ]
+        },
+        mySetting: {
+          title: '我的设置',
+          menus: [
+            {
+              icon: '&#xe63e;',
+              iconColor: '#6CCABC',
+              title: '发布公告',
+              callBack: () => {
+                this.$router.push({name: 'editNotify'})
+              }
+            },
+            {
+              icon: '&#xe603;',
+              iconColor: '#6CCABC',
+              title: '个人信息',
+              callBack: () => {
+                this.$router.push({name: 'accountSet'})
+              }
+            },
+            {
+              icon: '&#xe607;',
+              iconColor: '#6CCABC',
+              title: '退出登录',
+              callBack: () => {
+                this.logout()
+              }
+            }
+          ]
+        }
+      }
     }
   },
   methods: {
@@ -58,22 +159,6 @@ export default {
         this.authInfo = this.amount
         this.$root.userInfo.setUserInfoBalance(this.amount.balance)
         this.$root.userInfo.setUserInfoRebate(this.amount.rebate)
-        // start************根据接口返回来的数据判断是不是有对应的权限************
-        // let canShareTicket = false
-        // let canFloorBuyTicket = false
-        // if (this.authInfo) { // 是否获取到数据了
-        //   let auth = Number(this.authInfo.auth)
-        //   let authSet = this.authInfo.auth_set
-        //   if (auth === 1) { // 是否是做任务开启权限
-        //     canShareTicket = Number(this.authInfo.finish_order_number) >= Number(this.authInfo.photo_sharing_order_number) // 判断任务是否是完成了，能不能分享单个商品
-        //     canFloorBuyTicket = Number(this.authInfo.finish_order_number) >= Number(this.authInfo.floor_buy_number) // 判断任务是否是完成了，能不能低价购买商品
-        //   } else if (auth === 2) { // 手动开启权限
-        //     canShareTicket = authSet && authSet.indexOf('1') !== -1 // 是不是能分享图片
-        //     canFloorBuyTicket = authSet && authSet.indexOf('2') !== -1 // 是不是能低价购买
-        //   }
-        // }
-        // this.$root.state.saveCanShareTicket(canShareTicket)
-        // this.$root.state.saveCanFloorBuyTicket(canFloorBuyTicket)
         let canShareTicket = false
         let canFloorBuyTicket = false
         if (this.authInfo) { // 是否获取到数据了
@@ -87,6 +172,9 @@ export default {
       }, (errorCode, error) => {
         this.$toast(error)
       })
+    },
+    orderClick (type) {
+      this.$router.push({name: 'orderList', query: { type: type.type }})
     },
     logout () {
       this.$refs.confrimDialog.showDialog()
@@ -120,10 +208,6 @@ export default {
 .pc
     text-align center
     textStyle(#aaa, .25)
-    position absolute
-    left 0
-    right 0
-    bottom 0
-    margin-bottom rem(.2)
-    line-height rem(.4)
+    margin rem(.8) 0 rem(.3) 0
+    line-height rem(.5)
 </style>

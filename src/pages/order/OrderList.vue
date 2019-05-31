@@ -1,11 +1,11 @@
 <template>
     <div class="o-a-list-container">
         <my-navi title="我的订单" :isFixed="true">
-          <template slot="rightAction">
+          <!-- <template slot="rightAction">
             <span @click="refundList">退款/售后</span>
-          </template>
+          </template> -->
         </my-navi>
-        <order-list-item ref="allItem" :state="0"></order-list-item>
+        <order-list-item ref="allItem"></order-list-item>
     </div>
 </template>
 

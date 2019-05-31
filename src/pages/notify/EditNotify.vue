@@ -1,16 +1,21 @@
 <template>
 <div class='n-edit-container'>
   <my-navi title="发布公告">
-    <template slot="rightAction">
+    <!-- <template slot="rightAction">
       <p @click="notifyList">
         <span class="el-icon-tickets record">  记录</span>
       </p>
-    </template>
+    </template> -->
   </my-navi>
-  <div class="content">
-    <el-input type="textarea" placeholder="请输入您要发布的店铺公告内容……" :rows="10"></el-input>
+   <div class="content">
+    <p>公告标题</p>
+    <input placeholder="请输入您要发布的店铺公告标题……"  maxlength="20" minlength="5" v-model="title"/>
   </div>
-  <div class="submit">
+  <div class="content">
+    <p>公告内容</p>
+    <textarea placeholder="请输入您要发布的店铺公告内容……"  maxlength="100" minlength="10" v-model="content"/>
+  </div>
+  <div class="submit" @click="submit">
     发布公告
   </div>
 </div>
@@ -23,9 +28,25 @@ export default {
   components: {},
   data () {
     return {
+      title: '',
+      content: ''
     }
   },
   methods: {
+    submit () {
+      if (!this.title) {
+        return this.$toast('请输入公告标题')
+      }
+      if (this.title.length < 5) {
+        return this.$toast('请输入5~20位字符的标题内容')
+      }
+      if (!this.content) {
+        return this.$toast('请输入公告内容')
+      }
+      if (this.content.length < 100) {
+        return this.$toast('请输入10~100位字符的公告内容')
+      }
+    },
     notifyList () {
       this.$router.push({name: 'notifyList'})
     }
@@ -40,13 +61,25 @@ export default {
         color $primary
     .content
         padding rem(.2)
-        & input
-            background #E8EDED
+        & textarea
+            background #f5f5f5
+            border-radius rem(.1)
             border 1px solid #DCE0E2
             width 100%
-            height rem(3)
+            min-height rem(3)
             padding rem(.2)
             box-sizing border-box
+        & input
+            background #f5f5f5
+            border-radius rem(.1)
+            border 1px solid #DCE0E2
+            width 100%
+            padding rem(.2)
+            box-sizing border-box
+        & p
+            margin rem(.2)
+            font-size rem(.28)
+            color #333
     .submit
         position fixed
         bottom 0

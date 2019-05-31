@@ -51,9 +51,6 @@ import listMixin from 'common/mixins/list-mixin'
 export default {
   name: 'orderListItem',
   mixins: [listMixin],
-  props: {
-    state: Number
-  },
   components: {
     MescrollVue,
     CountDown
@@ -71,6 +68,7 @@ export default {
     },
     upCallBack (page, mescroll) {
       this.$http(this.$urlPath.orderList, {
+        status: this.$route.query.type,
         page: page.num
       }, null, (data) => {
         this.serverTime = data.time

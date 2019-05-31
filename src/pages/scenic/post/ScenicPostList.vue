@@ -1,10 +1,16 @@
 <template>
 <div class='s-p-list-container'>
-  <my-navi title="景区海报" :isFixed="true"></my-navi>
+  <my-navi title="分享海报" :isFixed="true"></my-navi>
   <div class="content">
-      <div class="search-wrapper" v-if="showSearch">
+      <!-- <div class="search-wrapper" v-if="showSearch">
         <input type="text" placeholder="请输入要搜索的内容" class="input-content" v-model="scenicName">
         <button class="button-search" @click="searchPost">搜索</button>
+      </div> -->
+      <div class="radio-container">
+        <el-radio-group size="medium" v-model="selectType">
+          <el-radio-button label="scenic">景区海报</el-radio-button>
+          <el-radio-button label="ticket">门票海报</el-radio-button>
+        </el-radio-group>
       </div>
       <ul v-if="scenicPostList">
         <li v-for="item of scenicPostList" :key="item.id" class="scenic-post-item-wrapper" @click="startScenicPost(item)">
@@ -36,7 +42,8 @@ export default {
   data () {
     return {
       scenicPostList: null,
-      scenicName: ''
+      scenicName: '',
+      selectType: 'scenic'
     }
   },
   computed: {
@@ -89,6 +96,11 @@ export default {
     .content
         // contentFixed()
         padding-top $headerHeight
+        .radio-container
+            text-align center
+            margin rem(.2)
+            & >>> .el-radio-button__inner
+              padding rem(.2) rem(1)
         .search-wrapper
             background #ffffff
             height $headerHeight
