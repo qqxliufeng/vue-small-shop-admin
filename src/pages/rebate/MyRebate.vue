@@ -9,12 +9,12 @@
       <p class="balance">￥{{Number(info.now_rebate).toFixed(2) || '0.00'}}</p>
       <p class="balance-tip">当前返利</p>
       <div class="balance-wrapper">
-        <div>
+        <div @click="rebateDetail">
           <p class="total-money">￥{{Number(info.rebate_total).toFixed(2)}}</p>
           <p class="total-tip">累计返利</p>
         </div>
         <span class="sperator"></span>
-        <div>
+        <div @click="rebateDetail">
           <p class="total-money">￥{{Number(info.estimate_rebate_total).toFixed(2)}}</p>
           <p class="total-tip">预计返利</p>
         </div>

@@ -5,35 +5,40 @@
           <li>
               <div class="p-i-item">
                   <span class="p-i-left">联系人姓名</span>
-                  <input class="p-i-right p-i-text" placeholder="请输入用户名" maxlength="10"/>
+                  <span class="p-i-right p-i-text">{{info.linkname}}</span>
               </div>
           </li>
           <li>
               <div class="p-i-item">
                   <span class="p-i-left">所在城市</span>
-                  <input class="p-i-right p-i-text" placeholder="请输入邮箱" maxlength="20"/>
+                  <span class="p-i-right p-i-text">{{info.city}}</span>
               </div>
           </li>
           <li>
               <div class="p-i-item">
                   <span class="p-i-left">身份类别</span>
-                  <input class="p-i-right p-i-text" placeholder="请输入QQ号" maxlength="12"/>
+                  <span class="p-i-right p-i-text">{{info.distributor_type === 1 ? '社会' : '学生'}}</span>
               </div>
           </li>
           <li>
               <div class="p-i-item">
                   <span class="p-i-left">学校/单位名称</span>
-                  <input class="p-i-right p-i-text" placeholder="请输入QQ号" maxlength="12"/>
+                  <span class="p-i-right p-i-text">{{info.schoolName_companyName}}</span>
               </div>
           </li>
           <li>
-              <div class="p-i-item">
-                  <span class="p-i-left">证件信息</span>
-                  <input class="p-i-right p-i-text" placeholder="请输入QQ号" maxlength="12"/>
+              <div>
+                  <span class="p-i-left" style="display: block;padding: 0 .2rem; line-height: 1rem; color: #333333; font-size: .32rem">证件信息</span>
+                  <div v-if="info.distributor_type === 1" class="image-wrapper">
+                      <img :src="$utils.image.getImagePath(info.ID_card_Front)" alt="" v-if="info.ID_card_Front">
+                      <img :src="$utils.image.getImagePath(info.ID_card_Reverse)" alt="" v-if="info.ID_card_Reverse">
+                   </div>
+                   <div v-else  class="image-wrapper">
+                      <img :src="$utils.image.getImagePath(info.student_identity_card)" alt="" v-if="info.student_identity_card">
+                   </div>
               </div>
           </li>
       </ul>
-      <button class="p-i-submit" @click="submit">确定</button>
   </div>
 </template>
 
@@ -44,11 +49,15 @@ export default {
   components: {},
   data () {
     return {
+      info: {}
     }
   },
-  methods: {
-    submit () {
-    }
+  mounted () {
+    this.$http(this.$urlPath.getInformation, {}, '', (data) => {
+      this.info = data.data
+    }, (errorCode, error) => {
+      this.$toast(error)
+    })
   }
 }
 </script>
@@ -85,6 +94,13 @@ export default {
         .p-i-sex
             float right
             margin-right .2rem
+    .image-wrapper
+        padding 0 rem(.2)
+        & img
+            width 100%
+            object-fit cover
+            background-color red
+            margin-bottom rem(.2)
 .p-i-submit
     display block
     width 80%

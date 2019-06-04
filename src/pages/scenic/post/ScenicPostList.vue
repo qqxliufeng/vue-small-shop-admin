@@ -7,9 +7,9 @@
         <button class="button-search" @click="searchPost">搜索</button>
       </div> -->
       <div class="radio-container">
-        <el-radio-group size="medium" v-model="selectType">
-          <el-radio-button label="scenic">景区海报</el-radio-button>
-          <el-radio-button label="ticket">门票海报</el-radio-button>
+        <el-radio-group size="medium" v-model="selectType" @change="change">
+          <el-radio-button label="1">景区海报</el-radio-button>
+          <el-radio-button label="2">门票海报</el-radio-button>
         </el-radio-group>
       </div>
       <ul v-if="scenicPostList">
@@ -18,8 +18,8 @@
             <img class="item-image" v-lazy="getScenicImage(item)" :key="getScenicImage(item)">
             <div class="item-info-wrapper">
               <p class="item-title">{{item.scenic_name}}</p>
-              <p class="item-lvxingshe">{{item.store_name ? item.store_name : '暂无'}}</p>
-              <p class="item-info">
+              <p class="item-lvxingshe">{{selectType === '1' ? item.store_name : item.goods_name}}</p>
+              <p class="item-info" v-show="selectType === '1'">
                 <span>{{item.score}}分</span>
                 <span>{{item.number_of_people}}人次</span>
               </p>
@@ -43,7 +43,7 @@ export default {
     return {
       scenicPostList: null,
       scenicName: '',
-      selectType: 'scenic'
+      selectType: '1'
     }
   },
   computed: {
@@ -52,12 +52,21 @@ export default {
     }
   },
   methods: {
+    change (item) {
+      this.selectType = item
+      this.getData()
+    },
     startScenicPost (item) {
-      this.$router.push({name: 'shareScenic', query: {scenic_id: item.scenic_id}})
+      if (this.selectType === '1') {
+        this.$router.push({name: 'shareScenic', query: {scenic_id: item.scenic_id}})
+      } else {
+        this.$router.push({name: 'shareTicket', query: {s_id: this.$route.query.scenicId, goods_id: item.goods_id}})
+      }
     },
     getData () {
       this.$http(this.$urlPath.scenicPosterList, {
-        scenic_name: this.scenicName
+        scenic_name: this.scenicName,
+        type: this.selectType
       }, '正在加载…', (data) => {
         this.scenicPostList = data.data
         if (!this.scenicPostList || this.scenicPostList.length === 0) {

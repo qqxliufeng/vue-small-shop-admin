@@ -1,6 +1,6 @@
 
 // 迁移到正式的服务器的时候，一定要更换这个地址，要不然会炸的
-export const baseIP = 'http://www.test.youdaike.com/'
+export const baseIP = 'http://www.huiqintuan.com/'
 
 export const baseUrl = 'distributor_api/'
 
@@ -66,6 +66,10 @@ export const rebateLog = distributorModuleUrl + 'rebate_log'
 
 export const customerService = distributorModuleUrl + 'customer_service'
 
+export const releaseNotice = distributorModuleUrl + 'release_notice'
+
+export const getInformation = distributorModuleUrl + 'get_information'
+
 const orderUrl = baseUrl + 'order/'
 
 export const createOrder = orderUrl + 'create_order'
@@ -119,10 +123,10 @@ export const askAnswerListUrl = baseUrl2 + 'ask/answer_list'
 export const askAnserGetScenicUrl = baseUrl2 + 'ask/get_scenic'
 
 // 迁移到正式服务器的时候，一定要更换这个地址
-const baseShareShopUrl = 'http://www.store.youdaike.com/'
+const baseShareShopUrl = 'http://www.store.huiqintuan.com/'
 
 // 迁移到正式的服务器的时候，一定要更换这个地址，要不然会炸的
-const baseShareAdminUrl = 'http://www.test.youdaike.com/distributor_manage/#/'
+const baseShareAdminUrl = 'http://www.huiqintuan.com/distributor_manage/#/'
 
 // const baseShareAdminUrl = 'http://192.168.0.107:8888/distributor_manage/#/'
 

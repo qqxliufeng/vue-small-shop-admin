@@ -2,7 +2,6 @@
     <div class="r-d-user-info-container">
         <p class="r-d-user-info-title">
             <span>游客信息<i class="tourist-count">(需要提供<i>{{touristCount}}</i>位游客信息)</i></span>
-            <span class="select-user-info" @click="selectContact">选择联系人<i class="el-icon-arrow-right"></i></span>
         </p>
         <div class="r-d-user-info-content-wrapper">
             <el-tag class="r-d-user-info-content"
@@ -18,14 +17,14 @@
                 {{item.name}}
             </el-tag>
         </div>
-        <el-dialog :visible.sync="showAddUserInfoDialog" :modal="false" title="用户信息" width="90%">
-            <div class="r-d-user-info-input-wrapper">
-                <span>姓名<i>(必填)</i></span>
+        <el-dialog :visible.sync="showAddUserInfoDialog" :modal="false" title="游客信息" width="90%">
+            <div class="r-d-user-info-input-wrapper"  v-if="visitorInfo.indexOf('n') !== -1">
+                <span>姓名</span>
                 <input type="text" placeholder="请输入姓名" v-model="tempUserInfo.name">
             </div>
-             <div class="r-d-user-info-input-wrapper">
-                <span>手机号<i>(必填)</i></span>
-                <input type="text" placeholder="请输入手机号" v-model="tempUserInfo.phone">
+             <div class="r-d-user-info-input-wrapper"  v-if="visitorInfo.indexOf('m') !== -1">
+                <span>手机号</span>
+                <input type="text" placeholder="请输入手机号" v-model="tempUserInfo.phone" maxlength="11">
             </div>
              <div class="r-d-user-info-input-wrapper"  v-if="visitorInfo.indexOf('id') !== -1">
                 <span>身份证号</span>
@@ -145,16 +144,28 @@ export default {
       this.tempUserInfo.clear()
     },
     submitUserInfoDialog () {
-      if (!this.tempUserInfo.name) {
+      if (!this.tempUserInfo.name && this.visitorInfo.indexOf('n') !== -1) {
         this.$toast('请输入姓名')
         return
       }
-      if (!this.tempUserInfo.phone) {
+      if (!this.tempUserInfo.phone && this.visitorInfo.indexOf('m') !== -1) {
         this.$toast('请输入手机号')
         return
       }
-      if (!this.$utils.validator.isPhone(this.tempUserInfo.phone)) {
+      if (!this.$utils.validator.isPhone(this.tempUserInfo.phone) && this.visitorInfo.indexOf('m') !== -1) {
         this.$toast('请输入合法的手机号')
+        return
+      }
+      if (!this.tempUserInfo.idCard && this.visitorInfo.indexOf('id') !== -1) {
+        this.$toast('请输入身份证号')
+        return
+      }
+      if (!this.tempUserInfo.schoolName && this.visitorInfo.indexOf('u') !== -1) {
+        this.$toast('请输入学校姓名')
+        return
+      }
+      if (!this.tempUserInfo.studentId && this.visitorInfo.indexOf('s') !== -1) {
+        this.$toast('请输入学生证号')
         return
       }
       let info = {
@@ -181,6 +192,7 @@ export default {
 @import '~styles/mixin.styl'
 .r-d-user-info-container
     border-top rem(.2) solid #f5f5f5
+    padding-bottom rem(.8)
     .r-d-user-info-title
         textStyle(#333, .3)
         padding rem(.3)

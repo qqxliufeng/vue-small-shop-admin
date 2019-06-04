@@ -46,10 +46,9 @@ export default {
   components: {},
   data () {
     return {
-      userName: '',
-      email: '',
-      qq: '',
-      avatar: '',
+      userName: this.$root.userInfo.state.name,
+      email: this.$root.userInfo.state.email,
+      qq: this.$root.userInfo.state.qq || '',
       avatarAction: ''
     }
   },

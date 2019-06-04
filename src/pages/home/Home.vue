@@ -8,14 +8,11 @@
       </p>
       <home-header :amount="amount"></home-header>
   </div>
-  <home-order-info @orderClick="orderClick"></home-order-info>
+  <home-order-info @orderClick="orderClick" :orderInfo="amount.my_order" v-if="amount"></home-order-info>
   <home-menu :menu="menus.makeMoney"></home-menu>
   <home-menu :menu="menus.myTeam" v-if="Number(this.$root.userInfo.state.rank) < 3"></home-menu>
   <home-menu :menu="menus.mySetting"></home-menu>
-  <!-- <home-tools ref="homeTools" :authInfo="authInfo"></home-tools> -->
-  <!-- <p class="logout" @click="logout">退出登录</p> -->
   <p class="pc">更多功能请登录电脑端：http://www.test.youdaike.com/distributor/dashboard?ref=addtabs</p>
-  <confirm-dialog content="是否要退出登录？" @dialogConfirm="dialogConfirm" ref="confrimDialog"></confirm-dialog>
 </div>
 </template>
 
@@ -26,7 +23,6 @@ import HomeTools from './components/HomeTool'
 import HomeOrderInfo from './components/HomeOrderInfo'
 import HomeMenu from './components/HomeMenu'
 import HomeBottomNavigation from './components/HomeBottomNavigation'
-import ConfirmDialog from 'common/components/confirm-dialog'
 export default {
   name: 'home',
   components: {
@@ -35,7 +31,6 @@ export default {
     HomeTools,
     HomeOrderInfo,
     HomeBottomNavigation,
-    ConfirmDialog,
     HomeMenu
   },
   data () {
@@ -127,11 +122,11 @@ export default {
               }
             },
             {
-              icon: '&#xe607;',
+              icon: '&#xe614;',
               iconColor: '#6CCABC',
-              title: '退出登录',
+              title: '联系客服',
               callBack: () => {
-                this.logout()
+                this.$router.push({name: 'customService'})
               }
             }
           ]
@@ -142,15 +137,6 @@ export default {
   methods: {
     tipClick () {
       this.showTip = false
-    },
-    dialogConfirm () {
-      this.$http(this.$urlPath.logoutUrl, {
-      }, '正在退出…', (data) => {
-        this.$root.userInfo.clearInfoAction()
-        this.$router.replace({name: 'login'})
-      }, (errorCode, error) => {
-        this.$toast(error)
-      })
     },
     getData () {
       this.$http(this.$urlPath.getAmount, {
@@ -175,9 +161,6 @@ export default {
     },
     orderClick (type) {
       this.$router.push({name: 'orderList', query: { type: type.type }})
-    },
-    logout () {
-      this.$refs.confrimDialog.showDialog()
     }
   },
   mounted () {

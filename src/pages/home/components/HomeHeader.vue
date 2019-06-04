@@ -7,17 +7,17 @@
       </div>
       <span class="nick-name">{{$root.userInfo.state.name}}</span>
       <div class="other-money-wrapper">
-        <div class="money-info-wrapper">
+        <div class="money-info-wrapper" @click="accountRelease">
           <p class="money-title">账户余额</p>
           <p class="money">￥{{(amount && Number(amount.balance).toFixed(2)) || '0.00'}}</p>
         </div>
-        <div class="money-info-wrapper">
+        <div class="money-info-wrapper" @click="accountRebate">
           <p class="money-title">账户返利</p>
           <p class="money">￥{{(amount && Number(amount.rebate).toFixed(2)) || '0.00'}}</p>
         </div>
-        <div class="money-info-wrapper">
+        <div class="money-info-wrapper" @click="willRebate">
           <p class="money-title">预计返利</p>
-          <p class="money">￥{{(amount && Number(amount.rebate).toFixed(2)) || '0.00'}}</p>
+          <p class="money">￥{{(amount && Number(amount.estimate_rebate).toFixed(2)) || '0.00'}}</p>
         </div>
         <div class="money-info-wrapper">
           <p class="money-title">授信额度</p>
@@ -41,7 +41,15 @@ export default {
   },
   methods: {
     myBalance () {
+    },
+    accountRelease () {
       this.$router.push({name: 'myBalance'})
+    },
+    accountRebate () {
+      this.$router.push({name: 'myRebate'})
+    },
+    willRebate () {
+      this.$router.push({name: 'myRebate'})
     }
   }
 }

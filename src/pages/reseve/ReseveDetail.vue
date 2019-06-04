@@ -3,9 +3,9 @@
         <my-navi title="提交订单" :isFixed="true"></my-navi>
         <div class="r-d-detail-wrapper">
             <ticket-info :ticketInfo="ticketInfo" @selected="onSelectedTimeItem" ref="ticketInfo"></ticket-info>
-            <ticket-user-single-info ref="userSingleInfo"></ticket-user-single-info>
-            <!-- <ticket-user-info :contacts="contacts" :touristCount="touristCount" ref="userInfo" v-if="ticketInfo.goods && ticketInfo.goods.play_info === 2" :visitorInfo="ticketInfo.goods.visitor_info"></ticket-user-info> -->
-            <!-- <ticket-discount></ticket-discount> -->
+            <ticket-contact v-if="ticketInfo.goods" ref="userSingleInfo" :visitorInfo="ticketInfo.goods.visitor_info"></ticket-contact>
+            <!-- <ticket-user-single-info ref="userSingleInfo"></ticket-user-single-info> -->
+            <ticket-user-info :contacts="contacts" :touristCount="touristCount" ref="userInfo" v-if="ticketInfo.goods && ticketInfo.goods.play_info === 2" :visitorInfo="ticketInfo.goods.visitor_info"></ticket-user-info>
             <div class="resever-tip">最终支付价格以下单结算为准</div>
             <div class="r-d-detail-pay-action-wrapper">
                 <span class="r-d-pay-action-price">总价：<i>￥{{totalPrice}}</i></span>
@@ -20,13 +20,15 @@ import TicketInfo from './components/TicketInfo'
 import TicketDiscount from './components/TicketDiscount'
 import TicketUserInfo from './components/TicketUserInfo'
 import TicketUserSingleInfo from './components/TicketUserSingleInfo'
+import TicketContact from './components/TicketContact'
 export default {
   name: 'ReseveDetail',
   components: {
     TicketInfo,
     TicketDiscount,
     TicketUserInfo,
-    TicketUserSingleInfo
+    TicketUserSingleInfo,
+    TicketContact
   },
   data () {
     return {
@@ -42,7 +44,8 @@ export default {
       this.$http(this.$urlPath.orderReserve, {
         goods_id: this.$route.query.goods_id,
         identity: this.$root.state.identity,
-        store_id: this.$root.state.storeId
+        store_id: this.$root.state.storeId,
+        s_id: this.$route.query.scenicId
       }, '', (data) => {
         this.ticketInfo = data.data
       }, (errorCode, error) => {
@@ -79,19 +82,50 @@ export default {
       postData.date = this.tempDate
       const userName = this.$refs.userSingleInfo.tempUserInfo.name
       const userPhone = this.$refs.userSingleInfo.tempUserInfo.phone
+      const idCard = this.$refs.userSingleInfo.tempUserInfo.idCard
+      const schoolName = this.$refs.userSingleInfo.tempUserInfo.schoolName
+      const studentId = this.$refs.userSingleInfo.tempUserInfo.studentId
       if (!userName) {
-        this.$toast('请输入游客姓名')
+        this.$toast('请输入联系人姓名')
         return
       }
       if (!userPhone) {
-        this.$toast('请输入游客手机号')
+        this.$toast('请输入联系人手机号')
         return
       }
       if (!this.$utils.validator.isPhone(userPhone)) {
-        this.$toast('请输入合法的游客手机号')
+        this.$toast('请输入合法的手机号')
         return
       }
-      postData.user = this.$refs.userSingleInfo.tempUserInfo
+      if (!idCard && this.ticketInfo.goods.visitor_info.indexOf('id') !== -1) {
+        this.$toast('请输入联系人身份证号')
+        return
+      }
+      if (!schoolName && this.ticketInfo.goods.visitor_info.indexOf('u') !== -1) {
+        this.$toast('请输入联系人学校')
+        return
+      }
+      if (!studentId && this.ticketInfo.goods.visitor_info.indexOf('s') !== -1) {
+        this.$toast('请输入联系人学生证号')
+        return
+      }
+      postData.contact = this.$refs.userSingleInfo.tempUserInfo
+      if (this.ticketInfo.goods.play_info === 2) {
+        const userList = this.$refs.userInfo.userList
+        if (userList.length - 1 !== this.tempDate.num) {
+          this.$toast('游客信息与购买数量不匹配')
+          return
+        }
+        postData.user = []
+        userList.forEach(item => {
+          if (item.type !== 'add') {
+            postData.user.push(item)
+          }
+        })
+        postData.user.push(this.$refs.userSingleInfo.tempUserInfo)
+      } else if (this.ticketInfo.goods.play_info === 1) { // 只需要一个游玩人信息
+        postData.user = [this.$refs.userSingleInfo.tempUserInfo]
+      }
       postData.info = {
         identity: this.$root.state.identity,
         store_id: this.$root.state.storeId,

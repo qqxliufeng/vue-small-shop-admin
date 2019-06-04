@@ -37,15 +37,24 @@ export default {
       if (!this.title) {
         return this.$toast('请输入公告标题')
       }
-      if (this.title.length < 5) {
+      if (this.title.length < 5 || this.title.length > 20) {
         return this.$toast('请输入5~20位字符的标题内容')
       }
       if (!this.content) {
         return this.$toast('请输入公告内容')
       }
-      if (this.content.length < 100) {
+      if (this.content.length < 10 || this.content.length > 100) {
         return this.$toast('请输入10~100位字符的公告内容')
       }
+      this.$http(this.$urlPath.releaseNotice, {
+        notice_title: this.title,
+        notice_content: this.content
+      }, '', (data) => {
+        this.$toast('公告发布成功')
+        this.$router.go(-1)
+      }, (errorCode, error) => {
+        this.$toast(error)
+      })
     },
     notifyList () {
       this.$router.push({name: 'notifyList'})

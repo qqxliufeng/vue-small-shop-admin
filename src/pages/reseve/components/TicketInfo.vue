@@ -6,13 +6,15 @@
         </div>
         <div class="r-d-ticket-info-title-wrapper">
             <span class="r-d-ticket-info-time-title">使用日期</span>
-            <span class="r-d-ticket-info-time-more" @click="isShowCanlendarDialog = true">更多日期<i class="el-icon-arrow-right"></i></span>
         </div>
         <div class="r-d-ticket-info-time-wrapper">
             <div class="r-d-ticket-info-time-item" v-for="(item, index) of times" :key="index" @click="timeItemClick(item)" :class="[{'r-d-ticket-info-time-selected': item.isSelected},{'r-d-ticket-info-time-uneable' : !item.isEnable}]">
                 <p>{{item.date}}</p>
                 <p>周{{$utils.getWeekByWeek(item.week)}}</p>
                 <p>￥{{item.price}}</p>
+            </div>
+            <div class="r-d-ticket-info-time-item" style="border: #63BBB0 solid 1px" @click="isShowCanlendarDialog = true">
+                <p class="more-date">更多日期></p>
             </div>
         </div>
         <div class="r-d-ticket-info-count-wrapper">
@@ -34,18 +36,8 @@
             </calander>
         </el-dialog>
         <transition name="slide-fade" @before-enter="beforeEnter" @before-leave="beforeLeave">
-            <div v-show="showRemark" class="r-d-ticket-info-remark-wrapper">
-                <div class="r-d-ticket-info-remark-title-wrapper">
-                    <span>购买须知</span>
-                </div>
-                <div class="remark-content-wrapper">
-                    <ul>
-                      <li v-for="(item, index) of remarks" :key="index">
-                          <ticket-remark :remark="item"></ticket-remark>
-                      </li>
-                      <p class="remark-content-confirm" @click="showRemark = false">确定</p>
-                    </ul>
-                </div>
+            <div v-if="showRemark" class="r-d-ticket-info-remark-wrapper">
+              <reseve-notice v-if="ticketInfo" :goods="ticketInfo.goods" :scenic="ticketInfo.scenic"></reseve-notice>
             </div>
         </transition>
         <div class="v-modal" v-show="showModal" @click="showRemark = false"></div>
@@ -55,6 +47,7 @@
 <script>
 import calander from 'common/components/calendar/calendar.vue'
 import TicketRemark from 'common/components/ticket-remark'
+import ReseveNotice from './ReseveNotice'
 export default {
   name: 'TicketInfo',
   props: {
@@ -62,7 +55,8 @@ export default {
   },
   components: {
     calander,
-    TicketRemark
+    TicketRemark,
+    ReseveNotice
   },
   data () {
     return {
@@ -80,16 +74,6 @@ export default {
         }
       },
       times: [
-        {
-          date: '',
-          week: '',
-          price: '0',
-          count: 0,
-          salesId: '',
-          isEnable: false,
-          isSelected: false,
-          raw: {}
-        },
         {
           date: '',
           week: '',
@@ -245,6 +229,11 @@ export default {
       this.isShowCanlendarDialog = false
       this.showRemark = false
     }
+  },
+  mounted () {
+    this.$root.$on('closeDialog', () => {
+      this.showRemark = false
+    })
   }
 }
 </script>
@@ -306,6 +295,27 @@ export default {
             & p:nth-child(3)
                 margin-top rem(.2)
                 color $orangeColor
+              .more-date
+                  color $primary
+                  font-size rem(.23)
+        .r-d-ticket-info-time-item
+            width 25%
+            height rem(1.35)
+            margin 0 1.25%
+            border #f5f5f5 solid 1px
+            display flex
+            justify-content center
+            align-items center
+            flex-direction column
+            border-radius rem(.1)
+            color #333
+            & p:nth-child(2)
+                color #888
+                font-size rem(.2)
+                margin-top rem(.05)
+            & p:nth-child(3)
+                margin-top rem(.2)
+                color $orangeColor
         .r-d-ticket-info-time-selected
             border $primary solid 1px
         .r-d-ticket-info-time-uneable
@@ -339,7 +349,10 @@ export default {
         right 0
         z-index 1001
         overflow-y scroll
-        background-color #fff
+        background-color #ffffff
+        border-top-left-radius rem(.2)
+        border-top-right-radius rem(.2)
+        padding-top rem(.2)
         .r-d-ticket-info-remark-title-wrapper
             display flex
             padding rem(.2)
