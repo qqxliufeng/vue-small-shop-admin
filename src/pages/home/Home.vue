@@ -9,8 +9,8 @@
       <home-header :amount="amount"></home-header>
   </div>
   <home-order-info @orderClick="orderClick" :orderInfo="amount.my_order" v-if="amount"></home-order-info>
-  <home-menu :menu="menus.makeMoney"></home-menu>
   <home-menu :menu="menus.myTeam" v-if="Number(this.$root.userInfo.state.rank) < 3"></home-menu>
+  <home-menu :menu="menus.makeMoney"></home-menu>
   <home-menu :menu="menus.mySetting"></home-menu>
   <p class="pc">更多功能请登录电脑端：http://www.test.youdaike.com/distributor/dashboard?ref=addtabs</p>
 </div>
@@ -73,6 +73,14 @@ export default {
           title: '我的团队',
           menus: [
             {
+              icon: '&#xe654;',
+              iconColor: '#99DCFB',
+              title: '如何发展团队',
+              callBack: () => {
+                this.$router.push('teamFlow')
+              }
+            },
+            {
               icon: '&#xe63f;',
               iconColor: '#99DCFB',
               title: '发展团队',
@@ -85,19 +93,19 @@ export default {
               }
             },
             {
-              icon: '&#xe654;',
-              iconColor: '#99DCFB',
-              title: '如何发展团队',
-              callBack: () => {
-                this.$router.push('teamFlow')
-              }
-            },
-            {
               icon: '&#xe655;',
               iconColor: '#99DCFB',
               title: '团队列表',
               callBack: () => {
                 this.$router.push({name: 'partnerList'})
+              }
+            },
+            {
+              icon: '&#xe619;',
+              iconColor: '#99DCFB',
+              title: '返利订单',
+              callBack: () => {
+                this.$router.push({name: 'rebateList'})
               }
             }
           ]

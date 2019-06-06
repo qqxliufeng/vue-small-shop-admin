@@ -18,7 +18,7 @@ export default {
   methods: {
     creatQrCode () {
       this.$nextTick(() => {
-        QRCode.toCanvas(this.$refs.codeCanvas, 'http://www.test.youdaike.com/distributor_manage/#/', (data) => {
+        QRCode.toCanvas(this.$refs.codeCanvas, window.location.href, (data) => {
         })
       })
     }

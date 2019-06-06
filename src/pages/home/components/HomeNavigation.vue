@@ -1,10 +1,10 @@
 <template>
 <div class='h-navigation-container'>
   <span>个人主页</span>
-  <!-- <div class="message-wrapper" @click="messageClick">
-    <span class="red-notify" v-if="showRedNotify"></span>
+  <div class="message-wrapper" @click="messageClick">
+    <span class="red-notify" v-show="showRedNotify"></span>
     <span class="iconfont">&#xe60c;</span>
-  </div> -->
+  </div>
 </div>
 </template>
 

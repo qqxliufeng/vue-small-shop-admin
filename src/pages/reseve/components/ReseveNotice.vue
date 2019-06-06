@@ -35,7 +35,11 @@
       <div class="sperator-1"></div>
       <ticket-notice title="商家说明" :remarks="goods.explain"></ticket-notice>
       <div class="sperator-2"></div>
-      <div class="next" @click="close">下一步</div>
+      <div class="bottom-wrapper" >
+        <span class="price-wrapper">￥{{Number(scenic.minPrice || 0).toFixed(2)}}<i>起</i></span>
+        <span class="flex-item"></span>
+        <span class="next" @click="close">下一步</span>
+      </div>
     </div>
 </template>
 
@@ -126,14 +130,37 @@ export default {
         margin 0 auto
     .sperator-2
         height $headerHeight
-    .next
+    .bottom-wrapper
         height $headerHeight
-        line-height $headerHeight
-        background-color $primary
-        text-align center
-        textStyle(#fff, .3)
+        border-top 1px solid #f5f5f5
+        background-color #fff
         position fixed
         bottom 0
         left 0
         right 0
+        display flex
+        align-items center
+        padding 0 rem(.2)
+        .flex-item
+            flex 1
+        .next
+            background-color $orangeColor
+            border-radius rem(.3)
+            margin rem(.2)
+            color #fff
+            padding rem(.1) rem(.3)
+        .price-wrapper
+            color $orangeColor
+            font-size rem(.35)
+            & i
+                margin-left rem(.1)
+                font-size rem(.2)
+        .collection
+            text-align center
+            margin-right rem(.3)
+            & p:nth-child(1)
+                    textStyle($orangeColor, .35)
+            & p:nth-child(2)
+                margin-top rem(.1)
+                textStyle($orangeColor, .25)
 </style>

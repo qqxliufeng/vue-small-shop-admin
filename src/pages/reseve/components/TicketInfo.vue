@@ -192,10 +192,8 @@ export default {
       it.raw = temp
     },
     releaseCount (count) {
-      if (count === -1) {
-        return '不限量'
-      } else if (count === -2) {
-        return '禁售'
+      if (count === -1 || count === -2) {
+        return ''
       } else {
         return '余' + count + '张'
       }

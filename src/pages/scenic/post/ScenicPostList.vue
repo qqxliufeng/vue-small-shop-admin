@@ -14,7 +14,7 @@
       </div>
       <ul v-if="scenicPostList">
         <li v-for="item of scenicPostList" :key="item.id" class="scenic-post-item-wrapper" @click="startScenicPost(item)">
-          <el-card shadow="always" :bodyStyle="{padding: '0'}">
+          <el-card shadow="always" :bodyStyle="{padding: '0'}" v-if="getScenicImage(item)">
             <img class="item-image" v-lazy="getScenicImage(item)" :key="getScenicImage(item)">
             <div class="item-info-wrapper">
               <p class="item-title">{{item.scenic_name}}</p>
@@ -60,7 +60,7 @@ export default {
       if (this.selectType === '1') {
         this.$router.push({name: 'shareScenic', query: {scenic_id: item.scenic_id}})
       } else {
-        this.$router.push({name: 'shareTicket', query: {s_id: this.$route.query.scenicId, goods_id: item.goods_id}})
+        this.$router.push({name: 'shareTicket', query: {s_id: item.scenic_id, goods_id: item.goods_id}})
       }
     },
     getData () {
@@ -88,8 +88,10 @@ export default {
     getScenicImage (item) {
       if (item.poster_image) {
         return this.$utils.image.getImagePath(item.poster_image)
-      } else {
+      } else if (item.share_image) {
         return this.$utils.image.getImagePath(item.share_image)
+      } else {
+        return ''
       }
     }
   },

@@ -85,7 +85,7 @@ export default {
         .shop-address
             display inline-block
             word-break break-all
-            background #E8EDED
+            background #fcfcfc
             border 1px solid #DCE0E2
             padding rem(.2)
             width 70%

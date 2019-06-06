@@ -236,7 +236,8 @@ export default {
                     title: '重新购票',
                     show: true,
                     action: () => {
-                      this.$router.push({name: 'reseveDetail', query: { goods_id: it.ord_goodsId, scenicId: it.ord_scenicId }})
+                      // this.$router.push({name: 'reseveDetail', query: { goods_id: it.ord_goodsId, scenicId: it.ord_scenicId }})
+                      this.$router.push({name: 'scenicDetail', query: {identity: '2', storeId: this.$root.userInfo.state.id, scenicId: it.ord_scenicId}})
                     }
                   }
                 }
