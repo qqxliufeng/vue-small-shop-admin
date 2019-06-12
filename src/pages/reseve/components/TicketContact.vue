@@ -78,7 +78,7 @@ export default {
     },
     clearUserInfo () {
       this.tempUserInfo.name = null
-      this.tempUserInfo.phone = null
+      this.tempUserInfo.phone = this.$root.userInfo.state.phone || ''
       this.tempUserInfo.idCard = null
       this.tempUserInfo.schoolName = null
       this.tempUserInfo.studentId = null

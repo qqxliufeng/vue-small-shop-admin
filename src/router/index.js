@@ -205,6 +205,11 @@ export default new Router({
       component: Message
     },
     {
+      path: '/messagedetail',
+      name: 'messageDetail',
+      component: () => import('@/pages/home/other/NoticeDetail')
+    },
+    {
       path: '/orderlist',
       name: 'orderList',
       component: OrderList

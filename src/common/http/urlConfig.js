@@ -70,6 +70,12 @@ export const releaseNotice = distributorModuleUrl + 'release_notice'
 
 export const getInformation = distributorModuleUrl + 'get_information'
 
+export const getMessage = distributorModuleUrl + 'get_message'
+
+export const getMessageDetails = distributorModuleUrl + 'get_message_details'
+
+export const shareImageSave = distributorModuleUrl + 'share_image_save'
+
 const orderUrl = baseUrl + 'order/'
 
 export const createOrder = orderUrl + 'create_order'

@@ -39,6 +39,12 @@ export default {
   },
   methods: {
     savePost () {
+      let goodsId = this.$route.query.goods_id
+      if (goodsId) {
+        this.$http(this.$urlPath.shareImageSave, {
+          goods_id: goodsId
+        }, '正在生成……', null, null)
+      }
       html2canvas(this.$refs.post, {
         backgroundColor: '#ffffff',
         useCORS: true,

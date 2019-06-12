@@ -28,13 +28,15 @@
           </div>
         </div>
       </div>
-      <div class="sperator-1"></div>
-      <ticket-notice title="入园须知" :remarks="goods.entrance"></ticket-notice>
-      <div class="sperator-1"></div>
-      <ticket-notice title="退还说明" :remarks="goods.refund"></ticket-notice>
-      <div class="sperator-1"></div>
-      <ticket-notice title="商家说明" :remarks="goods.explain"></ticket-notice>
-      <div class="sperator-2"></div>
+      <div class="notice-info-wrapper">
+        <div class="sperator-1"></div>
+        <ticket-notice title="入园须知" :remarks="goods.entrance"></ticket-notice>
+        <div class="sperator-1"></div>
+        <ticket-notice title="退还说明" :remarks="goods.refund"></ticket-notice>
+        <div class="sperator-1"></div>
+        <ticket-notice title="商家说明" :remarks="goods.explain"></ticket-notice>
+        <div class="sperator-2"></div>
+      </div>
       <div class="bottom-wrapper" >
         <span class="price-wrapper">￥{{Number(scenic.minPrice || 0).toFixed(2)}}<i>起</i></span>
         <span class="flex-item"></span>
@@ -70,16 +72,26 @@ export default {
 @import '~styles/varibles.styl'
 @import '~styles/mixin.styl'
 .r-n-container
-    position relative
+    position absolute
+    top 0
+    left 0
+    right 0
+    bottom 0
     .close-icon
         position absolute
         right rem(.2)
         textStyle(#888, .4)
+        top rem(.2)
+        z-index 100
     .scenic-info-wrapper
         display flex
         padding rem(.3)
         overflow hidden
         box-sizing border-box
+        position absolute
+        top 0
+        left 0
+        right 0
         .scenic-info-image-wrapper
             height rem(1.5)
             width rem(1.5)
@@ -123,6 +135,13 @@ export default {
                 .scenic-detail-sale-count
                     textStyle(#333, .25)
                     margin-left rem(1)
+    .notice-info-wrapper
+        position absolute
+        top rem(2.2)
+        left 0
+        right 0
+        bottom 0
+        overflow scroll
     .sperator-1
         height 2px
         background-color #f5f5f5
