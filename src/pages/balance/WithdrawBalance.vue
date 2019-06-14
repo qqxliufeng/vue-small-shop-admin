@@ -8,7 +8,7 @@
       <input class="input-money" type="text" :disabled="!canCrash" v-model="crashMoney" maxlength="10">
       <span class="all-money" @click="allMoneyCrash">全部提现</span>
     </div>
-    <p class="tip-no-input" v-if="!isInput">当前余额：<i>￥{{$root.userInfo.state.balance || '0.00'}}</i>，提现最底金额：<i>￥{{crashTip.miniCrash || '0.00'}}</i>，账户最底余额：<i>￥{{crashTip.miniBalance || '0.00'}}</i>，提现手续费：<i>{{Number(crashTip.serviceCharge || 0.00) * 100 + '%'}}</i></p>
+    <p class="tip-no-input" v-if="!isInput">当前余额：<i>￥{{$root.userInfo.state.balance || '0.00'}}</i>，提现最低金额：<i>￥{{crashTip.miniCrash || '0.00'}}</i>，账户最低余额：<i>￥{{crashTip.miniBalance || '0.00'}}</i>，提现手续费：<i>{{Number(crashTip.serviceCharge || 0.00) * 100 + '%'}}</i></p>
     <p class="tip-no-input" v-else>额外扣除<i>￥{{serviceCharge.toFixed(2)}}</i>服务费（费率{{crashTip.serviceCharge * 100 + '%'}}）</p>
   </div>
   <div class="select-type-container">
@@ -85,7 +85,7 @@ export default {
     },
     allMoneyCrash () {
       if (this.canCrash) {
-        this.crashMoney = Number(this.$root.userInfo.state.balance).toFixed(2) + ''
+        this.crashMoney = Number(this.$root.userInfo.state.balance).toFixed(2) - Number(this.crashTip.miniBalance) + ''
       }
     },
     getData () {
@@ -101,7 +101,7 @@ export default {
         return
       }
       if (Number(this.crashMoney) < Number(this.crashTip.miniCrash)) {
-        this.$toast('提现金额小于最底提现金额')
+        this.$toast('提现金额小于最低提现金额')
         return
       }
       if (Number(this.crashMoney) > Number(this.$root.userInfo.state.balance)) {

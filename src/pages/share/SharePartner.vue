@@ -33,7 +33,8 @@
       </template>
       <template slot="shareAddress">
         <span class="shop-address-title">注册链接:</span>
-        <span class="shop-address">{{$urlPath.getShareRegisterUrl($root.userInfo.state.id)}}</span>
+        <!-- <span class="shop-address">{{$urlPath.getShareRegisterUrl($root.userInfo.state.id)}}</span> -->
+        <textarea class="shop-address" type="text" :value="$urlPath.getShareRegisterUrl($root.userInfo.state.id)"></textarea>
       </template>
     </share-component>
   </div>

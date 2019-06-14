@@ -11,7 +11,8 @@
           </template>
           <template slot="shareAddress">
             <span class="shop-address-title">店铺链接:</span>
-            <span class="shop-address" ref="copyUrl">{{url}}</span>
+            <!-- <span class="shop-address" ref="copyUrl">{{url}}</span> -->
+            <textarea class="shop-address" :value="url"></textarea>
           </template>
         </share-component>
     </div>

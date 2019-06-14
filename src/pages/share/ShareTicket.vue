@@ -11,7 +11,8 @@
       </template>
       <template slot="shareAddress">
         <span class="shop-address-title">门票链接:</span>
-        <span class="shop-address">{{url}}</span>
+        <!-- <span class="shop-address">{{url}}</span> -->
+        <textarea class="shop-address" :value="url" rows="3"></textarea>
       </template>
     </share-component>
   </div>

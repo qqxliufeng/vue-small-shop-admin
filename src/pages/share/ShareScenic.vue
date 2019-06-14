@@ -12,7 +12,8 @@
         </template>
         <template slot="shareAddress">
           <span class="shop-address-title">景区链接:</span>
-          <span class="shop-address">{{url}}</span>
+          <!-- <span class="shop-address">{{url}}</span> -->
+          <textarea class="shop-address" :value="url" rows="3"></textarea>
         </template>
         <template slot="otherInfo">
           <div class="other-info-wrapper">
