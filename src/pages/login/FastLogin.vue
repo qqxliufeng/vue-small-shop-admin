@@ -1,6 +1,5 @@
 <template>
   <div class='f-p-container'>
-    <my-navi title="手机号快捷登录"></my-navi>
       <div class="input-container">
         <div>
             <input placeholder="请输入手机号" class="user-name" maxlength="11" v-model="phone"/>

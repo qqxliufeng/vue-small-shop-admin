@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Login from '@/pages/login/login'
+import LoginContainer from '@/pages/login/LoginContainer'
 import Home from '@/pages/home/Home'
 import ScenicPostList from '@/pages/scenic/post/ScenicPostList'
 import SelectScenicPostList from '@/pages/scenic/post/SelectScenicPostList'
@@ -52,10 +52,15 @@ export default new Router({
         auth: true
       }
     },
+    // {
+    //   path: '/login',
+    //   name: 'login',
+    //   component: Login
+    // },
     {
       path: '/login',
       name: 'login',
-      component: Login
+      component: LoginContainer
     },
     {
       path: '/forgetpassword',

@@ -1,6 +1,5 @@
 <template>
 <div class='login-container'>
-  <my-navi title="登录" :isShowBack="false"></my-navi>
   <div class="input-container">
       <div>
           <input placeholder="请输入手机号" class="user-name" maxlength="11" v-model="userName"/>
@@ -10,11 +9,7 @@
           <span class="input-forget-password" @click="forgetPassword">忘记密码</span>
       </div>
       <el-button type="primary" class="input-login" @click="login">登录</el-button>
-      <div>
-          <span class="input-fast-phone" @click="fastLogin">手机快捷登录</span>
-      </div>
   </div>
-  <p class="pc">更多功能请登录电脑端：http://www.test.youdaike.com/distributor/dashboard?ref=addtabs</p>
   <el-dialog :visible.sync="showVerifyDialog" modal width="90%">
     <slide-verify
     :w="width"
@@ -162,13 +157,4 @@ export default {
             float right
             font-size .3rem
             color #ccc
-    .pc
-        text-align center
-        textStyle(#aaa, .25)
-        position absolute
-        left 0
-        right 0
-        bottom 0
-        margin-bottom rem(.2)
-        line-height rem(.4)
 </style>

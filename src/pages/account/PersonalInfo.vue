@@ -7,7 +7,7 @@
                   <span class="p-i-left">头像</span>
                   <el-upload
                       class="avatar-uploader"
-                      :action="avatarAction + '?token=' + this.$root.userInfo.state.token"
+                      :action="$urlPath.registerImageActionUrl"
                       :show-file-list="false"
                       :before-upload="beforeUpload"
                       :on-success="uploadSuccess"
@@ -63,7 +63,7 @@ export default {
     uploadSuccess (response, file, fileList) {
       if (response.data) {
         this.uploadAvatar = response.data.url
-        this.$http(this.$urlPath.userInfoResetInfo, {
+        this.$http(this.$urlPath.updatedProfile, {
           avatar: this.uploadAvatar
         }, null, (data) => {
           this.$toast('头像上传成功')
@@ -84,6 +84,24 @@ export default {
       this.$loading.close()
     },
     submit () {
+      this.$http(this.$urlPath.updatedProfile, {
+        nickname: this.userName,
+        email: this.email,
+        qq: this.qq
+      }, null, (data) => {
+        this.$toast('保存成功')
+        if (this.userName) {
+          this.$root.userInfo.setUserInfoName(this.userName)
+        }
+        if (this.email) {
+          this.$root.userInfo.setUserInfoEmail(this.email)
+        }
+        if (this.qq) {
+          this.$root.userInfo.setUserInfoQQ(this.qq)
+        }
+      }, (errorCode, error) => {
+        this.$toast('上传失败' + error)
+      })
     }
   }
 }

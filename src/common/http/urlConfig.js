@@ -76,6 +76,8 @@ export const getMessageDetails = distributorModuleUrl + 'get_message_details'
 
 export const shareImageSave = distributorModuleUrl + 'share_image_save'
 
+export const updatedProfile = distributorModuleUrl + 'updated_profile'
+
 const orderUrl = baseUrl + 'order/'
 
 export const createOrder = orderUrl + 'create_order'
