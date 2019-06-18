@@ -9,7 +9,6 @@
         <login></login>
       </el-tab-pane>
     </el-tabs>
-    <p class="pc">更多功能请登录电脑端：http://www.test.youdaike.com/distributor/dashboard?ref=addtabs</p>
   </div>
 </template>
 
@@ -32,13 +31,4 @@ export default {
 <style lang='stylus' scoped>
 @import '~styles/varibles.styl'
 @import '~styles/mixin.styl'
-.pc
-    text-align center
-    textStyle(#aaa, .25)
-    position absolute
-    left 0
-    right 0
-    bottom 0
-    margin-bottom rem(.2)
-    line-height rem(.4)
 </style>

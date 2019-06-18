@@ -4,9 +4,13 @@
         <div>
             <input placeholder="请输入手机号" class="user-name" maxlength="11" v-model="phone"/>
         </div>
+        <!-- <div class="input-password-container">
+          <input placeholder="请输入密码" class="user-password" maxlength="16" v-model="userPassword" type="password"/>
+          <span class="input-forget-password" @click="forgetPassword">忘记密码</span>
+      </div> -->
         <div class="input-password-container">
             <input placeholder="请输入验证码" class="user-password" maxlength="6" v-model="verifyCode"/>
-            <button class="input-forget-password" @click="getVerifyCode" :disabled="disabled">{{verifyTip}}</button>
+            <span class="input-forget-password" @click="getVerifyCode" :disabled="disabled">{{verifyTip}}</span>
         </div>
         <el-button type="primary" class="input-login" @click="submit">登录</el-button>
     </div>
@@ -123,14 +127,17 @@ export default {
       .input-forget-password
           position absolute
           right 0
+          text-align right
           font-size 12px
           padding rem(.1)
-          background $primary
           border-radius rem(.1)
-          color #fff
+          color $primary
           margin-left rem(.2)
           white-space nowrap
           min-width rem(1.5)
+          &::before
+              content '|'
+              margin-right .5rem
     .input-login
         background-color $primary
         border 0 none

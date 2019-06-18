@@ -29,7 +29,7 @@
             <calander :events="events" :lunar="calendar.lunar" :begin="calendar.begin()" :end="calendar.end" :weeks="calendar.weeks" :months="calendar.months" @select="select">
                 <template slot="event" slot-scope="slotProps">
                     <div class="c-e-wrapper">
-                        <p :style="{ 'color' : slotProps.disabled ? '#ccc' : '#64BBAE'}">￥{{slotProps.event.sale_price}}</p>
+                        <p :style="{ 'color' : slotProps.disabled ? '#ccc' : '#64BBAE'}">￥{{slotProps.event.cost_price}}</p>
                         <p :style="{ 'color' : slotProps.disabled ? '#ccc' : '#64BBAE'}">{{releaseCount(slotProps.event.one_stock)}}</p>
                     </div>
                 </template>
@@ -187,7 +187,7 @@ export default {
       let temp = this.events[it.date]
       it.isEnable = this.events.hasOwnProperty(it.date) && temp && parseInt(temp.one_stock) !== 0
       it.count = it.isEnable && temp ? temp.one_stock : 0
-      it.price = temp ? temp.sale_price : '0'
+      it.price = temp ? temp.cost_price : '0'
       it.isSelected = it.isEnable && index === 0
       it.raw = temp
     },

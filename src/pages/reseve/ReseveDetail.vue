@@ -6,7 +6,7 @@
             <ticket-contact v-if="ticketInfo.goods" ref="userSingleInfo" :visitorInfo="ticketInfo.goods.visitor_info"></ticket-contact>
             <!-- <ticket-user-single-info ref="userSingleInfo"></ticket-user-single-info> -->
             <ticket-user-info :contacts="contacts" :touristCount="touristCount" ref="userInfo" v-if="ticketInfo.goods && ticketInfo.goods.play_info === 2" :visitorInfo="ticketInfo.goods.visitor_info"></ticket-user-info>
-            <div class="resever-tip">最终支付价格以下单结算为准</div>
+            <!-- <div class="resever-tip">最终支付价格以下单结算为准</div> -->
             <div class="r-d-detail-pay-action-wrapper">
                 <span class="r-d-pay-action-price">总价：<i>￥{{totalPrice}}</i></span>
                 <span class="r-d-pay-action-pay" :style="{'background' : totalPrice === 0 ? '#cccccc' : '#E18234', 'pointer-events': totalPrice === 0 ? 'none' : 'auto'}" @click="reserve">立即预定</span>
@@ -60,7 +60,7 @@ export default {
         this.tempDate = info.item
         this.tempDate.num = info.num
         this.touristCount = info.num
-        this.totalPrice = (Number(info.item.sale_price) * parseInt(info.num)).toFixed(2)
+        this.totalPrice = (Number(info.item.cost_price) * parseInt(info.num)).toFixed(2)
       } else {
         if (info.item.one_stock < this.ticketInfo.goods.min_number) {
           this.totalPrice = 0
@@ -70,7 +70,7 @@ export default {
         this.tempDate = info.item
         this.tempDate.num = info.num
         this.touristCount = info.num
-        this.totalPrice = (Number(info.item.sale_price) * parseInt(info.num)).toFixed(2)
+        this.totalPrice = (Number(info.item.cost_price) * parseInt(info.num)).toFixed(2)
       }
     },
     reserve () {

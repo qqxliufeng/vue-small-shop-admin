@@ -87,7 +87,8 @@ export default {
       this.$http(this.$urlPath.updatedProfile, {
         nickname: this.userName,
         email: this.email,
-        qq: this.qq
+        qq: this.qq,
+        avatar: this.uploadAvatar
       }, null, (data) => {
         this.$toast('保存成功')
         if (this.userName) {
