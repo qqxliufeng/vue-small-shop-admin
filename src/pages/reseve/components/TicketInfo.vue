@@ -334,6 +334,7 @@ export default {
             align-items center
             .r-d-ticket-info-count-info-price
                 textStyle($orangeColor, .3)
+                margin-right rem(.1)
             .r-d-ticket-info-count-info-release-count
                 textStyle(#888, .28)
                 margin 0 rem(.2)

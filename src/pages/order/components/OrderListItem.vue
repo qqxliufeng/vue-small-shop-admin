@@ -66,6 +66,15 @@ export default {
     orderItemClick (item) {
       this.$router.push({name: 'orderInfo', params: {orderId: item.ord_id.toString(), orderType: item.stateModel.orderType}})
     },
+    reBuyTicket (item) {
+      return {
+        title: '再来一单',
+        show: true,
+        action: () => {
+          this.$router.push({name: 'scenicDetail', query: {identity: '2', storeId: this.$root.userInfo.state.id, scenicId: item.ord_scenicId}})
+        }
+      }
+    },
     upCallBack (page, mescroll) {
       this.$http(this.$urlPath.orderList, {
         status: this.$route.query.type,
@@ -117,11 +126,7 @@ export default {
                     title: '下单时间：',
                     time: it.ord_add_time
                   },
-                  action1: {
-                    title: '',
-                    show: false,
-                    action: null
-                  },
+                  action1: this.reBuyTicket(it),
                   action2: {
                     title: it.is_refund === 1 ? '申请退款' : '',
                     show: it.is_refund === 1,
@@ -159,11 +164,7 @@ export default {
                     title: '下单时间：',
                     time: it.ord_add_time
                   },
-                  action1: {
-                    title: '',
-                    show: false,
-                    action: null
-                  },
+                  action1: this.reBuyTicket(it),
                   action2: {
                     title: '去评价',
                     show: false,
@@ -181,7 +182,8 @@ export default {
                     title: '下单时间：',
                     time: it.ord_add_time
                   },
-                  action1: {
+                  action1: this.reBuyTicket(it),
+                  action2: {
                     title: '删除订单',
                     show: true,
                     action: () => {
@@ -196,13 +198,6 @@ export default {
                           this.$toast(error)
                         })
                       }
-                    }
-                  },
-                  action2: {
-                    title: '重新购票',
-                    show: true,
-                    action: () => {
-                      this.$router.push({name: 'reseveDetail', query: { goods_id: it.ord_goodsId, scenicId: it.ord_scenicId }})
                     }
                   }
                 }
@@ -215,7 +210,8 @@ export default {
                     title: '下单时间：',
                     time: it.ord_add_time
                   },
-                  action1: {
+                  action1: this.reBuyTicket(it),
+                  action2: {
                     title: '删除订单',
                     show: true,
                     action: () => {
@@ -231,14 +227,6 @@ export default {
                         })
                       }
                     }
-                  },
-                  action2: {
-                    title: '重新购票',
-                    show: true,
-                    action: () => {
-                      // this.$router.push({name: 'reseveDetail', query: { goods_id: it.ord_goodsId, scenicId: it.ord_scenicId }})
-                      this.$router.push({name: 'scenicDetail', query: {identity: '2', storeId: this.$root.userInfo.state.id, scenicId: it.ord_scenicId}})
-                    }
                   }
                 }
                 break
@@ -250,11 +238,7 @@ export default {
                     title: '下单时间：',
                     time: it.ord_add_time
                   },
-                  action1: {
-                    title: '',
-                    show: false,
-                    action: null
-                  },
+                  action1: this.reBuyTicket(it),
                   action2: {
                     title: '',
                     show: false,
@@ -270,11 +254,7 @@ export default {
                     title: '下单时间：',
                     time: it.ord_add_time
                   },
-                  action1: {
-                    title: '',
-                    show: false,
-                    action: null
-                  },
+                  action1: this.reBuyTicket(it),
                   action2: {
                     title: '',
                     show: false,
@@ -290,11 +270,7 @@ export default {
                     title: '下单时间：',
                     time: it.ord_add_time
                   },
-                  action1: {
-                    title: '',
-                    show: false,
-                    action: null
-                  },
+                  action1: this.reBuyTicket(it),
                   action2: {
                     title: '',
                     show: false,
