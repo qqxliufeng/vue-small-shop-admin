@@ -44,6 +44,17 @@
             </ul>
             <p class="o-i-pay-action" @click="pay">支付</p>
         </div>
+        <el-dialog
+          title="提示"
+          :visible.sync="dialogVisible"
+          width="90%"
+          @close="close">
+          <span>购买成功~</span>
+          <span slot="footer" class="dialog-footer">
+            <el-button @click="close" size="mini">再逛逛</el-button>
+            <el-button type="primary" @click="seeOrder" size="mini">查看订单</el-button>
+          </span>
+        </el-dialog>
     </div>
 </template>
 
@@ -60,6 +71,7 @@ export default {
   },
   data () {
     return {
+      dialogVisible: false,
       payItemList: [
         {
           name: '支付宝',
@@ -135,10 +147,22 @@ export default {
       }, '正在支付…', (data) => {
         this.$toast('订单支付成功')
         this.$root.$emit('onReload')
-        this.$router.go(-1)
+        // this.$router.go(-1)
+        this.dialogVisible = true
       }, (errorCode, error) => {
         this.$toast(error)
       })
+    },
+    seeOrder () {
+      this.dialogVisible = false
+      this.$router.replace({name: 'orderInfo', params: {orderId: '103', orderType: '2'}})
+    //   if (this.orderId) {
+    //     this.$router.replace({name: 'orderInfo', params: {orderId: '103', orderType: '2'}})
+    //   }
+    },
+    close () {
+      this.dialogVisible = false
+      this.$router.go(-1)
     }
   },
   mounted () {

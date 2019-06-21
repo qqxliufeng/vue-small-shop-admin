@@ -21,13 +21,7 @@
                         :timeLog="detail.order_log">
     </order-info-content>
     <!-- <order-ticket-info v-for="item of detail.voucher" :key="item.v_id" :itemInfo="item" :ticketName="detail.ord_product_name" :refundNum="detail.refund_num"></order-ticket-info> -->
-    <ticket-notice title="购买须知" :remarks="detail.goods.buy_way"></ticket-notice>
-    <div class="sperator-1"></div>
-    <ticket-notice title="入园方式" :remarks="detail.goods.entrance"></ticket-notice>
-    <div class="sperator-1"></div>
-    <ticket-notice title="退票说明" :remarks="detail.goods.refund"></ticket-notice>
-    <div class="sperator-1"></div>
-    <ticket-notice title="商家说明" :remarks="detail.goods.explain"></ticket-notice>
+    <ticket-notice-wrapper :goodsInfo="detail.goods"></ticket-notice-wrapper>
     <order-business-info :store="detail.store"></order-business-info>
     <order-detail :detail="detail"></order-detail>
     <div class="sperator-3"></div>
@@ -48,7 +42,7 @@
 <script>
 import orderInfoHeader from './components/OrderInfoHeader'
 import orderInfoContent from './components/OrderInfoContent'
-import ticketNotice from 'common/components/ticket-notice'
+import ticketNoticeWrapper from 'common/components/ticket-notice-wrapper'
 import orderBusinessInfo from '../components/OrderBusinessInfo'
 import orderDetail from './components/OrderDetail'
 import orderMixin from 'common/mixins/order-mixin'
@@ -61,7 +55,7 @@ export default {
   components: {
     orderInfoHeader,
     orderInfoContent,
-    ticketNotice,
+    ticketNoticeWrapper,
     orderBusinessInfo,
     orderDetail
   },
