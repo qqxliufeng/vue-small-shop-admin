@@ -4,7 +4,7 @@
   <div class="content">
       <div class="menu">
         <ul>
-         <li v-for="(item, index) of menuList" :key="index" class="menu-item" :style="{color:item.showActiveStyle ? '#64BBAE' : '#333'}" @click="menuItemClick(item)">
+         <li v-for="(item, index) of menuList" :key="index" class="menu-item" :class="{'menu-item-select' : item.showActiveStyle}" :style="{color:item.showActiveStyle ? '#64BBAE' : '#333'}" @click="menuItemClick(item)">
            {{item.name}}
          </li>
         </ul>
@@ -13,16 +13,22 @@
         <p class="list-title">{{tempMenu.name}}</p>
          <ul v-if="tempMenu.data && tempMenu.data.length > 0">
            <li v-for="(content, index) of tempMenu.data" :key="index" class="content-item">
-              <div class="content-item-info-wrapper">
+              <div class="content-item-info-wrapper" @click="startScenicDetail(content)">
                 <div class="item-image-wrapper">
                   <img v-lazy="$utils.image.getImagePath(getPath(content.scenicimages))" :key="getPath(content.scenicimages)">
                 </div>
                 <div class="item-info-wrapper">
                   <p class="info-title">{{content.s_title}}</p>
-                  <p><span class="info-rating">{{content.score}}分</span><span class="info-sale-count">已售{{content.people_num}}</span></p>
+                  <div>
+                    <el-rate :value="Number(content.score)"
+                     disabled
+                     show-score
+                     text-color="#ff9900"
+                     score-template="{value}分">
+                    </el-rate></div>
                   <!-- <p><span class="info-money">￥89</span><span class="info-money-tag">起</span><span class="info-old-money">￥109</span></p> -->
                   <div class="info-action-wrapper">
-                    <button class="info-detail" @click="startScenicDetail(content)">详情</button>
+                    <span class="info-sale-count">已售{{content.people_num}}</span>
                     <button class="info-share" @click="selectScenicShare(content)" v-if="isCanShare">分享</button>
                   </div>
                 </div>
@@ -103,6 +109,8 @@ export default {
 <style lang='stylus' scoped>
 @import '~styles/varibles.styl'
 @import '~styles/mixin.styl'
+.menu-item-select
+    border-left 2px solid #64BBAE
 .g-list-container
     .content
         padding-top $headerHeight
@@ -124,8 +132,9 @@ export default {
             .menu-item
                 height $headerHeight
                 line-height $headerHeight
-                text-align center
-                textStyle(#333, .32)
+                text-align left
+                padding-left rem(.2)
+                textStyle(#666, .3)
                 ellipsis()
                 border-bottom 1px solid #f5f5f5
                 .menu-active-style
@@ -136,7 +145,7 @@ export default {
             overflow-y scroll
             box-sizing border-box
             .list-title
-                textStyle(#333, .32)
+                textStyle(#666, .3)
                 line-height $headerHeight
                 padding 0 rem(.2)
                 border-bottom 1px solid #f5f5f5
@@ -163,7 +172,7 @@ export default {
                         overflow hidden
                         .info-title
                             ellipsis()
-                            textStyle(#333, .3)
+                            textStyle(#333, .28)
                         .info-rating
                             textStyle($primary, .25)
                             &::after
@@ -171,8 +180,14 @@ export default {
                                 display inline-block
                                 margin 0 rem(.2)
                                 color #888
+                        & >>> .el-rate__icon
+                            font-size 14px
+                            margin-right 1px
+                        & >>> .el-rate__text
+                            font-size 12px
+                            margin-left rem(.1)
                         .info-sale-count
-                            textStyle(#888, .25)
+                            textStyle(#999, .25)
                         .info-money
                             textStyle(#EA782F, .35)
                         .info-money-tag
@@ -184,7 +199,8 @@ export default {
                             text-decoration line-through
                         .info-action-wrapper
                             display flex
-                            justify-content flex-end
+                            justify-content space-between
+                            align-items center
                             .info-detail
                                 border 1px solid #EA782F
                                 border-radius rem(.05)
@@ -202,6 +218,6 @@ export default {
                                 background-color #EA782F
                                 color #fff
                                 font-size rem(.25)
-                                padding 0 rem(.2)
+                                padding 0 rem(.3)
                                 line-height rem(.35)
 </style>

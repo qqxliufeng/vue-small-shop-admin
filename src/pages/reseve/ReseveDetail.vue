@@ -60,7 +60,7 @@ export default {
         this.tempDate = info.item
         this.tempDate.num = info.num
         this.touristCount = info.num
-        this.totalPrice = (Number(info.item.cost_price) * parseInt(info.num)).toFixed(2)
+        this.totalPrice = (Number(info.item.cost_prices) * parseInt(info.num)).toFixed(2)
       } else {
         if (info.item.one_stock < this.ticketInfo.goods.min_number) {
           this.totalPrice = 0
@@ -70,7 +70,7 @@ export default {
         this.tempDate = info.item
         this.tempDate.num = info.num
         this.touristCount = info.num
-        this.totalPrice = (Number(info.item.cost_price) * parseInt(info.num)).toFixed(2)
+        this.totalPrice = (Number(info.item.cost_prices) * parseInt(info.num)).toFixed(2)
       }
     },
     reserve () {

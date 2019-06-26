@@ -25,6 +25,13 @@ export default {
     return {
       activeName: 'first'
     }
+  },
+  beforeRouteEnter (to, from, next) {
+    next(vm => {
+      if (from.name === 'forgetPassword') {
+        vm.activeName = 'second'
+      }
+    })
   }
 }
 </script>

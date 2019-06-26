@@ -101,6 +101,7 @@ export default {
       }
       this.$http(this.$urlPath.getCaptcha, {
         mobile: this.registerInfo.phone,
+        store_id: this.$route.query.storeId,
         event: 'register'
       }, '正在发送验证码…', (data) => {
         this.$toast('验证码发送成功')

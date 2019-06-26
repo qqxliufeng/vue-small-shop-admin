@@ -14,6 +14,12 @@
         </div>
         <el-button type="primary" class="input-login" @click="submit">登录</el-button>
     </div>
+    <el-dialog :visible.sync="showVerifyDialog" modal width="90%">
+      <slide-verify
+      :w="width"
+      @success="onSlideSuccess"
+      ref="slideVerfiy"></slide-verify>
+  </el-dialog>
   </div>
 </template>
 
@@ -27,7 +33,9 @@ export default {
       disabled: false,
       phone: '',
       verifyCode: '',
-      code: ''
+      code: '',
+      showVerifyDialog: false,
+      width: document.body.clientWidth * 0.9 - 40
     }
   },
   methods: {
@@ -71,6 +79,13 @@ export default {
         this.$toast('请输入合法手机号')
         return
       }
+      this.showVerifyDialog = true
+    },
+    onSlideSuccess () {
+      if (this.$refs.slideVerfiy) {
+        this.$refs.slideVerfiy.reset()
+      }
+      this.showVerifyDialog = false
       this.$http(this.$urlPath.getCaptcha, {
         mobile: this.phone,
         event: 'mobilelogin'
@@ -91,6 +106,14 @@ export default {
       }, (errorCode, error) => {
         this.$toast(error)
       })
+    }
+  },
+  mounted () {
+    window.onresize = () => {
+      this.width = document.body.clientWidth * 0.9 - 40
+      if (this.$refs.slideVerfiy) {
+        this.$refs.slideVerfiy.reset()
+      }
     }
   }
 }
