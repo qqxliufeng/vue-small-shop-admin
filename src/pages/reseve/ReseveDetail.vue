@@ -53,6 +53,11 @@ export default {
       })
     },
     onSelectedTimeItem (info) {
+      if (this.ticketInfo.valid_period === 2 && this.ticketInfo.valid_period_expire === 0) {
+        this.$toast('该票已不能购买')
+        this.totalPrice = 0
+        return
+      }
       // 禁售
       if (info.item.one_stock === -2) {
         this.$toast('此票在所选日期禁售')

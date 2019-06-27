@@ -59,10 +59,11 @@ export default {
             this.stateModel.stateTip = '已取消'
             this.stateModel.discription = '订单已经取消，如有需要请重新下单购买'
             break
-          case 'USE_STATUS_EXPIRD': // 已过期
+          case 'USE_STATUS_EXPIRE': // 已过期
             this.stateModel.stateTip = '已过期'
             this.stateModel.discription = '订单已经过期，如有需要请重新下单购买'
             break
+          case 'NO_COMMENT': // 待评价
           case 'USE_STATUS_OVER':
           case 'ALREADY_COMMENT': // 已经评价
             this.stateModel.stateTip = '已完成'
@@ -75,10 +76,6 @@ export default {
           case 'USE_STATUS_NO': // 待使用
             this.stateModel.stateTip = '待使用'
             this.stateModel.discription = '产品已出票，请尽快使用产品'
-            break
-          case 'NO_COMMENT': // 待评价
-            this.stateModel.stateTip = '待评价'
-            this.stateModel.discription = '快来和小伙伴们分享一下这次出游的感受吧'
             break
         }
       }

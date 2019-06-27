@@ -3,14 +3,18 @@
   <my-navi title="商品列表" :isFixed="true"></my-navi>
   <div class="content">
       <div class="menu">
-        <ul>
+        <swiper :options="swiperOption" class="swiper">
+            <swiper-slide v-for="(item, index) of menuList" :key="index" >
+                <span class="menu-item" @click="menuItemClick(item)" :class="{'menu-item-select' : item.showActiveStyle}" :style="{color:item.showActiveStyle ? '#64BBAE' : '#666'}" >{{item.name}}</span>
+            </swiper-slide>
+        </swiper>
+        <!-- <ul>
          <li v-for="(item, index) of menuList" :key="index" class="menu-item" :class="{'menu-item-select' : item.showActiveStyle}" :style="{color:item.showActiveStyle ? '#64BBAE' : '#333'}" @click="menuItemClick(item)">
            {{item.name}}
          </li>
-        </ul>
+        </ul> -->
       </div>
       <div class="content-list" v-if="tempMenu"  @scroll="onScroll">
-        <p class="list-title">{{tempMenu.name}}</p>
          <ul v-if="tempMenu.data && tempMenu.data.length > 0">
            <li v-for="(content, index) of tempMenu.data" :key="index" class="content-item">
               <div class="content-item-info-wrapper" @click="startScenicDetail(content)">
@@ -29,7 +33,7 @@
                   <!-- <p><span class="info-money">￥89</span><span class="info-money-tag">起</span><span class="info-old-money">￥109</span></p> -->
                   <div class="info-action-wrapper">
                     <span class="info-sale-count">已售{{content.people_num}}</span>
-                    <button class="info-share" @click="selectScenicShare(content)" v-if="isCanShare">分享</button>
+                    <button class="info-share" @click.stop="selectScenicShare(content)" v-if="isCanShare">分享</button>
                   </div>
                 </div>
               </div>
@@ -50,9 +54,12 @@ export default {
   components: {},
   data () {
     return {
-      listTitle: '滑雪',
+      listTitle: '',
       tempMenu: null,
-      menuList: null
+      menuList: null,
+      swiperOption: {
+        slidesPerView: 5
+      }
     }
   },
   watch: {
@@ -109,13 +116,12 @@ export default {
 <style lang='stylus' scoped>
 @import '~styles/varibles.styl'
 @import '~styles/mixin.styl'
-.menu-item-select
-    border-left 2px solid #64BBAE
+>>> .swiper-slide
+    text-align center
+
 .g-list-container
     .content
         padding-top $headerHeight
-        display flex
-        position relative
         .scenic-empty
             display flex
             justify-content center
@@ -126,24 +132,26 @@ export default {
             position fixed
             top $headerHeight
             left 0
-            width rem(1.8)
-            height 100%
+            right 0
             border-right 1px solid #f5f5f5
-            .menu-item
-                height $headerHeight
-                line-height $headerHeight
-                text-align left
-                padding-left rem(.2)
-                textStyle(#666, .3)
-                ellipsis()
-                border-bottom 1px solid #f5f5f5
-                .menu-active-style
-                    color #64BBAE
+            .swiper
+                .menu-item
+                    height $headerHeight
+                    line-height $headerHeight
+                    width 100%
+                    display inline-block
+                    text-align center
+                    textStyle(#666, .28)
+                    ellipsis()
+                    border-bottom 1px solid #f5f5f5
+                .menu-item-select
+                    border-bottom 1px solid #64BBAE
         .content-list
-            flex 3
-            margin-left rem(1.8)
-            overflow-y scroll
             box-sizing border-box
+            position fixed
+            top $headerHeight * 2.1
+            left 0
+            right 0
             .list-title
                 textStyle(#666, .3)
                 line-height $headerHeight

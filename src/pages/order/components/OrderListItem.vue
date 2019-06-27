@@ -202,7 +202,7 @@ export default {
                   }
                 }
                 break
-              case 'USE_STATUS_EXPIRD': // 已过期
+              case 'USE_STATUS_EXPIRE': // 已过期
                 it.stateModel = {
                   orderType: '7',
                   stateTip: '已过期',

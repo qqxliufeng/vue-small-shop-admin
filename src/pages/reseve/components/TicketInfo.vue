@@ -135,14 +135,23 @@ export default {
     ticketInfo (newVal, oldVal) {
       if (newVal) {
         let tempEvent = {}
-        for (let key in this.ticketInfo.calendar) {
-          let item = this.ticketInfo.calendar[key]
-          tempEvent[item.date] = item
+        if (typeof this.ticketInfo.calendar === 'object') {
+          this.tempTime.count = this.ticketInfo.calendar.one_stock || 0
+          this.tempTime.price = this.ticketInfo.calendar.sale_price
+          this.tempTime.raw = this.ticketInfo.calendar
+          this.minNum = this.ticketInfo.goods.min_number
+          this.num = this.minNum
+          this.emit()
+        } else {
+          for (let key in this.ticketInfo.calendar) {
+            let item = this.ticketInfo.calendar[key]
+            tempEvent[item.date] = item
+          }
+          this.minNum = this.ticketInfo.goods.min_number
+          this.num = this.minNum
+          this.events = tempEvent
+          this.initDate()
         }
-        this.minNum = this.ticketInfo.goods.min_number
-        this.num = this.minNum
-        this.events = tempEvent
-        this.initDate()
         this.showRemark = true
       }
     }
