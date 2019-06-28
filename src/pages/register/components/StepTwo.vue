@@ -1,10 +1,9 @@
 <template>
-  <div class='r-s-two-container'>
+  <!-- <div class='r-s-two-container'>
     <p class="title">请填写您的身份信息</p>
     <div class="info-wrapper">
       <div class="info-item-wrapper">
         <p class="info-title">真实姓名：</p>
-        <!-- <span class="info-tag">(必填)</span> -->
       </div>
       <div class="info-content-wrapper">
         <input type="text" class="input" placeholder="请输入真实姓名" maxlength="6" v-model="registerInfo.realName">
@@ -24,7 +23,6 @@
     <div class="info-wrapper">
       <div class="info-item-wrapper">
         <p class="info-title">单位/学校名称：</p>
-        <!-- <span class="info-tag">(必填)</span> -->
       </div>
       <div class="info-content-wrapper">
         <input type="text" class="input" placeholder="请输入单位/学校名称" v-model="registerInfo.workName">
@@ -57,6 +55,21 @@
       </el-upload>
     </div>
     <el-button class="next-step" @click="nextStep">下一步</el-button>
+  </div> -->
+  <div class="r-s-two-container">
+    <div class="info-wrapper">
+      <span class="info-title">密码：</span>
+      <div class="info-content-wrapper">
+        <input type="password" class="input" placeholder="请输入密码" v-model="registerInfo.password" maxlength="16">
+      </div>
+    </div>
+    <div class="info-wrapper">
+      <span class="info-title">确认密码：</span>
+      <div class="info-content-wrapper">
+        <input type="password" class="input" placeholder="请再次输入密码" v-model="registerInfo.confirmPassword">
+      </div>
+    </div>
+    <el-button class="next-step" @click="nextStep">下一步</el-button>
   </div>
 </template>
 
@@ -73,12 +86,24 @@ export default {
   },
   methods: {
     nextStep () {
-      if (!this.registerInfo.realName) {
-        this.$toast('请输入真实姓名')
+      // if (!this.registerInfo.realName) {
+      //   this.$toast('请输入真实姓名')
+      //   return
+      // }
+      // if (!this.registerInfo.workName) {
+      //   this.$toast('请输入单位/学校名称')
+      //   return
+      // }
+      if (!this.registerInfo.password) {
+        this.$toast('请输入密码')
         return
       }
-      if (!this.registerInfo.workName) {
-        this.$toast('请输入单位/学校名称')
+      if (this.registerInfo.password.length < 6) {
+        this.$toast('请输入至少6位数密码')
+        return
+      }
+      if (this.registerInfo.password !== this.registerInfo.confirmPassword) {
+        this.$toast('两次密码不一致')
         return
       }
       this.$router.replace({name: 'stepThree'})
@@ -126,53 +151,111 @@ export default {
 @import '~styles/mixin.styl'
 .r-s-two-container
     background #ffffff
-    padding rem(.4) rem(.4) $headerHeight rem(.4)
-    box-sizing border-box
+    padding rem(.4)
+    padding-bottom 0
     height auto
-    min-height 100%
-    .title
-        textStyle(#888, .3)
+    min-height 90%
+    overflow hidden
+    position relative
     .info-wrapper
         display flex
         align-items center
         padding rem(.4) 0
-        .info-item-wrapper
-            width 35%
-            .info-title
-                textStyle(#333, .28)
-            .info-tag
+        .info-title
+            width 25%
+            textStyle(#333, .3)
+            & i
                 textStyle(#888, .25)
         .info-content-wrapper
-            width 65%
+            width 75%
+            display flex
+            justify-content space-between
             .input
-                display inline-block
-                width 100%
                 border-radius rem(.02)
                 background #fff
                 border 1px solid #EDEEEE
+                padding rem(.2)
                 padding rem(.1)
-                box-sizing border-box
                 font-size 12px
-    .image-title-wrapper
-        textStyle(#333, .28)
-        margin-top rem(.2)
-        & span
-            textStyle(#888, .25)
+                flex 1
+          .info-code-wrapper
+                width 75%
+                display flex
+                justify-content space-between
+                .input
+                    width 50%
+                    border-radius rem(.02)
+                    background #fff
+                    border 1px solid #EDEEEE
+                    padding rem(.1)
+                    font-size 12px
+                    flex 1
+                .bt-code
+                    font-size 12px
+                    padding 0 rem(.1)
+                    background $primary
+                    border-radius rem(.1)
+                    color #fff
+                    margin-left rem(.2)
+                    white-space nowrap
+                    min-width rem(1.5)
     .next-step
         background $primary
         color #fff
-        width 80%
+        width 90%
         display block
-        margin rem(1) auto
-    .upload-wrapper
-        margin rem(.5) 0
-        & >>> .el-upload--picture-card
-        & >>> .el-upload-list__item
-            width 30%
-            height 27vw
-            line-height 27vw
-        & >>> .el-upload-list__item-status-label
-            height 0
-            & i
-                font-size 0
+        margin 0 auto
+        position absolute
+        bottom rem(.5)
+// .r-s-two-container
+//     background #ffffff
+//     padding rem(.4) rem(.4) $headerHeight rem(.4)
+//     box-sizing border-box
+//     height auto
+//     min-height 100%
+//     .title
+//         textStyle(#888, .3)
+//     .info-wrapper
+//         display flex
+//         align-items center
+//         padding rem(.4) 0
+//         .info-item-wrapper
+//             width 35%
+//             .info-title
+//                 textStyle(#333, .28)
+//             .info-tag
+//                 textStyle(#888, .25)
+//         .info-content-wrapper
+//             width 65%
+//             .input
+//                 display inline-block
+//                 width 100%
+//                 border-radius rem(.02)
+//                 background #fff
+//                 border 1px solid #EDEEEE
+//                 padding rem(.1)
+//                 box-sizing border-box
+//                 font-size 12px
+//     .image-title-wrapper
+//         textStyle(#333, .28)
+//         margin-top rem(.2)
+//         & span
+//             textStyle(#888, .25)
+//     .next-step
+//         background $primary
+//         color #fff
+//         width 80%
+//         display block
+//         margin rem(1) auto
+//     .upload-wrapper
+//         margin rem(.5) 0
+//         & >>> .el-upload--picture-card
+//         & >>> .el-upload-list__item
+//             width 30%
+//             height 27vw
+//             line-height 27vw
+//         & >>> .el-upload-list__item-status-label
+//             height 0
+//             & i
+//                 font-size 0
 </style>

@@ -4,16 +4,14 @@
   <div class="info-wrapper">
     <div class="info-item-wrapper">
       <p class="info-title">店铺名称：</p>
-      <!-- <span class="info-tag">(必填)</span> -->
     </div>
     <div class="info-content-wrapper">
       <input type="text" class="input" placeholder="请输入店铺名称" v-model="registerInfo.shopName" maxlength="8">
     </div>
   </div>
-  <div class="info-wrapper">
+  <!-- <div class="info-wrapper">
     <div class="info-item-wrapper">
       <p class="info-title">所在区域：</p>
-      <!-- <span class="info-tag">(必填)</span> -->
     </div>
     <div class="info-area-wrapper" @click="selectArea">
       {{city ? city : '选择所在地区'}}<span class="el-icon-arrow-right"></span>
@@ -22,12 +20,11 @@
   <div class="info-wrapper">
     <div class="info-item-wrapper">
       <p class="info-title">客服电话：</p>
-      <!-- <span class="info-tag">(必填)</span> -->
     </div>
     <div class="info-content-wrapper">
       <input type="text" class="input" placeholder="请输入客服电话"  v-model="registerInfo.shopPhone" maxlength="11">
     </div>
-  </div>
+  </div> -->
   <el-button class="next-step" @click="submit">提交</el-button>
 </div>
 </template>
@@ -55,18 +52,18 @@ export default {
         this.$toast('店铺名称最多8位')
         return
       }
-      if (!this.registerInfo.shopArea) {
-        this.$toast('请输入所在区域')
-        return
-      }
-      if (!this.registerInfo.shopPhone) {
-        this.$toast('请输入客服电话')
-        return
-      }
-      if (!this.$utils.validator.isPhone(this.registerInfo.shopPhone)) {
-        this.$toast('请输入合法的客服电话')
-        return
-      }
+      // if (!this.registerInfo.shopArea) {
+      //   this.$toast('请输入所在区域')
+      //   return
+      // }
+      // if (!this.registerInfo.shopPhone) {
+      //   this.$toast('请输入客服电话')
+      //   return
+      // }
+      // if (!this.$utils.validator.isPhone(this.registerInfo.shopPhone)) {
+      //   this.$toast('请输入合法的客服电话')
+      //   return
+      // }
       if (!this.registerInfo.parentId) {
         this.$toast('注册失败，请重试…')
         return
@@ -122,6 +119,7 @@ export default {
     overflow hidden
     height auto
     min-height 100%
+    position relative
     .title
         textStyle(#888, .3)
     .info-wrapper
@@ -129,13 +127,13 @@ export default {
         align-items center
         padding rem(.4) 0
         .info-item-wrapper
-            width 35%
+            width 25%
             .info-title
                 textStyle(#333, .28)
             .info-tag
                 textStyle(#888, .25)
         .info-content-wrapper
-            width 65%
+            width 75%
             .input
                 display inline-block
                 width 100%
@@ -155,7 +153,9 @@ export default {
     .next-step
         background $primary
         color #fff
-        width 80%
+        width 90%
         display block
-        margin rem(1) auto
+        margin 0 auto
+        position absolute
+        bottom rem(.5)
 </style>

@@ -1,7 +1,7 @@
 <template>
     <div class='r-seller-container'>
       <my-navi title="分销商申请" :isFixed="true" :isShowBack="false"></my-navi>
-      <div class="tab-wrapper">
+      <!-- <div class="tab-wrapper">
           <p
           class="tab-item"
           :class="{'active': item.isActive}"
@@ -10,7 +10,7 @@
               <i class="num" :class="{'num-active': item.isActive}">{{index+1}}</i>
               <span>{{item.name}}</span>
           </p>
-        </div>
+        </div> -->
       <div class="content">
         <router-view></router-view>
       </div>
@@ -97,5 +97,5 @@ export default {
                 background $orangeColor
     .content
         contentFixed()
-        top $headerHeight * 2
+        // top $headerHeight * 2
 </style>

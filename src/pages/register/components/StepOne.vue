@@ -1,33 +1,33 @@
 <template>
-<div class='r-s-one-container'>
-  <p class="title">请填写您的身份信息</p>
-  <div class="info-wrapper">
-    <span class="info-title">手机号：</span>
-    <div class="info-content-wrapper">
-      <input type="text" class="input" placeholder="请输入手机号" v-model="registerInfo.phone" maxlength="11">
+  <div class='r-s-one-container'>
+    <p class="title">请填写您的身份信息</p>
+    <div class="info-wrapper">
+      <span class="info-title">手机号：</span>
+      <div class="info-content-wrapper">
+        <input type="text" class="input" placeholder="请输入手机号" v-model="registerInfo.phone" maxlength="11">
+      </div>
     </div>
-  </div>
-  <div class="info-wrapper">
-    <span class="info-title">验证码：</span>
-    <div class="info-code-wrapper">
-      <input type="text" class="input" placeholder="请输入验证码" v-model="registerInfo.verifyCode">
-      <button class="bt-code" @click="getCode" :disabled="disabled">{{countDownText}}</button>
+    <div class="info-wrapper">
+      <span class="info-title">验证码：</span>
+      <div class="info-code-wrapper">
+        <input type="text" class="input" placeholder="请输入验证码" v-model="registerInfo.verifyCode">
+        <button class="bt-code" @click="getCode" :disabled="disabled">{{countDownText}}</button>
+      </div>
     </div>
-  </div>
-  <div class="info-wrapper">
-    <span class="info-title">密码：</span>
-    <div class="info-content-wrapper">
-      <input type="password" class="input" placeholder="请输入密码" v-model="registerInfo.password" maxlength="16">
+    <!-- <div class="info-wrapper">
+      <span class="info-title">密码：</span>
+      <div class="info-content-wrapper">
+        <input type="password" class="input" placeholder="请输入密码" v-model="registerInfo.password" maxlength="16">
+      </div>
     </div>
+    <div class="info-wrapper">
+      <span class="info-title">确认密码：</span>
+      <div class="info-content-wrapper">
+        <input type="password" class="input" placeholder="请再次输入密码" v-model="registerInfo.confirmPassword">
+      </div>
+    </div> -->
+    <el-button class="next-step" @click="nextStep">下一步</el-button>
   </div>
-  <div class="info-wrapper">
-    <span class="info-title">确认密码：</span>
-    <div class="info-content-wrapper">
-      <input type="password" class="input" placeholder="请再次输入密码" v-model="registerInfo.confirmPassword">
-    </div>
-  </div>
-  <el-button class="next-step" @click="nextStep">下一步</el-button>
-</div>
 </template>
 
 <script>
@@ -76,18 +76,6 @@ export default {
         this.$toast('请输入正确的验证码')
         return
       }
-      if (!this.registerInfo.password) {
-        this.$toast('请输入密码')
-        return
-      }
-      if (this.registerInfo.password.length < 6) {
-        this.$toast('请输入至少6位数密码')
-        return
-      }
-      if (this.registerInfo.password !== this.registerInfo.confirmPassword) {
-        this.$toast('两次密码不一致')
-        return
-      }
       this.$router.replace({name: 'stepTwo'})
     },
     getCode () {
@@ -101,7 +89,7 @@ export default {
       }
       this.$http(this.$urlPath.getCaptcha, {
         mobile: this.registerInfo.phone,
-        store_id: this.$route.query.storeId,
+        pid: this.$route.query.pid,
         event: 'register'
       }, '正在发送验证码…', (data) => {
         this.$toast('验证码发送成功')
@@ -146,8 +134,9 @@ export default {
     padding rem(.4)
     padding-bottom 0
     height auto
-    min-height 100%
+    min-height 90%
     overflow hidden
+    position relative
     .title
         textStyle(#888, .3)
     .info-wrapper
@@ -155,12 +144,12 @@ export default {
         align-items center
         padding rem(.4) 0
         .info-title
-            width 30%
+            width 20%
             textStyle(#333, .3)
             & i
                 textStyle(#888, .25)
         .info-content-wrapper
-            width 70%
+            width 80%
             display flex
             justify-content space-between
             .input
@@ -172,17 +161,16 @@ export default {
                 font-size 12px
                 flex 1
           .info-code-wrapper
-                width 70%
+                width 80%
                 display flex
                 justify-content space-between
                 .input
-                    width 50%
                     border-radius rem(.02)
                     background #fff
                     border 1px solid #EDEEEE
                     padding rem(.1)
                     font-size 12px
-                    flex 1
+                    flex 2
                 .bt-code
                     font-size 12px
                     padding 0 rem(.1)
@@ -191,11 +179,15 @@ export default {
                     color #fff
                     margin-left rem(.2)
                     white-space nowrap
-                    min-width rem(1.5)
+                    // min-width rem(1.5)
+                    // width 100%
+                    flex 1
     .next-step
         background $primary
         color #fff
-        width 80%
+        width 90%
         display block
-        margin rem(1) auto
+        margin 0 auto
+        position absolute
+        bottom rem(.5)
 </style>
