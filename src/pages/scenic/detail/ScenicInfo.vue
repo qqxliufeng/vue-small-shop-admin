@@ -88,6 +88,14 @@ export default {
   },
   mounted () {
     this.getData()
+  },
+  updated () {
+    let array = document.getElementsByTagName('a')
+    for (let i = 0; i < array.length; i++) {
+      let a = array[i]
+      a.removeAttribute('href')
+      a.style.color = '#333333'
+    }
   }
 }
 </script>

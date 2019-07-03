@@ -78,6 +78,8 @@ export const shareImageSave = distributorModuleUrl + 'share_image_save'
 
 export const updatedProfile = distributorModuleUrl + 'updated_profile'
 
+export const identityAuthentication = distributorModuleUrl + 'identity_authentication'
+
 const orderUrl = baseUrl + 'order/'
 
 export const createOrder = orderUrl + 'create_order'

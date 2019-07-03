@@ -90,6 +90,7 @@ export default {
       this.$http(this.$urlPath.getCaptcha, {
         mobile: this.registerInfo.phone,
         pid: this.$route.query.pid,
+        store_id: this.registerInfo.storeId,
         event: 'register'
       }, '正在发送验证码…', (data) => {
         this.$toast('验证码发送成功')

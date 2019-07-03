@@ -10,7 +10,7 @@ let listHandlerMixin = {
       }
     },
     loadError (mescroll, errorCode = -1, error = '加载失败') {
-      this.$toast(error)
+      // this.$toast(error)
       if (errorCode !== 200) {
         mescroll.endErr()
       } else {

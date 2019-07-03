@@ -92,18 +92,18 @@ export default {
       }
     })
   },
-  beforeRouteEnter (to, from, next) {
-    next(vm => {
-      if (from.name === 'city' && to.params.city) {
-        vm.registerInfo.shopArea = to.params.city
-        vm.city = to.params.city.province.value + ' ' + to.params.city.city.value
-      } else {
-        if (vm.$root.userInfo.isLogin()) {
-          vm.$router.replace({name: 'home'})
-        }
-      }
-    })
-  },
+  // beforeRouteEnter (to, from, next) {
+  //   next(vm => {
+  //     if (from.name === 'city' && to.params.city) {
+  //       vm.registerInfo.shopArea = to.params.city
+  //       vm.city = to.params.city.province.value + ' ' + to.params.city.city.value
+  //     } else {
+  //       if (vm.$root.userInfo.isLogin()) {
+  //         vm.$router.replace({name: 'home'})
+  //       }
+  //     }
+  //   })
+  // },
   destroyed () {
     window.removeEventListener('resize', () => {})
   }

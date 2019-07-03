@@ -322,7 +322,10 @@ export default new Router({
     {
       path: '/authinfo',
       name: 'authInfo',
-      component: () => import('@/pages/account/AuthInfo')
+      component: () => import('@/pages/account/AuthInfo'),
+      meta: {
+        keepAlive: true
+      }
     }
   ],
   scrollBehavior (to, from, saveTop) {

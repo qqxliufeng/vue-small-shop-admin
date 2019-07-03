@@ -9,7 +9,7 @@
       <span class="all-money" @click="allMoneyCrash">全部提现</span>
     </div>
     <p class="tip-no-input" v-if="!isInput">当前余额：<i>￥{{$root.userInfo.state.balance || '0.00'}}</i>，提现最低金额：<i>￥{{crashTip.miniCrash || '0.00'}}</i>，账户最低余额：<i>￥{{crashTip.miniBalance || '0.00'}}</i>，提现手续费：<i>{{Number(crashTip.serviceCharge || 0.00) * 100 + '%'}}</i></p>
-    <p class="tip-no-input" v-else>额外扣除<i>￥{{serviceCharge.toFixed(2)}}</i>服务费（费率{{crashTip.serviceCharge * 100 + '%'}}）</p>
+    <p class="tip-no-input" v-else>本次提现手续费为：<i>￥{{serviceCharge.toFixed(2)}}</i>服务费（费率{{crashTip.serviceCharge * 100 + '%'}}），此金额将会在您的提现金额中扣除</p>
   </div>
   <div class="select-type-container">
     <p class="title-tip">提现方式</p>
