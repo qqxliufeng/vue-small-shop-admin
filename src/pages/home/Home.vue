@@ -12,7 +12,7 @@
   <home-menu :menu="menus.myTeam" v-if="Number(this.$root.userInfo.state.rank) < 3"></home-menu>
   <home-menu :menu="menus.makeMoney"></home-menu>
   <home-menu :menu="menus.mySetting"></home-menu>
-  <p class="pc">更多功能请登录电脑端：http://www.test.youdaike.com/distributor/dashboard?ref=addtabs</p>
+  <div style="height: 20px"></div>
 </div>
 </template>
 

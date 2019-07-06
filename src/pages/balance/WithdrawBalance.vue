@@ -31,15 +31,19 @@
     <input type="text" class="account-input" placeholder="请输入提现账号" :disabled="!canCrash" v-model="crashAccount">
   </div>
   <el-button type="primary" class="submit" :disabled="!canCrash" @click="crash">确定</el-button>
+  <confirm-dialog content="当前账号未进行认证，请先认证" @dialogConfirm="dialogConfirm" ref="confrimDialog"></confirm-dialog>
 </div>
 </template>
 
 <script>
 import imgZFBIcon from 'images/img_zfb_icon.png'
 import imgWXIcon from 'images/img_weixin_icon.png'
+import ConfirmDialog from 'common/components/confirm-dialog'
 export default {
   name: 'withdrawBalance',
-  components: {},
+  components: {
+    ConfirmDialog
+  },
   data () {
     return {
       imgZFBIcon,
@@ -63,7 +67,7 @@ export default {
           miniBalance: Number(newVal.minimum_balance),
           serviceCharge: Number(newVal.service_charge)
         }
-        this.canCrash = this.crashTip.balance && this.crashTip.balance > 0 && this.crashTip.balance >= this.crashTip.miniCrash + this.crashTip.miniBalance
+        this.canCrash = this.crashTip.balance && this.crashTip.balance > 0 && this.crashTip.balance > this.crashTip.miniCrash + this.crashTip.miniBalance
       }
     },
     crashMoney (newVal, oldVal) {
@@ -88,14 +92,25 @@ export default {
         this.crashMoney = Number(this.$root.userInfo.state.balance).toFixed(2) - Number(this.crashTip.miniBalance) + ''
       }
     },
+    dialogConfirm () {
+      this.$router.replace({name: 'authInfo'})
+    },
     getData () {
       this.$http(this.$urlPath.withdrawCash, {}, '', (data) => {
         this.info = data.data
       }, (errorCode, error) => {
-        this.$toast(error)
+        if (errorCode === 200) {
+          this.$refs.confrimDialog.showDialog()
+        } else {
+          this.$toast(error)
+        }
       })
     },
     crash () {
+      if (Number(this.crashMoney) === 0) {
+        this.$toast('请输入合法的金额')
+        return
+      }
       if (!this.$utils.validator.isMoney(this.crashMoney)) {
         this.$toast('请输入合法的金额')
         return
@@ -106,6 +121,11 @@ export default {
       }
       if (Number(this.crashMoney) > Number(this.$root.userInfo.state.balance)) {
         this.$toast('提现金额大于当前账户余额')
+        return
+      }
+      if (Number(this.crashMoney) > Number(this.$root.userInfo.state.balance) - Number(this.crashTip.miniBalance)) {
+        this.$toast('提现金额最低保留￥' + this.info.minimum_balance)
+        this.crashMoney = Number(this.$root.userInfo.state.balance) - Number(this.crashTip.miniBalance)
         return
       }
       if (!this.crashAccount) {
@@ -119,6 +139,8 @@ export default {
       }, '正在操作…', (data) => {
         this.$toast('提现申请成功')
         this.$root.userInfo.setUserInfoBalance(data.data.balance)
+        this.crashTip.balance = Number(data.data.balance)
+        this.canCrash = this.crashTip.balance && this.crashTip.balance > 0 && this.crashTip.balance > this.crashTip.miniCrash + this.crashTip.miniBalance
         this.crashMoney = ''
         this.crashAccount = ''
       }, (errorCode, error) => {

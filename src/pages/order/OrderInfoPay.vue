@@ -44,17 +44,6 @@
             </ul>
             <p class="o-i-pay-action" @click="pay">支付</p>
         </div>
-        <el-dialog
-          title="提示"
-          :visible.sync="dialogVisible"
-          width="90%"
-          @close="close">
-          <span>购买成功~</span>
-          <span slot="footer" class="dialog-footer">
-            <el-button @click="close" size="mini">再逛逛</el-button>
-            <el-button type="primary" @click="seeOrder" size="mini">查看订单</el-button>
-          </span>
-        </el-dialog>
     </div>
 </template>
 
@@ -71,7 +60,6 @@ export default {
   },
   data () {
     return {
-      dialogVisible: false,
       payItemList: [
         {
           name: '支付宝',
@@ -126,7 +114,7 @@ export default {
         this.info = data.data
         this.info.timeout_express = this.info.timeout_express - data.time
       }, (errorCode, error) => {
-        this.$toast(error)
+        this.$router.go(-1)
       })
     },
     payItemClick (item) {
@@ -145,24 +133,22 @@ export default {
         out_trade_no: this.$route.query.no,
         pay_type: this.payType
       }, '正在支付…', (data) => {
-        this.$toast('订单支付成功')
-        this.$root.$emit('onReload')
-        // this.$router.go(-1)
-        this.dialogVisible = true
+        if (this.payType === 'alipay') { // 支付宝
+          const div = document.createElement('div')
+          div.innerHTML = data.data
+          document.body.appendChild(div)
+          document.forms[0].submit()
+        } else if (this.payType === 'balance' || this.payType === 'credit') { // 余额支付 或者 是授信支付
+          this.$router.replace({name: 'orderPayResult', query: {out_trade_no: this.$route.query.no, state: '1', scenic_id: this.info.scenic_id, order_id: data.data.order_id}})
+        } else if (this.payType === 'wechatpay') { // 微信
+          console.log('object')
+        }
       }, (errorCode, error) => {
         this.$toast(error)
+        if (this.payType === 'alipay') {
+          this.$router.replace({name: 'orderPayResult', query: {out_trade_no: this.$route.query.no, state: '0', scenic_id: this.info.scenic_id, order_id: ''}})
+        }
       })
-    },
-    seeOrder () {
-      this.dialogVisible = false
-      this.$router.replace({name: 'orderInfo', params: {orderId: '103', orderType: '2'}})
-    //   if (this.orderId) {
-    //     this.$router.replace({name: 'orderInfo', params: {orderId: '103', orderType: '2'}})
-    //   }
-    },
-    close () {
-      this.dialogVisible = false
-      this.$router.go(-1)
     }
   },
   mounted () {

@@ -11,13 +11,13 @@
   <div class="select-type-container">
     <p class="title-tip">充值方式</p>
     <div class="input-wrapper">
-      <div class="type-wrapper" @click="typeClick(1)">
+      <div class="type-wrapper" @click="typeClick(1)" v-if="!$isWeiXin">
         <img :src="imgZFBIcon" class="img">
         <span class="type-name">支付宝</span>
         <el-radio v-model="selectType" label="1" class="radio"></el-radio>
       </div>
       <div class="sperator"></div>
-       <div class="type-wrapper" @click="typeClick(2)">
+      <div class="type-wrapper" @click="typeClick(2)" v-if="$isWeiXin">
         <img :src="imgWXIcon" class="img">
         <span class="type-name">微信</span>
         <el-radio v-model="selectType" label="2" class="radio"></el-radio>
@@ -55,7 +55,21 @@ export default {
         this.$toast('请输入合法的金额')
         return
       }
-      this.$toast('充值')
+      this.$http(this.$urlPath.rechargeBalanc, {
+        amount: this.rechargeMoney,
+        pay_type: this.selectType === '1' ? 'alipay' : 'wechat'
+      }, '正在提交…', (data) => {
+        if (this.selectType === '1') { // 支付宝
+          const div = document.createElement('div')
+          div.innerHTML = data.data
+          document.body.appendChild(div)
+          document.forms[0].submit()
+        } else if (this.selectType === '2') { // 微信
+          console.log('object')
+        }
+      }, (errorCode, error) => {
+        this.$toast(error)
+      })
     }
   }
 }

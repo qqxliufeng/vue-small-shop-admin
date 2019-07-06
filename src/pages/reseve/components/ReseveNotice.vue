@@ -19,7 +19,7 @@
           </div>
           <div class="scenic-detail">
             <div class="scenic-detail-rate">
-              <el-rate disabled :value="Number(scenic.mark) || 0" show-score text-color="#444"></el-rate>
+              <el-rate disabled :value="Number(scenic.mark) || 0" show-score text-color="#ff9900" score-template="{value}分"></el-rate>
             </div>
             <span class="scenic-detail-sale-count">
               已售{{scenic.totalSales}}张
@@ -29,6 +29,7 @@
       </div>
       <div class="notice-info-wrapper">
         <ticket-notice-wrapper :goodsInfo="goods"></ticket-notice-wrapper>
+        <business-info :store="store"></business-info>
         <div class="sperator-2"></div>
       </div>
       <div class="bottom-wrapper" >
@@ -41,14 +42,17 @@
 
 <script>
 import TicketNoticeWrapper from 'common/components/ticket-notice-wrapper'
+import BusinessInfo from '@/pages/order/components/OrderBusinessInfo'
 export default {
   name: 'reseveNotice',
   props: {
     goods: Object,
-    scenic: Object
+    scenic: Object,
+    store: Object
   },
   components: {
-    TicketNoticeWrapper
+    TicketNoticeWrapper,
+    BusinessInfo
   },
   data () {
     return {

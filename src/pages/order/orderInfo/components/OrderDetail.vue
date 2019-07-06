@@ -6,7 +6,7 @@
         联系人
       </p>
       <p class="content-info">
-        姓名：{{detail.ord_check_taker_name || '暂无'}}
+        姓&nbsp;&nbsp;&nbsp;&nbsp;名：{{detail.ord_check_taker_name || '暂无'}}
       </p>
       <p class="content-info">
         手机号：{{detail.ord_check_taker_phone || '暂无'}}
@@ -18,7 +18,7 @@
         游玩人{{index+1}}
       </p>
       <p class="content-info">
-        姓名：{{item.t_username}}
+        姓&nbsp;&nbsp;&nbsp;&nbsp;名：{{item.t_username}}
       </p>
       <p class="content-info">
         手机号：{{item.t_phone}}

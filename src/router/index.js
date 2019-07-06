@@ -205,6 +205,11 @@ export default new Router({
       component: OrderInfoPay
     },
     {
+      path: '/orderpayresult',
+      name: 'orderPayResult',
+      component: () => import('@/pages/order/OrderPayResult')
+    },
+    {
       path: '/message',
       name: 'message',
       component: Message

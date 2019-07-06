@@ -80,6 +80,8 @@ export const updatedProfile = distributorModuleUrl + 'updated_profile'
 
 export const identityAuthentication = distributorModuleUrl + 'identity_authentication'
 
+export const rechargeBalanc = distributorModuleUrl + 'recharge_balanc'
+
 const orderUrl = baseUrl + 'order/'
 
 export const createOrder = orderUrl + 'create_order'
