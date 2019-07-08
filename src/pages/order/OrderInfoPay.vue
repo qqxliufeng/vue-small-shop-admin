@@ -64,15 +64,15 @@ export default {
         {
           name: '支付宝',
           icon: imgZFBIcon,
-          isChecked: true,
+          isChecked: false,
           isShow: !this.$isWeiXin,
           payType: 'alipay'
         },
         {
           name: '微信',
           icon: imgWXIcon,
-          isChecked: true,
-          isShow: this.$isWeiXin,
+          isChecked: false,
+          isShow: !this.$isAliPay,
           payType: 'wechatpay'
         },
         {
@@ -91,7 +91,7 @@ export default {
         }
       ],
       info: null,
-      payType: 'alipay'
+      payType: ''
     }
   },
   computed: {
@@ -128,6 +128,10 @@ export default {
       this.$router.go(-1)
     },
     pay () {
+      if (!this.payType) {
+        this.$toast('请选择支付方式')
+        return
+      }
       this.$http(this.$urlPath.orderPay, {
         isNoToken: true,
         out_trade_no: this.$route.query.no,
@@ -141,7 +145,11 @@ export default {
         } else if (this.payType === 'balance' || this.payType === 'credit') { // 余额支付 或者 是授信支付
           this.$router.replace({name: 'orderPayResult', query: {out_trade_no: this.$route.query.no, state: '1', scenic_id: this.info.scenic_id, order_id: data.data.order_id}})
         } else if (this.payType === 'wechatpay') { // 微信
-          console.log('object')
+          if (this.$isWeiXin) { // 判断是不是微信客户端
+            console.log('weixin')
+          } else {
+            window.location.href = data.data
+          }
         }
       }, (errorCode, error) => {
         this.$toast(error)
@@ -153,7 +161,6 @@ export default {
   },
   mounted () {
     this.getData()
-    this.payType = this.$isWeiXin ? 'wechatpay' : 'alipay'
   }
 }
 </script>

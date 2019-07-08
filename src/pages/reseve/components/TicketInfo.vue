@@ -154,6 +154,7 @@ export default {
             if (item.oneStock) {
               item.one_stock = item.oneStock
             }
+            item.cost_prices = Number(item.cost_prices).toFixed(2)
             tempEvent[item.date] = item
           })
           this.minNum = this.ticketInfo.goods.min_number

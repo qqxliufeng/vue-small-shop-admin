@@ -33,7 +33,10 @@
                   <!-- <p><span class="info-money">￥89</span><span class="info-money-tag">起</span><span class="info-old-money">￥109</span></p> -->
                   <div class="info-action-wrapper">
                     <span class="info-sale-count">已售{{content.people_num}}</span>
-                    <button class="info-share" @click.stop="selectScenicShare(content)" v-if="isCanShare">分享</button>
+                    <span>
+                      <button class="info-detail" @click.stop="startScenicDetail(content)">详情</button>
+                      <button class="info-share" @click.stop="selectScenicShare(content)" v-if="isCanShare">分享</button>
+                    </span>
                   </div>
                 </div>
               </div>

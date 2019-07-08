@@ -17,7 +17,7 @@
         <el-radio v-model="selectType" label="1" class="radio"></el-radio>
       </div>
       <div class="sperator"></div>
-      <div class="type-wrapper" @click="typeClick(2)" v-if="$isWeiXin">
+      <div class="type-wrapper" @click="typeClick(2)" v-if="!$isAliPay">
         <img :src="imgWXIcon" class="img">
         <span class="type-name">微信</span>
         <el-radio v-model="selectType" label="2" class="radio"></el-radio>
@@ -38,7 +38,7 @@ export default {
     return {
       imgZFBIcon,
       imgWXIcon,
-      selectType: '1',
+      selectType: this.$isWeiXin ? '2' : '1',
       rechargeMoney: ''
     }
   },
@@ -65,7 +65,11 @@ export default {
           document.body.appendChild(div)
           document.forms[0].submit()
         } else if (this.selectType === '2') { // 微信
-          console.log('object')
+          if (this.$isWeiXin) { // 是不是微信客户端
+            console.log('object')
+          } else {
+            window.location.href = data.data
+          }
         }
       }, (errorCode, error) => {
         this.$toast(error)

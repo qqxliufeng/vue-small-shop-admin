@@ -47,6 +47,7 @@ Vue.prototype.$utils = utils
 Vue.prototype.$urlPath = urlPath
 Vue.prototype.NODE_DEVELOPMENT = process.env.NODE_ENV === 'development'
 Vue.prototype.$isWeiXin = navigator.userAgent.toLowerCase().indexOf('micromessenger') !== -1
+Vue.prototype.$isAliPay = navigator.userAgent.toLowerCase().indexOf('alipay') !== -1
 Vue.prototype.$isMobile = function () {
   return navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)
 }
@@ -114,7 +115,9 @@ let noLoginContainer = [
   'stepThree',
   'city',
   'forgetPassword',
-  'fastLogin'
+  'fastLogin',
+  'rechargePayResult',
+  'orderPayResult'
 ]
 
 router.beforeEach((to, from, next) => {

@@ -20,3 +20,31 @@ if (isWXAndIos) { // 既是微信浏览器 又是ios============（因为查到�
     }, 200)
   })
 }
+
+// export function weixinPayResult () {
+//   if (typeof WeixinJSBridge === 'undefined') {
+//     if (document.addEventListener) {
+//       document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false)
+//     } else if (document.attachEvent) {
+//       document.attachEvent('WeixinJSBridgeReady', onBridgeReady)
+//       document.attachEvent('onWeixinJSBridgeReady', onBridgeReady)
+//     }
+//   } else {
+//     onBridgeReady()
+//   }
+// }
+
+// function onBridgeReady () {
+//   WeixinJSBridge.invoke('getBrandWCPayRequest', {
+//     'appId': 'wx2421b1c4370ec43b',
+//     'timeStamp': '1395712654',
+//     'nonceStr': 'e61463f8efa94090b1f366cccfbbb444',
+//     'package': 'prepay_id=u802345jgfjsdfgsdg888',
+//     'signType': 'MD5',
+//     'paySign': '70EA570631E4BB79628FBCA90534C63FF7FADD89'
+//   },
+//   function (res) {
+//     if (res.err_msg === 'get_brand_wcpay_request:ok') {
+//     }
+//   })
+// }

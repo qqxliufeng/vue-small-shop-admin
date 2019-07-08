@@ -282,6 +282,11 @@ export default new Router({
       component: RechargeBalance
     },
     {
+      path: '/rechargepayresult',
+      name: 'rechargePayResult',
+      component: () => import('@/pages/balance/RechargePayResult')
+    },
+    {
       path: '/withdrawbalance',
       name: 'withdrawBalance',
       component: WithdrawBalance
