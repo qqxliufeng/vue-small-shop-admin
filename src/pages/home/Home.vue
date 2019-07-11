@@ -39,6 +39,7 @@ export default {
       showTip: true,
       amount: null,
       authInfo: null,
+      from: null,
       menus: {
         makeMoney: {
           title: '我要赚钱',
@@ -46,7 +47,7 @@ export default {
             {
               icon: '&#xe7d6;',
               iconColor: '#EC8E8B',
-              title: '分享小店',
+              title: '分享店铺',
               callBack: () => {
                 this.$router.push({name: 'shareShop'})
               }
@@ -171,8 +172,37 @@ export default {
       this.$router.push({name: 'orderList', query: { type: type.type }})
     }
   },
+  created () {
+    if (window.location.href && window.location.href.indexOf('&state=1#/') !== -1) {
+      let url = window.location.href
+      let newUrl = url.replace('#/', '')
+      location.href = newUrl.replace('?', '#/?')
+    } else {
+      let isWeiXin = navigator.userAgent.toLowerCase().indexOf('micromessenger') !== -1
+      let isLogin = this.$root.userInfo.isLogin()
+      let isNoOpenId = !this.$root.userInfo.state.openid || this.$root.userInfo.state.openid === 'null'
+      if (isWeiXin && isLogin && isNoOpenId) {
+        if (this.$route.query.code) {
+          // let url = location.href
+          // let index = url.indexOf('code=') + 5
+          // let content = url.slice(index, url.lastIndexOf('&'))
+          // this.$router.push({name: 'auth', query: {code: content}})
+          this.$router.push({name: 'auth', query: {code: this.$route.query.code}})
+        } else {
+          // 微信去授权
+          let redirectUri = 'http://www.liuyiqinzi.com/distributor_manage'
+          location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx10a7de3814315ba1&redirect_uri=' + redirectUri + '&response_type=code&scope=snsapi_base&state=1#wechat_redirect'
+        }
+      }
+    }
+  },
   mounted () {
     this.getData()
+  },
+  beforeRouteEnter (to, from, next) {
+    next((vm) => {
+      vm.from = from
+    })
   }
 }
 </script>

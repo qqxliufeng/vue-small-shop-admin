@@ -14,7 +14,7 @@
       </div>
       <ul v-if="scenicPostList">
         <li v-for="item of scenicPostList" :key="item.id" class="scenic-post-item-wrapper" @click="startScenicPost(item)">
-          <el-card shadow="always" :bodyStyle="{padding: '0'}" v-if="getScenicImage(item)">
+          <el-card shadow="always" :bodyStyle="{padding: '0'}">
             <img class="item-image" v-lazy="getScenicImage(item)" :key="getScenicImage(item)">
             <div class="item-info-wrapper">
               <p class="item-title">{{item.scenic_name}}</p>

@@ -1,6 +1,10 @@
 <template>
 <div class='g-list-container'>
-  <my-navi title="商品列表" :isFixed="true"></my-navi>
+  <my-navi title="商品列表" :isFixed="true">
+    <slot slot="rightAction">
+      <span class="el-icon-search search" @click="search"></span>
+    </slot>
+  </my-navi>
   <div class="content">
       <div class="menu">
         <swiper :options="swiperOption" class="swiper">
@@ -91,6 +95,9 @@ export default {
       })
       this.tempMenu = item
     },
+    search () {
+      this.$router.push({name: 'searchGoods'})
+    },
     startScenicDetail (item) {
       this.$router.push({name: 'scenicDetail', query: {identity: '2', storeId: this.$root.userInfo.state.id, scenicId: item.scenic_id}})
     },
@@ -121,8 +128,13 @@ export default {
 @import '~styles/mixin.styl'
 >>> .swiper-slide
     text-align center
-
 .g-list-container
+    .search
+        font-size rem(.4)
+        color #666
+        display inline-block
+        line-height $headerHeight
+        width rem(.5)
     .content
         padding-top $headerHeight
         .scenic-empty
@@ -218,7 +230,7 @@ export default {
                                 background-color #fff
                                 color #EA782F
                                 font-size rem(.25)
-                                padding 0 rem(.2)
+                                padding 0 rem(.3)
                                 box-sizing border-box
                                 display inline-block
                                 margin-right rem(.2)

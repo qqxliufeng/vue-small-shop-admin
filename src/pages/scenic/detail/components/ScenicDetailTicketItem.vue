@@ -6,13 +6,19 @@
                 <p class="s-d-hot-item-info-price"><span>￥{{item.minPrice}}</span><i>起</i></p>
             </div>
             <div class="s-d-hot-item-info-remark-wrapper">
-                <p class="s-d-hot-item-info-remark">{{item.before}}</p>
+                <!-- <p class="s-d-hot-item-info-remark">{{item.before}}</p> -->
+                 <div class="tags">
+                    <span v-for="(itemTag, index) of item.tag" :key="index" class="tag">
+                        <el-tag size="mini" :type=" index === 0 ? 'success' : 'danger'" v-if="itemTag">{{itemTag}}</el-tag>
+                    </span>
+                 </div>
                 <p class="s-d-hot-item-info-old-price">￥{{item.retailPrice}}</p>
             </div>
             <div class="s-d-hot-item-info-info-wrapper">
                 <div class="s-d-hot-item-info-info-info">
                     <p>
-                        已售{{item.totalSales}}
+                        <span>已售{{item.totalSales}}</span>
+                        <span class="ticket-must" @click="itemClickOrder(item)">购票须知<i class="el-icon-arrow-right"></i></span>
                     </p>
                 </div>
                 <div class="s-d-hot-item-info-info-action">
@@ -86,6 +92,10 @@ export default {
                 right 0
                 normalTextStyle(#888888, .25)
                 text-decoration line-through
+            .tags
+                margin-top rem(.08)
+                .tag
+                    margin 0 rem(.1)
         .s-d-hot-item-info-info-wrapper
             display flex
             justify-content center
@@ -98,7 +108,9 @@ export default {
                     margin-top rem(.1)
                     normalTextStyle(#888888, .25)
                     & span:nth-child(1)
-                        margin 0 rem(.2)
+                        margin 0 rem(.1)
+                .ticket-must
+                    textStyle($orangeColor, .25)
         .button
             background $orangeColor
             border-color $orangeColor

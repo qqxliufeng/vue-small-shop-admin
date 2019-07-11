@@ -1,6 +1,11 @@
 <template>
   <div class='o-i-result-container'>
-    <my-navi title="支付结果"></my-navi>
+    <div class="navi-relative navi-container">
+        <span class="iconfont navi-back" @click="back">&#xe625;</span>
+        <span class="navi-title">
+            支付结果
+        </span>
+    </div>
     <div class="result-icon-container">
       <span class="el-icon-success result-icon" :class="{'el-icon-success' : state === 1, 'el-icon-circle-close' : state === 0}"></span>
       <p class="result-icon-tip">{{state === 1 ? '支付成功' : '支付失败'}}</p>
@@ -25,8 +30,9 @@ export default {
   },
   methods: {
     confirm () {
-      // this.$root.$emit('closePage')
-      // this.$router.go(-1)
+      this.$router.replace({name: 'home'})
+    },
+    back () {
       this.$router.replace({name: 'home'})
     }
   }
@@ -53,4 +59,31 @@ export default {
         width 50%
         line-height 1.5
         font-size rem(.3)
+.navi-container
+    height $headerHeight
+    line-height $headerHeight
+    background-color #f5f5f5
+    opacity 1
+    text-align center
+    font-size .32rem
+    top 0
+    left 0
+    right 0
+    z-index 999
+    .navi-back
+        font-size .4rem
+        position absolute
+        left 0
+        top 0
+        margin-left .3rem
+    .navi-right-action
+        position absolute
+        right  0
+        top 0
+        margin-right .3rem
+        font-size .3rem
+.navi-relative
+    position relative
+.navi-fixed
+    position fixed
 </style>

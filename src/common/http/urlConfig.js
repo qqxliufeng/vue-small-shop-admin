@@ -20,6 +20,8 @@ export const registerImageActionUrl = baseIP + commonModuleUrl + 'upload_registe
 
 export const loginUrl = distributorModuleUrl + 'login'
 
+export const userInfo = distributorModuleUrl + 'get_distributor_info'
+
 export const logoutUrl = distributorModuleUrl + 'logout'
 
 export const shareShopUrl = distributorModuleUrl + 'share_shop'
@@ -81,6 +83,10 @@ export const updatedProfile = distributorModuleUrl + 'updated_profile'
 export const identityAuthentication = distributorModuleUrl + 'identity_authentication'
 
 export const rechargeBalanc = distributorModuleUrl + 'recharge_balanc'
+
+export const searchScenic = distributorModuleUrl + 'search_scenic'
+
+export const getWXOpenid = distributorModuleUrl + 'get_openid'
 
 const orderUrl = baseUrl + 'order/'
 

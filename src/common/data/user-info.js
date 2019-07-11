@@ -4,7 +4,7 @@ const userInfo = {
   state: {
     id: sessionStorage.getItem('id'),
     authset: sessionStorage.getItem('authset'),
-    token: sessionStorage.getItem('token'),
+    token: localStorage.getItem('token'),
     name: sessionStorage.getItem('name'),
     phone: sessionStorage.getItem('phone'),
     avatar: sessionStorage.getItem('avatar'),
@@ -15,7 +15,8 @@ const userInfo = {
     rebate: sessionStorage.getItem('rebate'),
     credit: sessionStorage.getItem('credit'),
     rank: sessionStorage.getItem('rank'),
-    linkname: sessionStorage.getItem('linkname')
+    linkname: sessionStorage.getItem('linkname'),
+    openid: sessionStorage.getItem('openid')
   },
   isLogin () {
     // return this.state.id !== '' && this.state.id !== null && this.state.token !== '' && this.state.token !== null && this.state.phone !== '' && this.state.phone !== null
@@ -36,10 +37,10 @@ const userInfo = {
     this.state.credit = userInfo.line_of_credit
     this.state.rank = userInfo.rank
     this.state.linkname = userInfo.linkname
-
+    this.state.openid = userInfo.openid
     sessionStorage.setItem('id', this.state.id)
     sessionStorage.setItem('authset', this.state.authset)
-    sessionStorage.setItem('token', this.state.token)
+    localStorage.setItem('token', this.state.token)
     sessionStorage.setItem('name', this.state.name)
     sessionStorage.setItem('phone', this.state.phone)
     sessionStorage.setItem('avatar', this.state.avatar)
@@ -51,6 +52,7 @@ const userInfo = {
     sessionStorage.setItem('credit', this.state.credit)
     sessionStorage.setItem('rank', this.state.rank)
     sessionStorage.setItem('linkname', this.state.linkname)
+    sessionStorage.setItem('openid', this.state.openid)
     state.saveSallerInfo('2', this.state.id)
   },
   setUserInfoAvatar (avatar) {
@@ -80,6 +82,10 @@ const userInfo = {
   setUserInfoBalance (balance) {
     this.state.balance = balance
     sessionStorage.setItem('balance', this.state.balance)
+  },
+  setUserInfoOpenId (openid) {
+    this.state.openid = openid
+    sessionStorage.setItem('openid', this.state.openid)
   },
   clearInfoAction () {
     this.state.id = ''

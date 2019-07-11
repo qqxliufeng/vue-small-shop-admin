@@ -91,7 +91,8 @@ export default {
         }
       ],
       info: null,
-      payType: ''
+      payType: '',
+      wxPayInfo: null
     }
   },
   computed: {
@@ -114,6 +115,7 @@ export default {
         this.info = data.data
         this.info.timeout_express = this.info.timeout_express - data.time
       }, (errorCode, error) => {
+        this.$toast(error)
         this.$router.go(-1)
       })
     },
@@ -146,7 +148,17 @@ export default {
           this.$router.replace({name: 'orderPayResult', query: {out_trade_no: this.$route.query.no, state: '1', scenic_id: this.info.scenic_id, order_id: data.data.order_id}})
         } else if (this.payType === 'wechatpay') { // 微信
           if (this.$isWeiXin) { // 判断是不是微信客户端
-            console.log('weixin')
+            this.wxPayInfo = data.data
+            if (typeof WeixinJSBridge === 'undefined') {
+              if (document.addEventListener) {
+                document.addEventListener('WeixinJSBridgeReady', this.onBridgeReady, false)
+              } else if (document.attachEvent) {
+                document.attachEvent('WeixinJSBridgeReady', this.onBridgeReady)
+                document.attachEvent('onWeixinJSBridgeReady', this.onBridgeReady)
+              }
+            } else {
+              this.onBridgeReady()
+            }
           } else {
             window.location.href = data.data
           }
@@ -157,6 +169,26 @@ export default {
           this.$router.replace({name: 'orderPayResult', query: {out_trade_no: this.$route.query.no, state: '0', scenic_id: this.info.scenic_id, order_id: ''}})
         }
       })
+    },
+    onBridgeReady () {
+      if (this.wxPayInfo) {
+        WeixinJSBridge.invoke(
+          'getBrandWCPayRequest',
+          {
+            'appId': this.wxPayInfo.appId,
+            'timeStamp': this.wxPayInfo.timeStamp,
+            'nonceStr': this.wxPayInfo.nonceStr,
+            'package': this.wxPayInfo.package,
+            'signType': this.wxPayInfo.signType,
+            'paySign': this.wxPayInfo.paySign
+          }, (res) => {
+            if (res.err_msg === 'get_brand_wcpay_request:ok') {
+              this.$router.replace({name: 'orderPayResult', query: {out_trade_no: this.$route.query.no, scenic_id: this.info.scenic_id, state: '1', order_id: this.info.order_id}})
+            } else {
+              this.$router.replace({name: 'orderPayResult', query: {out_trade_no: this.$route.query.no, scenic_id: this.info.scenic_id, state: '0', order_id: this.info.order_id}})
+            }
+          })
+      }
     }
   },
   mounted () {

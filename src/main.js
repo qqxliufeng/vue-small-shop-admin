@@ -107,6 +107,58 @@ Vue.prototype.$http = function (url, params = {}, loadingTip, onRequestSuccess, 
     this.$loading.close()
   }
 }
+router.beforeEach((to, from, next) => {
+  if (noLoginContainer.includes(to.name)) {
+    next()
+    return
+  }
+  if (!userInfo.isLogin()) {
+    // if (to.name !== 'login') {
+    //   next({name: 'login'})
+    // } else {
+    //   next()
+    // }
+    if (to.name === 'login') {
+      next()
+    } else {
+      autoLogin(next)
+    }
+  } else {
+    next()
+  }
+})
+
+/**
+ * 如果用户没有登录，则判断是否要自动登录
+ * @param {next}
+ */
+function autoLogin (next) {
+  if (userInfo.state.token) {
+    axios.post(urlPath.userInfo, {
+      token: userInfo.state.token
+    }).then((response) => {
+      new Promise((resolve, reject) => {
+        if (response.status === 200 && response.data.code === 1) {
+          response.data.data.token = state.token
+          userInfo.setUserInfo(response.data.data)
+          resolve()
+        } else {
+          reject(new Error('auto error'))
+        }
+      }).then(() => {
+        next()
+      }).catch(error => {
+        console.log(error)
+        next({name: 'login'})
+      })
+    }).catch(error => {
+      console.log(error)
+      next({name: 'login'})
+    })
+  } else {
+    next({name: 'login'})
+  }
+}
 
 let noLoginContainer = [
   'registerDefault',
@@ -119,22 +171,6 @@ let noLoginContainer = [
   'rechargePayResult',
   'orderPayResult'
 ]
-
-router.beforeEach((to, from, next) => {
-  if (noLoginContainer.includes(to.name)) {
-    next()
-    return
-  }
-  if (!userInfo.isLogin()) {
-    if (to.name !== 'login') {
-      next({name: 'login'})
-    } else {
-      next()
-    }
-  } else {
-    next()
-  }
-})
 
 /* eslint-disable no-new */
 new Vue({

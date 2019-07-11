@@ -13,6 +13,7 @@ import NotifyList from '@/pages/notify/NotifyList'
 import PartnerList from '@/pages/partner/PartnerList'
 import AddPartner from '@/pages/partner/AddPartner'
 import GoodsList from '@/pages/goods/GoodsList'
+import SearchGoods from '@/pages/goods/SearchGoods'
 import ScenicDetail from '@/pages/scenic/detail/ScenicDetail'
 import TicketDetail from '@/pages/scenic/detail/TicketDetail'
 import ReseveDetail from '@/pages/reseve/ReseveDetail'
@@ -39,6 +40,7 @@ import MyBalance from '@/pages/balance/MyBalance'
 import RechargeBalance from '@/pages/balance/RechargeBalance'
 import WithdrawBalance from '@/pages/balance/WithdrawBalance'
 import BalanceDetails from '@/pages/balance/BalanceDetails'
+import Auth from '@/pages/wx/Auth'
 Vue.use(Router)
 
 export default new Router({
@@ -136,6 +138,11 @@ export default new Router({
       path: '/goodslist',
       name: 'goodsList',
       component: GoodsList
+    },
+    {
+      path: '/searchgoods',
+      name: 'searchGoods',
+      component: SearchGoods
     },
     {
       path: '/scenicdetail',
@@ -336,6 +343,11 @@ export default new Router({
       meta: {
         keepAlive: true
       }
+    },
+    {
+      path: '/auth',
+      name: 'auth',
+      component: Auth
     }
   ],
   scrollBehavior (to, from, saveTop) {

@@ -7,7 +7,7 @@
             <template slot="info" slot-scope="slotPropes">
               <div class="s-d-info-scenic-info-wrapper">
                   <div @click="startScenicInfo('scenicInfoForIntro')">
-                      <p class="s-d-info-scenic-info-title">景区介绍</p>
+                      <p class="s-d-info-scenic-info-title">景区须知</p>
                       <p class="s-d-info-scenic-info-info">{{slotPropes.scenicInfo.brief}}</p>
                   </div>
                   <!-- <div class="vertical-line"></div>
@@ -124,7 +124,7 @@ export default {
     },
     back () {
       if (this.from) {
-        if (this.from.name) {
+        if (this.from.name === 'goodsList') {
           this.$router.go(-1)
         } else {
           this.$router.replace({path: '/'})
@@ -182,6 +182,7 @@ export default {
     .s-d-info-scenic-info-info
         margin-top rem(.2)
         normalTextStyle(#888888, .25)
+        muitlLineEllipsis(2)
 .s-d-info-scenic-open-time-wrapper
     background-color #f5f5f5
     padding rem(.1)
