@@ -39,7 +39,8 @@ export default {
       imgZFBIcon,
       imgWXIcon,
       selectType: this.$isWeiXin ? '2' : '1',
-      rechargeMoney: ''
+      rechargeMoney: '',
+      wxPayInfo: null
     }
   },
   methods: {
@@ -66,7 +67,17 @@ export default {
           document.forms[0].submit()
         } else if (this.selectType === '2') { // 微信
           if (this.$isWeiXin) { // 是不是微信客户端
-            console.log('object')
+            this.wxPayInfo = data.data
+            if (typeof WeixinJSBridge === 'undefined') {
+              if (document.addEventListener) {
+                document.addEventListener('WeixinJSBridgeReady', this.onBridgeReady, false)
+              } else if (document.attachEvent) {
+                document.attachEvent('WeixinJSBridgeReady', this.onBridgeReady)
+                document.attachEvent('onWeixinJSBridgeReady', this.onBridgeReady)
+              }
+            } else {
+              this.onBridgeReady()
+            }
           } else {
             window.location.href = data.data
           }
@@ -74,6 +85,26 @@ export default {
       }, (errorCode, error) => {
         this.$toast(error)
       })
+    },
+    onBridgeReady () {
+      if (this.wxPayInfo) {
+        WeixinJSBridge.invoke(
+          'getBrandWCPayRequest',
+          {
+            'appId': this.wxPayInfo.appId,
+            'timeStamp': this.wxPayInfo.timeStamp,
+            'nonceStr': this.wxPayInfo.nonceStr,
+            'package': this.wxPayInfo.package,
+            'signType': this.wxPayInfo.signType,
+            'paySign': this.wxPayInfo.paySign
+          }, (res) => {
+            if (res.err_msg === 'get_brand_wcpay_request:ok') {
+              this.$router.replace({name: 'rechargePayResult', query: {state: '1'}})
+            } else {
+              this.$router.replace({name: 'rechargePayResult', query: {state: '0'}})
+            }
+          })
+      }
     }
   }
 }

@@ -7,7 +7,7 @@
         </span>
     </div>
     <div class="result-icon-container">
-      <span class="el-icon-success result-icon" :class="{'el-icon-success' : state === 1, 'el-icon-circle-close' : state === 0}"></span>
+      <span class="result-icon" :class="{'el-icon-success' : state === 1, 'el-icon-circle-close' : state === 0}"></span>
       <p class="result-icon-tip">{{state === 1 ? '支付成功' : '支付失败'}}</p>
     </div>
     <div class="result-action-container">
@@ -25,7 +25,7 @@ export default {
   },
   data () {
     return {
-      state: parseInt(this.$route.state || 1)
+      state: parseInt(this.$route.query.state || 1)
     }
   },
   methods: {

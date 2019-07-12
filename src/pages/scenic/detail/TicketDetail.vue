@@ -6,7 +6,7 @@
           <ticket-info :scenicInfo="scenicInfo">
               <template slot="info" slot-scope="slotProps">
                   <p class="t-d-intro-title">产品介绍</p>
-                  <p class="t-d-intro-content">{{slotProps.scenicInfo.brief}}</p>
+                  <p class="t-d-intro-content" @click="startScenicInfo">{{slotProps.scenicInfo.brief}}</p>
               </template>
           </ticket-info>
           <div class="t-d-detail-buy-info">
@@ -81,6 +81,9 @@ export default {
     reload () {
       this.getData()
     },
+    startScenicInfo () {
+      this.$router.push({name: 'scenicInfo', query: {id: this.scenicId}})
+    },
     getData () {
       this.$http(this.$urlPath.goodsDetailUrl, {
         s_id: this.$route.query.s_id,
@@ -116,7 +119,6 @@ export default {
         if (this.from.name) {
           this.$router.go(-1)
         } else {
-          console.log('asdfa')
           this.$router.replace({path: '/'})
         }
       } else {
@@ -147,6 +149,7 @@ export default {
 .t-d-intro-content
     margin-top rem(.2)
     normalTextStyle(#888, .3)
+    muitlLineEllipsis(2)
 .t-d-intro-back-money
     padding rem(.2)
     overflow hidden
