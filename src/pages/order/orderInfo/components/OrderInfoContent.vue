@@ -20,10 +20,11 @@
             <div class="info-count-wrapper">
               <span class="info-count-item">待消费：{{voucher[0].no_check_num}}张</span>
               <span class="info-count-item">已消费：{{voucher[0].consum}}张</span>
+              <span class="info-count-item" style="color: red">已退款: {{refundTickets || 0}}张</span>
             </div>
           </div>
           <div v-else>
-            <order-ticket-info v-for="item of voucher" :key="item.v_id" :itemInfo="item" :ticketName="ticketName"></order-ticket-info>
+            <order-ticket-info v-for="item of voucher" :key="item.v_id" :itemInfo="item" :ticketName="ticketName" :refundNum="refundTickets || 0"></order-ticket-info>
           </div>
         </div>
     </div>
@@ -51,6 +52,7 @@ export default {
     ticketName: String,
     ticketNum: Number,
     sendCode: Number,
+    refundTickets: Number || String,
     timeLog: Array
   },
   components: {

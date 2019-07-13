@@ -42,6 +42,14 @@ export default {
     back () {
       this.$router.replace({name: 'home'})
     }
+  },
+  beforeRouteEnter (to, from, next) {
+    next(vm => {
+      vm.from = from
+      if (from.name) {
+        vm.$router.replace({name: 'personal'})
+      }
+    })
   }
 }
 </script>

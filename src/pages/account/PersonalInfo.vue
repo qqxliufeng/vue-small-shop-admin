@@ -64,7 +64,10 @@ export default {
       if (response.data) {
         this.uploadAvatar = response.data.url
         this.$http(this.$urlPath.updatedProfile, {
-          avatar: this.uploadAvatar
+          nickname: this.userName,
+          email: this.email,
+          qq: this.qq,
+          avatar: this.uploadAvatar || this.$root.userInfo.state.avatar
         }, null, (data) => {
           this.$toast('头像上传成功')
           this.$loading.close()
@@ -88,7 +91,7 @@ export default {
         nickname: this.userName,
         email: this.email,
         qq: this.qq,
-        avatar: this.uploadAvatar
+        avatar: this.uploadAvatar || this.$root.userInfo.state.avatar
       }, null, (data) => {
         this.$toast('保存成功')
         if (this.userName) {

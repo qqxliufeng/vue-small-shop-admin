@@ -18,6 +18,7 @@
                         :ticketName="detail.ord_product_name"
                         :ticketNum="detail.ord_ticket_num"
                         :sendCode="detail.send_code"
+                        :refundTickets="detail.refund_tickets"
                         :timeLog="detail.order_log">
     </order-info-content>
     <!-- <order-ticket-info v-for="item of detail.voucher" :key="item.v_id" :itemInfo="item" :ticketName="detail.ord_product_name" :refundNum="detail.refund_num"></order-ticket-info> -->
