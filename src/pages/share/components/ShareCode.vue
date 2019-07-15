@@ -53,6 +53,8 @@ export default {
     padding rem(.2) rem(.3)
     .post-logo
         width rem(1.5)
+        height rem(1.6)
+        margin-top rem(.15)
         display flex
         justify-content center
         align-items center

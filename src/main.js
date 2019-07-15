@@ -141,6 +141,15 @@ function autoLogin (next) {
         if (response.status === 200 && response.data.code === 1) {
           response.data.data.token = state.token
           userInfo.setUserInfo(response.data.data)
+          let canShareTicket = false
+          let canFloorBuyTicket = false
+          let authSet = response.data.data.auth_set
+          if (authSet) { // 是否获取到数据了
+            canShareTicket = authSet && authSet.indexOf('1') !== -1 // 是不是能分享图片
+            canFloorBuyTicket = authSet && authSet.indexOf('2') !== -1 // 是不是能低价购买
+          }
+          state.saveCanShareTicket(canShareTicket)
+          state.saveCanFloorBuyTicket(canFloorBuyTicket)
           resolve()
         } else {
           reject(new Error('auto error'))

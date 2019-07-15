@@ -148,8 +148,9 @@ const baseShareAdminUrl = 'http://www.liuyiqinzi.com/distributor_manage/#/'
 
 // const baseShareAdminUrl = 'http://192.168.0.107:8888/distributor_manage/#/'
 
-export function getShareScenicUrl (identity, storeId, sid) {
-  return baseShareShopUrl + 'scenicdetail?scenicId=' + sid + '&identity=' + identity + '&storeId=' + storeId
+export function getShareScenicUrl (identity, storeId, sid, businessesId) {
+  // scenicId = s, identity = i, storeId=t, businessesId=b
+  return baseShareShopUrl + 'scenicdetail?s=' + sid + '&i=' + identity + '&t=' + storeId + '&b=' + businessesId
 }
 
 export function getShareTicketUrl (identity, storeId, sid, goodsId) {

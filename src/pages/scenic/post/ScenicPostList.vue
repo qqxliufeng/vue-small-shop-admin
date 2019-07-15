@@ -54,11 +54,15 @@ export default {
   methods: {
     change (item) {
       this.selectType = item
+      if (this.scenicPostList) {
+        this.scenicPostList.length = 0
+        this.scenicPostList = null
+      }
       this.getData()
     },
     startScenicPost (item) {
       if (this.selectType === '1') {
-        this.$router.push({name: 'shareScenic', query: {scenic_id: item.scenic_id}})
+        this.$router.push({name: 'shareScenic', query: {scenic_id: item.scenic_id, store_id: item.store_id}})
       } else {
         this.$router.push({name: 'shareTicket', query: {s_id: item.scenic_id, goods_id: item.goods_id}})
       }
@@ -76,6 +80,10 @@ export default {
       }, (errorCode, error) => {
         this.$toast(error)
         this.scenicName = ''
+        if (this.scenicPostList) {
+          this.scenicPostList.length = 0
+          this.scenicPostList = null
+        }
       })
     },
     searchPost () {

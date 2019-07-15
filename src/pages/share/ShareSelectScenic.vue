@@ -13,7 +13,7 @@
         <template slot="shareAddress">
           <span class="shop-address-title">景区链接:</span>
           <!-- <span class="shop-address">{{url}}</span> -->
-          <textarea class="shop-address" :value="url" rows="3"></textarea>
+          <textarea class="shop-address" :value="url" rows="2"></textarea>
         </template>
         <template slot="otherInfo">
           <div class="other-info-wrapper">
@@ -23,7 +23,7 @@
                 <li v-for="(item, index) of info.goods_name" :key="index" class="goods-name">{{item.goods_name}}</li>
               </ul>
             </div>
-            <p class="other-info-bottom" v-if="info.store_name">以上门票由{{info.store_name}}旅行社提供</p>
+            <p class="other-info-bottom" v-if="info.store_name">以上门票由{{info.store_name}}提供</p>
           </div>
         </template>
       </share-component>

@@ -13,7 +13,7 @@
         <template slot="shareAddress">
           <span class="shop-address-title">景区链接:</span>
           <!-- <span class="shop-address">{{url}}</span> -->
-          <textarea class="shop-address" :value="url" rows="3"></textarea>
+          <textarea class="shop-address" :value="url" rows="2"></textarea>
         </template>
         <template slot="otherInfo">
           <div class="other-info-wrapper">
@@ -23,7 +23,7 @@
                 <li v-for="(item, index) of info.goods_name" :key="index" class="goods-name">{{item.goods_name}}</li>
               </ul>
             </div>
-            <p class="other-info-bottom" v-if="info.store_name">以上门票由{{info.store_name}}旅行社提供</p>
+            <p class="other-info-bottom" v-if="info.store_name">以上门票由{{info.store_name}}提供</p>
           </div>
         </template>
       </share-component>
@@ -37,7 +37,7 @@ import ShareComponent from './Share'
 import ShareCode from './components/ShareCode'
 import IdMixin from 'common/mixins/id-mixin'
 export default {
-  name: 'shareTicket',
+  name: 'shareScenic',
   mixins: [IdMixin],
   components: {
     ShareComponent,
@@ -50,13 +50,14 @@ export default {
   },
   computed: {
     url () {
-      return this.$urlPath.getShareScenicUrl(this.identity, this.storeId, this.$route.query.scenic_id)
+      return this.$urlPath.getShareScenicUrl(this.identity, this.storeId, this.$route.query.scenic_id, this.$route.query.store_id)
     }
   },
   methods: {
     getData () {
       this.$http(this.$urlPath.scnicPosterDetail, {
-        scenic_id: this.$route.query.scenic_id
+        scenic_id: this.$route.query.scenic_id,
+        store_id: this.$route.query.store_id
       }, '', (data) => {
         this.info = data.data
       }, (errorCode, error) => {
