@@ -145,7 +145,7 @@ export default {
           document.body.appendChild(div)
           document.forms[0].submit()
         } else if (this.payType === 'balance' || this.payType === 'credit') { // 余额支付 或者 是授信支付
-          this.$router.replace({name: 'orderPayResult', query: {out_trade_no: this.$route.query.no, state: '1', scenic_id: this.info.scenic_id, order_id: data.data.order_id}})
+          this.$router.replace({name: 'orderPayResult', query: {out_trade_no: this.$route.query.no, state: '1', scenic_id: this.info.scenic_id, order_id: data.data.order_id, payType: this.payType}})
         } else if (this.payType === 'wechatpay') { // 微信
           if (this.$isWeiXin) { // 判断是不是微信客户端
             this.wxPayInfo = data.data

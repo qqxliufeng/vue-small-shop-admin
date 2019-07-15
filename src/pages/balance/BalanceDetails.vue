@@ -62,6 +62,12 @@ export default {
             case 6:
               element.typeTip = '提现失败返回余额'
               break
+            case 7:
+              element.typeTip = ' 商品退款'
+              break
+            default:
+              element.typeTip = '其它'
+              break
           }
           switch (element.status) {
             case 1:
