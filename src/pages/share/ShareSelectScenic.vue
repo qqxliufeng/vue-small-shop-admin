@@ -50,7 +50,7 @@ export default {
   },
   computed: {
     url () {
-      return this.$urlPath.getShareScenicUrl(this.identity, this.storeId, this.$route.query.scenic_id)
+      return this.$urlPath.getShareScenicUrl(this.identity, this.storeId, this.$route.query.scenic_id, this.$route.query.sid)
     }
   },
   methods: {
