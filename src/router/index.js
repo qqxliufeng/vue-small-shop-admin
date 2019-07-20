@@ -351,10 +351,14 @@ export default new Router({
     }
   ],
   scrollBehavior (to, from, saveTop) {
-    if (saveTop) {
-      return saveTop
-    } else {
-      return {x: 0, y: 0}
-    }
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        if (saveTop) {
+          return resolve(saveTop)
+        } else {
+          return resolve({x: 0, y: 0})
+        }
+      }, 100)
+    })
   }
 })
