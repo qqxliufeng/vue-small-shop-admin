@@ -88,6 +88,10 @@ export const searchScenic = distributorModuleUrl + 'search_scenic'
 
 export const getWXOpenid = distributorModuleUrl + 'get_openid'
 
+export const activityList = distributorModuleUrl + 'secondary_rebate'
+
+export const activityDetails = distributorModuleUrl + 'secondary_rebate_details'
+
 const orderUrl = baseUrl + 'order/'
 
 export const createOrder = orderUrl + 'create_order'

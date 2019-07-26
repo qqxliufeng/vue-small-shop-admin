@@ -41,6 +41,9 @@ import RechargeBalance from '@/pages/balance/RechargeBalance'
 import WithdrawBalance from '@/pages/balance/WithdrawBalance'
 import BalanceDetails from '@/pages/balance/BalanceDetails'
 import Auth from '@/pages/wx/Auth'
+
+import ActivityList from '@/pages/activity/ActivityList'
+import ActivityDetail from '@/pages/activity/ActivityDetail'
 Vue.use(Router)
 
 export default new Router({
@@ -348,6 +351,16 @@ export default new Router({
       path: '/auth',
       name: 'auth',
       component: Auth
+    },
+    {
+      path: '/activitylist',
+      name: 'activityList',
+      component: ActivityList
+    },
+    {
+      path: '/activitydetail',
+      name: 'activityDetail',
+      component: ActivityDetail
     }
   ],
   scrollBehavior (to, from, saveTop) {

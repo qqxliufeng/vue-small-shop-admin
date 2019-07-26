@@ -13,6 +13,7 @@
   <home-menu :menu="menus.makeMoney"></home-menu>
   <home-menu :menu="menus.mySetting"></home-menu>
   <div style="height: 20px"></div>
+  <red-packet v-if="showRedPacket" @close="closeRedPacket" @open="openRedPacket" :canTouchDismiss="false"></red-packet>
 </div>
 </template>
 
@@ -23,6 +24,8 @@ import HomeTools from './components/HomeTool'
 import HomeOrderInfo from './components/HomeOrderInfo'
 import HomeMenu from './components/HomeMenu'
 import HomeBottomNavigation from './components/HomeBottomNavigation'
+import RedPacket from 'common/components/red-packet'
+// v-if="showRedPacket"
 export default {
   name: 'home',
   components: {
@@ -31,7 +34,8 @@ export default {
     HomeTools,
     HomeOrderInfo,
     HomeBottomNavigation,
-    HomeMenu
+    HomeMenu,
+    RedPacket
   },
   data () {
     return {
@@ -40,6 +44,7 @@ export default {
       amount: null,
       authInfo: null,
       from: null,
+      showRedPacket: false,
       menus: {
         makeMoney: {
           title: '我要赚钱',
@@ -66,6 +71,14 @@ export default {
               title: '商品列表',
               callBack: () => {
                 this.$router.push({name: 'goodsList'})
+              }
+            },
+            {
+              icon: '&#xe60b;',
+              iconColor: '#EC8E8B',
+              title: '活动列表',
+              callBack: () => {
+                this.$router.push({name: 'activityList'})
               }
             }
           ]
@@ -152,6 +165,7 @@ export default {
       }, null, (data) => {
         this.amount = data.data
         this.authInfo = this.amount
+        this.showRedPacket = !isNaN(this.amount.red_envelope) && Number(this.amount.red_envelope) === 1
         this.$root.userInfo.setUserInfoBalance(this.amount.balance)
         this.$root.userInfo.setUserInfoRebate(this.amount.rebate)
         let canShareTicket = false
@@ -170,6 +184,13 @@ export default {
     },
     orderClick (type) {
       this.$router.push({name: 'orderList', query: { type: type.type }})
+    },
+    closeRedPacket () {
+      this.showRedPacket = false
+    },
+    openRedPacket () {
+      this.showRedPacket = false
+      this.$router.push({name: 'activityList'})
     }
   },
   created () {

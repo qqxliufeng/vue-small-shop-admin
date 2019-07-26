@@ -65,6 +65,9 @@ export default {
             case 7:
               element.typeTip = ' 商品退款'
               break
+            case 8:
+              element.typeTip = '二次返利活动'
+              break
             default:
               element.typeTip = '其它'
               break

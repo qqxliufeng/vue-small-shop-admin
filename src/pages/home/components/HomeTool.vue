@@ -29,7 +29,7 @@ export default {
     return {
       toolsList: [
         {
-          name: '分享小店',
+          name: '分享店铺',
           icon: imgShareShopIcon,
           actionUrl: 'shareShop',
           show: true
