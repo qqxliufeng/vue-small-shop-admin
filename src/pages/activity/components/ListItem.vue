@@ -7,10 +7,10 @@
       <div class="title">{{item.title}}</div>
       <p class="sub-title">二次返利活动</p>
       <p class="time">剩余时间:
-        <count-down :time="item.status === 3 ? 0 : item.end_time">
+        <count-down :time="item.status === 3 ? 0 : (Number(item.end_time) - Number(item.now_time)) * 1000">
             <template slot-scope="props">
                 <span class="time-wrapper">
-                    {{ props.hours }}:{{ props.minutes }}:{{ props.seconds }}
+                    {{ props.days }}天{{ props.hours }}时{{ props.minutes }}分{{ props.seconds }}秒
                 </span>
             </template>
         </count-down>

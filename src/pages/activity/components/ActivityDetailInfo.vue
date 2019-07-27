@@ -1,11 +1,11 @@
 <template>
 <div class='activity-detail-info-container' v-if="info">
   <div class="title-time">
-    <span>距离活动结束：</span>
-    <count-down :time="info.status === 3 ? 0 : info.end_time" @end="countDownEnd">
+    <span>距离活动结束:</span>
+    <count-down :time="info.status === 3 ? 0 : (info.end_time - info.now_time )* 1000 " @end="countDownEnd">
       <template slot-scope="props">
           <span class="time-wrapper">
-              <span class="time-bg">{{ props.hours }}</span>时<span  class="time-bg">{{ props.minutes }}</span>分<span  class="time-bg">{{ props.seconds }}</span>秒
+              <span class="time-bg">{{ props.days }}</span>天<span class="time-bg">{{ props.hours }}</span>时<span  class="time-bg">{{ props.minutes }}</span>分<span  class="time-bg">{{ props.seconds }}</span>秒
           </span>
       </template>
     </count-down>
@@ -74,9 +74,9 @@ export default {
             background-color #6EB6B3
             display inline-block
             padding 0 rem(.1)
-            margin  0 rem(.1)
+            margin  0 rem(.05)
             line-height rem(.4)
-            min-width rem(.4)
+            min-width rem(.3)
     .content-info
         border-radius 0 0 rem(.1) rem(.1)
         background-color #ffffff
