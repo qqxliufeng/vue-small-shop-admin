@@ -316,7 +316,7 @@
     .slide-verify-slider {
         position: relative;
         text-align: center;
-        width: 310px;
+        width: 100%;
         height: 40px;
         line-height: 40px;
         margin-top: 15px;

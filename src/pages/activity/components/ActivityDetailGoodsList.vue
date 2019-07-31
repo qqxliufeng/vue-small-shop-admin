@@ -47,10 +47,6 @@ export default {
         this.$toast('此活动已结束')
         return
       }
-      if (this.finish_status === 2) {
-        this.$toast('您已完成此活动')
-        return
-      }
       this.$router.push({name: 'shareTicket', query: { s_id: item.scenic_id, goods_id: item.goods_id }})
     },
     trasformNum (num) {

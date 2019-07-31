@@ -25,7 +25,6 @@ import HomeOrderInfo from './components/HomeOrderInfo'
 import HomeMenu from './components/HomeMenu'
 import HomeBottomNavigation from './components/HomeBottomNavigation'
 import RedPacket from 'common/components/red-packet'
-// v-if="showRedPacket"
 export default {
   name: 'home',
   components: {
