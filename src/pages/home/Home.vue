@@ -176,6 +176,10 @@ export default {
         }
         this.$root.state.saveCanShareTicket(canShareTicket)
         this.$root.state.saveCanFloorBuyTicket(canFloorBuyTicket)
+        // 当有红包活动的时候  先要进行展示红包活动，若是没有红包的话并且是从登录或者注册页面跳转来的，则直接跳转到商品列表
+        if (!this.showRedPacket && (this.from.name === 'login' || this.from.name === 'stepThree' || this.from.path === '/registerseller')) {
+          this.$router.push({name: 'goodsList'})
+        }
         // end************根据接口返回来的数据判断是不是有对应的权限************
       }, (errorCode, error) => {
         this.$toast(error)

@@ -26,10 +26,10 @@
         </div>
       </template>
       <template slot="shareInfo">
-        <div class="info-content-wrapper">
+        <!-- <div class="info-content-wrapper">
           加盟须知：
           这是一个很重要的事这是一个很重要的事这是一个很重要的事这是一个很重要的事这是一个很重要的事这是一个很重要的事这是一个很重要的事这是一个很重要的事这是一个很重要的事
-        </div>
+        </div> -->
       </template>
       <template slot="shareAddress">
         <span class="shop-address-title">注册链接:</span>
@@ -100,10 +100,11 @@ export default {
             .header-content
                 position relative
                 width 70%
-                height 70%
+                height 80%
                 margin 0 auto
-                margin-top rem(.5)
+                margin-top rem(.8)
                 background #fff
+                border-radius rem(.1)
                 padding rem(.3)
                 box-sizing border-box
                 .content-title-wrapper
@@ -144,7 +145,7 @@ export default {
                         border-bottom 1.5px dashed #f5f5f5
                   .code-wrapper
                       position absolute
-                      bottom rem(1)
+                      bottom rem(1.5)
                       left 0
                       right 0
                       width 60%
