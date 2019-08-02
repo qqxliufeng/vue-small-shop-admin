@@ -10,7 +10,7 @@
         <count-down :time="item.status === 3 ? 0 : (Number(item.end_time) - Number(item.now_time)) * 1000">
             <template slot-scope="props">
                 <span class="time-wrapper">
-                    {{ props.days }}天{{ props.hours }}时{{ props.minutes }}分{{ props.seconds }}秒
+                    {{ props.days }}<i>天</i>{{ props.hours }}<i>时</i>{{ props.minutes }}<i>分</i>{{ props.seconds }}<i>秒</i>
                 </span>
             </template>
         </count-down>
@@ -79,6 +79,10 @@ export default {
             font-size rem(.28)
             .time-wrapper
                 color $orangeColor
+                & > i
+                    color #888
+                    font-size rem(.25)
+                    margin 0 rem(.05)
         .action-wrapper
             overflow hidden
             .detail

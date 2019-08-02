@@ -3,20 +3,10 @@
         <my-navi :title="title" :isFixed="true"></my-navi>
         <el-tabs :value="mSelected" @tab-click="handleClick" class="c-tabs" :stretch="true" v-if="info">
             <el-tab-pane name="scenicInfoForIntro" label="景区须知" class="c-tabs-item">
-                <div class="s-i-content">{{content}}</div>
+                <div class="s-i-content" v-html="content"></div>
             </el-tab-pane>
             <el-tab-pane name="scenicInfoForOrderNotify" label="景区详情" class="c-tabs-item">
                 <div class="s-i-content" v-html="detail"></div>
-                <!-- <div v-for="(item, index) of remarks" :key="index" class="info-wrapper">
-                  <p class="s-i-info-title">{{item.title}}</p>
-                  <p v-if="showLine(item)" class="s-i-info-line">{{item.value}}</p>
-                  <div v-else>
-                    <div v-if="images && item.title === '景区图片'">
-                      <img class="image" v-lazy="$utils.image.getImagePath(it)" v-for="(it, imageIndex) of images" :key="imageIndex"/>
-                    </div>
-                    <el-tag size="mini" v-else class="tag" v-for="(it, tagIndex) of tags" :key="tagIndex">{{it}}</el-tag>
-                  </div>
-                </div> -->
             </el-tab-pane>
         </el-tabs>
     </div>

@@ -2,7 +2,7 @@
   <div class='f-p-container'>
       <div class="input-container">
         <div>
-            <input placeholder="请输入手机号" class="user-name" maxlength="11" v-model="phone"/>
+            <input placeholder="请输入手机号" class="user-name" maxlength="11" v-model="phone" type="tel"/>
         </div>
         <!-- <div class="input-password-container">
           <input placeholder="请输入密码" class="user-password" maxlength="16" v-model="userPassword" type="password"/>

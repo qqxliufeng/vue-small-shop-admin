@@ -6,7 +6,7 @@
           <ticket-info :scenicInfo="scenicInfo">
               <template slot="info" slot-scope="slotProps">
                   <p class="t-d-intro-title">产品介绍</p>
-                  <p class="t-d-intro-content" @click="startScenicInfo">{{slotProps.scenicInfo.brief}}</p>
+                  <p class="t-d-intro-content" @click="startScenicInfo">{{delHtmlTag(slotProps.scenicInfo.brief)}}</p>
               </template>
           </ticket-info>
           <div class="t-d-detail-buy-info">
@@ -83,6 +83,12 @@ export default {
     },
     startScenicInfo () {
       this.$router.push({name: 'scenicInfo', query: {id: this.scenicId}})
+    },
+    delHtmlTag (str) {
+      if (str) {
+        return str.replace(/<[^>]+>/g, '')
+      }
+      return ''
     },
     getData () {
       this.$http(this.$urlPath.goodsDetailUrl, {

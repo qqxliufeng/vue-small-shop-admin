@@ -38,7 +38,7 @@
                   <div class="info-action-wrapper">
                     <span class="info-sale-count">已售{{trasformNum(content.people_num)}}</span>
                     <span>
-                      <button class="info-detail" @click.stop="startScenicDetail(content)">详情</button>
+                      <button class="info-detail" @click.stop="startScenicDetail(content)">预定</button>
                       <button class="info-share" @click.stop="selectScenicShare(content)" v-if="isCanShare">分享</button>
                     </span>
                   </div>

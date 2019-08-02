@@ -8,7 +8,7 @@
               <div class="s-d-info-scenic-info-wrapper">
                   <div @click="startScenicInfo('scenicInfoForIntro')">
                       <p class="s-d-info-scenic-info-title">景区须知</p>
-                      <p class="s-d-info-scenic-info-info">{{slotPropes.scenicInfo.brief}}</p>
+                      <p class="s-d-info-scenic-info-info">{{delHtmlTag(slotPropes.scenicInfo.brief)}}</p>
                   </div>
                   <!-- <div class="vertical-line"></div>
                   <div @click="startScenicInfo('scenicInfoForOrderNotify')">
@@ -86,6 +86,12 @@ export default {
     },
     reload () {
       this.getData()
+    },
+    delHtmlTag (str) {
+      if (str) {
+        return str.replace(/<[^>]+>/g, '')
+      }
+      return ''
     },
     getData () {
       this.$http(this.$urlPath.scenicDetailUrl, {
