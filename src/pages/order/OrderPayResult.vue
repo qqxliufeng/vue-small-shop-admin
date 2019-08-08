@@ -28,7 +28,7 @@ export default {
     return {
       no: this.$route.query.out_trade_no || '',
       orderId: this.$route.query.order_id,
-      state: parseInt(this.$route.query.state || 1),
+      state: parseInt(this.$route.query.state || 0),
       scenicId: this.$route.query.scenic_id
     }
   },
@@ -45,10 +45,15 @@ export default {
   },
   beforeRouteEnter (to, from, next) {
     next(vm => {
-      vm.from = from
-      if (from.name) {
-        if (!vm.$route.query.payType) { // 如果是授信和余额购买的，则不用跳转
-          vm.$router.replace({name: 'home'})
+      // 支付失败
+      if (Number(vm.$route.query.state) === 0) {
+        vm.$router.replace({name: 'orderInfo', params: {orderId: vm.$route.query.order_id.toString(), orderType: '1'}})
+      } else {
+        vm.from = from
+        if (from.name) {
+          if (!vm.$route.query.payType) { // 如果是授信和余额购买的，则不用跳转
+            vm.$router.replace({name: 'home'})
+          }
         }
       }
     })

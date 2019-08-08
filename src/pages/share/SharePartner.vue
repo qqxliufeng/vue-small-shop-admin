@@ -1,6 +1,7 @@
 <template>
 <div class='share-ticket-container'>
   <my-navi title="邀请好友" :isFixed="true"></my-navi>
+  <share-tip></share-tip>
   <div class="content" v-if="info">
     <share-component>
       <template slot="shareHeader">
@@ -34,7 +35,7 @@
       <template slot="shareAddress">
         <span class="shop-address-title">注册链接:</span>
         <!-- <span class="shop-address">{{$urlPath.getShareRegisterUrl($root.userInfo.state.id)}}</span> -->
-        <textarea class="shop-address" type="text" :value="$urlPath.getShareRegisterUrl($root.userInfo.state.id)"></textarea>
+        <textarea class="shop-address" type="text" :value="wexin_url ? wexin_url : $urlPath.getShareRegisterUrl($root.userInfo.state.id)"></textarea>
       </template>
     </share-component>
   </div>
@@ -44,14 +45,17 @@
 <script>
 import QRCode from 'qrcode'
 import ShareComponent from './Share'
+import ShareTip from './components/ShareTip'
 export default {
   name: 'shareTicket',
   components: {
-    ShareComponent
+    ShareComponent,
+    ShareTip
   },
   data () {
     return {
-      info: null
+      info: null,
+      wexin_url: null
     }
   },
   watch: {
@@ -64,7 +68,7 @@ export default {
   methods: {
     qrCode () {
       this.$nextTick(() => {
-        QRCode.toCanvas(this.$refs.qrcode, this.$urlPath.getShareRegisterUrl(this.$root.userInfo.state.id), error => {
+        QRCode.toCanvas(this.$refs.qrcode, this.wexin_url ? this.wexin_url : this.$urlPath.getShareRegisterUrl(this.$root.userInfo.state.id), error => {
           if (error) {
             console.log(error)
           } else {
@@ -74,12 +78,15 @@ export default {
       })
     },
     getData () {
-      this.$http(this.$urlPath.shareReigsterUrl, {}, '',
-        (data) => {
-          this.info = data.data
-        }, (errorCode, error) => {
-          this.$toast(error)
-        })
+      this.$http(this.$urlPath.shareReigsterUrl, {
+        isWeiXin: this.$isWeiXin ? '1' : '0'
+      }, '',
+      (data) => {
+        this.info = data.data
+        this.wexin_url = this.info.wexin_url
+      }, (errorCode, error) => {
+        this.$toast(error)
+      })
     }
   },
   mounted () {

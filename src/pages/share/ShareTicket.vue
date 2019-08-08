@@ -1,18 +1,19 @@
 <template>
 <div class='share-ticket-container'>
   <my-navi title="分享门票" :isFixed="true"></my-navi>
+  <share-tip></share-tip>
   <div class="content" v-if="info">
     <share-component>
       <template slot="shareHeader">
           <img class="share-image" :src="$utils.image.getImagePath(info.share_image)" alt="">
       </template>
       <template slot="shareInfo">
-        <share-code :logo="$utils.image.getImagePath($root.userInfo.state.avatar)" :url="url"></share-code>
+        <share-code :logo="$utils.image.getImagePath($root.userInfo.state.avatar)" :url="wexin_url ? wexin_url: url"></share-code>
       </template>
       <template slot="shareAddress">
         <span class="shop-address-title">门票链接:</span>
         <!-- <span class="shop-address">{{url}}</span> -->
-        <textarea class="shop-address" :value="url" rows="3"></textarea>
+        <textarea class="shop-address" :value="wexin_url ? wexin_url: url" rows="3"></textarea>
       </template>
     </share-component>
   </div>
@@ -22,17 +23,20 @@
 <script>
 import ShareCode from './components/ShareCode'
 import ShareComponent from './Share'
+import ShareTip from './components/ShareTip'
 import IdMixin from 'common/mixins/id-mixin'
 export default {
   name: 'shareTicket',
   mixins: [IdMixin],
   components: {
     ShareComponent,
-    ShareCode
+    ShareCode,
+    ShareTip
   },
   data () {
     return {
-      info: null
+      info: null,
+      wexin_url: null
     }
   },
   computed: {
@@ -43,9 +47,13 @@ export default {
   methods: {
     getData () {
       this.$http(this.$urlPath.ticketPosterDetail, {
-        goods_id: this.$route.query.goods_id
+        goods_id: this.$route.query.goods_id,
+        scenic_id: this.$route.query.s_id,
+        store_id: this.storeId,
+        isWeiXin: this.$isWeiXin ? '1' : '0'
       }, '', (data) => {
         this.info = data.data
+        this.wexin_url = this.info.wexin_url
       }, (errorCode, error) => {
         this.$toast(error)
       })

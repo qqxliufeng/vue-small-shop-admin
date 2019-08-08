@@ -1,18 +1,19 @@
 <template>
   <div class='s-shop-container' v-if="info">
     <my-navi title="分享店铺" :isFixed="true"></my-navi>
+    <share-tip></share-tip>
     <div class="content">
         <share-component>
           <template slot="shareHeader">
             <img class="share-image" :src="image" alt="">
           </template>
           <template slot="shareInfo">
-            <share-code :logo="logo" :url="url"></share-code>
+            <share-code :logo="logo" :url="wexin_url ? wexin_url : url"></share-code>
           </template>
           <template slot="shareAddress">
             <span class="shop-address-title">店铺链接:</span>
             <!-- <span class="shop-address" ref="copyUrl">{{url}}</span> -->
-            <textarea class="shop-address" :value="url"></textarea>
+            <textarea class="shop-address" :value="wexin_url ? wexin_url : url"></textarea>
           </template>
         </share-component>
     </div>
@@ -22,17 +23,20 @@
 <script>
 import ShareComponent from '@/pages/share/Share'
 import ShareCode from './components/ShareCode'
+import ShareTip from './components/ShareTip'
 import IdMixin from 'common/mixins/id-mixin'
 export default {
   name: 'shareShop',
   mixins: [IdMixin],
   components: {
     ShareComponent,
-    ShareCode
+    ShareCode,
+    ShareTip
   },
   data () {
     return {
-      info: null
+      info: null,
+      wexin_url: null
     }
   },
   computed: {
@@ -48,8 +52,12 @@ export default {
   },
   methods: {
     getData () {
-      this.$http(this.$urlPath.shareShopUrl, {}, '', (data) => {
+      this.$http(this.$urlPath.shareShopUrl, {
+        // 根据是不是在微信客户端打开的页面判断
+        isWeiXin: this.$isWeiXin ? '1' : '0'
+      }, '', (data) => {
         this.info = data.data
+        this.wexin_url = this.info.wexin_url
       }, (errorCode, error) => {
         this.$toast(error)
       })

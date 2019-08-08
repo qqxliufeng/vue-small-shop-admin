@@ -1,6 +1,7 @@
 <template>
 <div class='share-scenic-container'>
   <my-navi title="分享景区" :isFixed="true"></my-navi>
+  <share-tip></share-tip>
   <section v-if="info">
     <div class="content">
       <share-component>
@@ -8,12 +9,12 @@
             <img class="share-image" :src="$utils.image.getImagePath(info.poster_image)" :key="info.poster_image">
         </template>
         <template slot="shareInfo">
-          <share-code :logo="$utils.image.getImagePath($root.userInfo.state.avatar)" :url="url"></share-code>
+          <share-code :logo="$utils.image.getImagePath($root.userInfo.state.avatar)" :url="wexin_url ? wexin_url : url"></share-code>
         </template>
         <template slot="shareAddress">
           <span class="shop-address-title">景区链接:</span>
           <!-- <span class="shop-address">{{url}}</span> -->
-          <textarea class="shop-address" :value="url" rows="2"></textarea>
+          <textarea class="shop-address" :value="wexin_url ? wexin_url : url" rows="2"></textarea>
         </template>
         <template slot="otherInfo">
           <div class="other-info-wrapper">
@@ -35,17 +36,20 @@
 <script>
 import ShareComponent from './Share'
 import ShareCode from './components/ShareCode'
+import ShareTip from './components/ShareTip'
 import IdMixin from 'common/mixins/id-mixin'
 export default {
   name: 'shareTicket',
   mixins: [IdMixin],
   components: {
     ShareComponent,
-    ShareCode
+    ShareCode,
+    ShareTip
   },
   data () {
     return {
-      info: null
+      info: null,
+      wexin_url: null
     }
   },
   computed: {
@@ -57,9 +61,12 @@ export default {
     getData () {
       this.$http(this.$urlPath.selectScenicPosterDetail, {
         scenic_id: this.$route.query.scenic_id,
-        store_id: this.$route.query.sid
+        store_id: this.$route.query.sid,
+        business_id: this.storeId,
+        isWeiXin: this.$isWeiXin ? '1' : '0'
       }, '', (data) => {
         this.info = data.data
+        this.wexin_url = this.info.wexin_url
       }, (errorCode, error) => {
         this.$toast(error)
       })
