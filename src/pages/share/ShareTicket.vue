@@ -13,7 +13,7 @@
       <template slot="shareAddress">
         <span class="shop-address-title">门票链接:</span>
         <!-- <span class="shop-address">{{url}}</span> -->
-        <textarea class="shop-address" :value="wexin_url ? wexin_url: url" rows="3"></textarea>
+        <textarea class="shop-address" :value="wexin_url ? wexin_url: url" rows="2"></textarea>
       </template>
     </share-component>
   </div>
@@ -41,7 +41,7 @@ export default {
   },
   computed: {
     url () {
-      return this.$urlPath.getShareTicketUrl(this.identity, this.storeId, this.$route.query.s_id, this.$route.query.goods_id)
+      return this.$urlPath.getShareTicketUrl(this.identity, this.storeId, this.$route.query.s_id, this.$route.query.goods_id, this.$route.query.promotion_id || null)
     }
   },
   methods: {

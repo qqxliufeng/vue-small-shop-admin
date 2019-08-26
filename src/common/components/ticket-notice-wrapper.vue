@@ -5,7 +5,6 @@
       <ticket-notice title="费用说明" :remarks="goodsInfo.explain"></ticket-notice>
       <div class="sperator-1"></div>
       <ticket-notice title="退款说明" :remarks="goodsInfo.refund"></ticket-notice>
-      <div class="sperator-1"></div>
   </div>
 </template>
 

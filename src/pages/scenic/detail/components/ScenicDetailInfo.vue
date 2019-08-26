@@ -1,5 +1,5 @@
 <template>
-    <div class="s-d-info-container">
+    <el-card class="s-d-info-container" :body-style="{padding: 0}">
         <div class="s-d-info-header-wrapper">
             <div>
                 <span>{{scenicInfo.title}}</span>
@@ -24,27 +24,14 @@
             </div>
         </div>
         <slot name="bottomInfo"></slot>
-        <div class="sperator-line"></div>
-        <!-- <div class="o-i-ticket-safe-container">
-            <p>优待客消费保障</p>
-            <div class="o-i-ticket-info-tag">
-                <span><i class="iconfont">&#xe69e;</i> 入园保障</span>
-                <span><i class="iconfont">&#xe69e;</i> 官方</span>
-            </div>
-        </div> -->
-        <safe-protect></safe-protect>
-    </div>
+    </el-card>
 </template>
 
 <script>
-import SafeProtect from 'common/components/safe-protect'
 export default {
   name: 'scenicDetailInfo',
   props: {
     scenicInfo: Object
-  },
-  components: {
-    SafeProtect
   },
   methods: {
     startScenicInfo (type) {
@@ -58,6 +45,10 @@ export default {
 @import '~styles/varibles.styl'
 @import '~styles/mixin.styl'
 .s-d-info-container
+    margin rem(.2)
+    margin-top rem(-.4)
+    position relative
+    z-index 1
     .s-d-info-header-wrapper
         padding rem(.3)
         & div:nth-child(1)

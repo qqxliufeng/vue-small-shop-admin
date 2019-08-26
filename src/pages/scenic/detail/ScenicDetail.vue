@@ -22,7 +22,8 @@
               </div>
             </template>
           </scenic-detail-info>
-          <scenic-detail-hot :hotGoodsList="hotGoodsList"></scenic-detail-hot>
+          <safe-protect></safe-protect>
+          <scenic-detail-hot v-if="hotGoodsList && hotGoodsList.length > 0" :hotGoodsList="hotGoodsList"></scenic-detail-hot>
           <scenic-detail-ticket-type :typeGoodsList="typeGoodsList"></scenic-detail-ticket-type>
           <scenic-detail-leave-message :ask="ask"></scenic-detail-leave-message>
           <scenic-detail-comment :comment="comment" :tagCanSelected="false"></scenic-detail-comment>
@@ -37,6 +38,7 @@
 </template>
 
 <script>
+import SafeProtect from 'common/components/safe-protect'
 import ScenicDetailHeader from './components/ScenicDetailHeader'
 import ScenicDetailImages from './components/ScenicDetailImages'
 import ScenicDetailInfo from './components/ScenicDetailInfo'
@@ -48,6 +50,7 @@ import LoadFail from 'common/components/loading/load-fail'
 export default {
   name: 'scenicDetail',
   components: {
+    SafeProtect,
     ScenicDetailHeader,
     ScenicDetailImages,
     ScenicDetailInfo,
@@ -94,7 +97,7 @@ export default {
       return ''
     },
     getData () {
-      this.$http(this.$urlPath.scenicDetailUrl, {
+      this.$http(this.$urlPath.scenicDetail2Url, {
         s_id: this.scenicId,
         identity: this.identity,
         store_id: this.storeId
@@ -198,7 +201,7 @@ export default {
     & p:nth-child(2), & p:nth-child(3)
         normalTextStyle(#888, .25)
 .s-d-l-m-comment-info-see-more
-    normalTextStyle(#333, .32)
+    normalTextStyle(#666, .3)
     padding rem(.2)
     text-align center
     border-top #f5f5f5 solid rem(.05)

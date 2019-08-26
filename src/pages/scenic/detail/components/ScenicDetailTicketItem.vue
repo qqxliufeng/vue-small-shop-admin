@@ -2,7 +2,7 @@
     <div class="s-d-hot-item-wrapper">
         <div class="s-d-hot-item-info">
             <div class="s-d-hot-item-info-title-wrapper">
-                <p class="s-d-hot-item-info-title">{{item.goodsTitle}}</p>
+                <p class="s-d-hot-item-info-title"><span class="iconfont s-d-hot-title-icon" v-if="item.is_promotion > 0">&#xe6a0;</span>{{item.goodsTitle}}</p>
                 <p class="s-d-hot-item-info-price"><span>￥{{item.minPrice}}</span><i>起</i></p>
             </div>
             <div class="s-d-hot-item-info-remark-wrapper">
@@ -17,7 +17,7 @@
             <div class="s-d-hot-item-info-info-wrapper">
                 <div class="s-d-hot-item-info-info-info">
                     <p>
-                        <span>已售{{item.totalSales}}</span>
+                        <span v-if="item.totalSales > 0">已售{{$utils.common.trasformNum(item.totalSales)}}</span>
                         <span class="ticket-must" @click="itemClickOrder(item)" v-if="isCanReseve">购票须知<i class="el-icon-arrow-right"></i></span>
                     </p>
                 </div>
@@ -27,10 +27,15 @@
                 </div>
             </div>
         </div>
+        <div class="line"></div>
+        <div class="bg" v-if="item.is_promotion > 0">
+            <div class="iconfont">&#xe69c;</div>
+        </div>
     </div>
 </template>
 
 <script>
+import qianggouIcon from 'images/img_qianggou_icon.png'
 export default {
   name: 'scenicDetailTicketItem',
   props: {
@@ -41,7 +46,13 @@ export default {
       return Boolean(this.$root.state.canShareTicket)
     },
     isCanReseve () {
-      return Boolean(this.$root.state.canFloorBuyTicket)
+      // 判断是不是可以购买此产品
+      return Boolean(this.$root.state.canFloorBuyTicket) && Number(this.item.buy_status) === 1
+    }
+  },
+  data () {
+    return {
+      qianggouIcon
     }
   },
   methods: {
@@ -49,7 +60,11 @@ export default {
       this.$router.push({name: 'reseveDetail', query: { goods_id: item.goodsId, scenicId: this.$route.query.scenicId }})
     },
     itemClickShare (item) {
-      this.$router.push({name: 'shareTicket', query: { s_id: this.$route.query.scenicId, goods_id: item.goodsId }})
+      if (item.is_promotion > 0) {
+        this.$router.push({name: 'shareTicket', query: { s_id: this.$route.query.scenicId, goods_id: item.goodsId, promotion_id: item.is_promotion }})
+      } else {
+        this.$router.push({name: 'shareTicket', query: { s_id: this.$route.query.scenicId, goods_id: item.goodsId }})
+      }
     }
   }
 }
@@ -61,6 +76,22 @@ export default {
 .s-d-hot-item-wrapper
     position relative
     border-bottom #f5f5f5 solid rem(.05)
+    .line
+        width 90%
+        height 1px
+        background-color #eee
+        margin 0 auto
+    .bg
+        position absolute
+        top 0
+        left 0
+        right 0
+        bottom 0
+        overflow hidden
+        opacity .2
+        text-align center
+        & > div
+            textStyle($orangeColor, 2.8)
     .s-d-hot-item-info
         padding rem(.2)
         .s-d-hot-item-info-title-wrapper
@@ -69,6 +100,9 @@ export default {
             .s-d-hot-item-info-title
                 float left
                 normalTextStyle(#333, .32)
+            .s-d-hot-title-icon
+                textStyle($orangeColor, .35)
+                margin-right rem(.1)
             .s-d-hot-item-info-price
                 float right
                 & span
@@ -96,6 +130,13 @@ export default {
                 margin-top rem(.08)
                 .tag
                     margin 0 rem(.1)
+                    & >>> .el-tag
+                        background-color transparent
+                        border-radius 1px
+                    & >>> .el-tag--success
+                        background-color transparent
+                    & >>> .el-tag--danger
+                        background-color transparent
         .s-d-hot-item-info-info-wrapper
             display flex
             justify-content center

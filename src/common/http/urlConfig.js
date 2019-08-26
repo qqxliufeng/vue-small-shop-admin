@@ -2,6 +2,8 @@
 // 迁移到正式的服务器的时候，一定要更换这个地址，要不然会炸的
 export const baseIP = 'http://www.liuyiqinzi.com/'
 
+// export const baseIP = 'https://www.yixinglvxing.com/'
+
 export const baseUrl = 'distributor_api/'
 
 export const distributorModuleUrl = baseUrl + 'distributor/'
@@ -120,6 +122,8 @@ const scenicDetailModuleUrl = baseUrl2 + 'details/'
 
 export const scenicDetailUrl = scenicDetailModuleUrl + 'scenic_details'
 
+export const scenicDetail2Url = scenicDetailModuleUrl + 'scenic_details2'
+
 export const scenicNotesUrl = scenicDetailModuleUrl + 'scenic_notes'
 
 const payModuleUrl = baseUrl2 + 'payment/'
@@ -147,6 +151,8 @@ export const askAnserGetScenicUrl = baseUrl2 + 'ask/get_scenic'
 // 迁移到正式服务器的时候，一定要更换这个地址
 const baseShareShopUrl = 'http://www.store.liuyiqinzi.com/'
 
+// const baseShareShopUrl = 'http://www.store.yixinglvxing.com/'
+
 // 迁移到正式的服务器的时候，一定要更换这个地址，要不然会炸的
 const baseShareAdminUrl = 'http://www.liuyiqinzi.com/distributor_manage/#/'
 
@@ -157,8 +163,15 @@ export function getShareScenicUrl (identity, storeId, sid, businessesId) {
   return baseShareShopUrl + 'scenicdetail?s=' + sid + '&i=' + identity + '&t=' + storeId + '&b=' + businessesId
 }
 
-export function getShareTicketUrl (identity, storeId, sid, goodsId) {
-  return baseShareShopUrl + 'ticketdetail?scenicId=' + sid + '&identity=' + identity + '&storeId=' + storeId + '&goods_id=' + goodsId
+export function getShareTicketUrl (identity, storeId, sid, goodsId, promotionId) {
+  // scenicId = s, identity = i, storeId=t, goodsId=g, promotion=p
+  if (promotionId) {
+    // 如果是活动商品，则分享活动页面
+    return baseShareShopUrl + 'atdetail?s=' + sid + '&i=' + identity + '&t=' + storeId + '&g=' + goodsId + '&p=' + promotionId
+  } else {
+    // 如果是常规商品，则分享常规页面
+    return baseShareShopUrl + 'ticketdetail?s=' + sid + '&i=' + identity + '&t=' + storeId + '&g=' + goodsId
+  }
 }
 
 export function getShareRegisterUrl (pid) {
