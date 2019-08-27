@@ -1,5 +1,5 @@
 <template>
-    <div class="s-d-l-m-message-container" v-if="ask">
+    <el-card :body-style="{padding: 0}"  class="s-d-l-m-message-container" v-if="ask">
         <div class="s-d-l-m-message-title">
             <span>留言板</span>
             <span>{{ask.ask_count}}条留言</span>
@@ -21,7 +21,7 @@
                 查看更多
             </div>
         </div>
-    </div>
+    </el-card>
 </template>
 
 <script>
@@ -51,7 +51,7 @@ export default {
 @import '~styles/varibles.styl'
 @import '~styles/mixin.styl'
 .s-d-l-m-message-container
-    border-top #f5f5f5 solid rem(.1)
+    margin rem(.2)
     .s-d-l-m-message-title
         overflow hidden
         padding rem(.2)

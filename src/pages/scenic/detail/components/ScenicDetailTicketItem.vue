@@ -17,7 +17,7 @@
             <div class="s-d-hot-item-info-info-wrapper">
                 <div class="s-d-hot-item-info-info-info">
                     <p>
-                        <span>已售{{item.totalSales}}</span>
+                        <span v-if="item.totalSales > 0">已售{{$utils.common.trasformNum(item.totalSales)}}</span>
                         <span class="ticket-must" @click="itemClickOrder(item)" v-if="isCanReseve">购票须知<i class="el-icon-arrow-right"></i></span>
                     </p>
                 </div>

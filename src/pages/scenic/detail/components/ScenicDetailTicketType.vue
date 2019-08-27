@@ -1,29 +1,16 @@
 <template>
-    <div class="s-d-t-type-container" v-if="typeGoodsList && typeGoodsList.length > 0">
+    <el-card :body-style="{padding: 0}" class="s-d-t-type-container" v-if="typeGoodsList && typeGoodsList.length > 0">
         <div class="s-d-t-type-title-wrapper" :class="{'tab-fixed' : isFixed}"  ref="type" @click="positionType">
             门票类型
         </div>
         <div id="tab" v-show="isFixed" style="height: 1.72rem"></div>
         <div>
-            <!-- <el-tabs>
-                <el-tab-pane v-for="tabItem of typeGoodsList" :label="tabItem.goodsTypeName" :key="tabItem.goodsTypeId">
-                    <ul v-if="tabItem.goods_list && tabItem.goods_list.length > 0">
-                        <li v-for="item of tabItem.goods_list" :key="item.goodsId">
-                            <scenic-detail-ticket-item :item="item"></scenic-detail-ticket-item>
-                        </li>
-                    </ul>
-                    <div v-else class="s-d-l-m-message-empty">
-                        <span>暂无门票</span>
-                    </div>
-                </el-tab-pane>
-            </el-tabs> -->
              <swiper :options="swiperOption" class="h-h-hot-card">
                  <swiper-slide v-for="(tabItem, index) of tempTypeGoodsList" :key="tabItem.goodsTypeId">
                      <span class="tab-item" @click="selectTabItem(index)" :class="{'tab-item-selected' : tabItem.isSelected}">{{tabItem.goodsTypeName}}</span>
                  </swiper-slide>
              </swiper>
-             <div style="height: 1px; background-color:#f5f5f5"></div>
-             <ul v-if="currentTabItems && currentTabItems.length > 0">
+             <ul v-if="currentTabItems && currentTabItems.length > 0" style="background: #f5f7f8; margin: .2rem">
                 <li v-for="item of currentTabItems" :key="item.goodsId">
                     <scenic-detail-ticket-item :item="item"></scenic-detail-ticket-item>
                 </li>
@@ -32,7 +19,7 @@
                 <span>暂无门票</span>
             </div>
         </div>
-    </div>
+    </el-card>
 </template>
 
 <script>
@@ -145,7 +132,7 @@ export default {
 .tab-scroll
     margin-top 2 * $headerHeight
 .s-d-t-type-container
-    border-top #f5f5f5 solid rem(.1)
+    margin rem(.2)
     .s-d-t-type-title-wrapper
         normalTextStyle(#333, .35)
         borderBottom()

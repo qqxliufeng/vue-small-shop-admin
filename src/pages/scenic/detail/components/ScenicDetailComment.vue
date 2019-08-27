@@ -1,5 +1,5 @@
 <template>
-    <div class="s-d-comment-container" v-if="comment">
+    <el-card :body-style="{padding: 0}" class="s-d-comment-container" v-if="comment">
         <div class="s-d-comment-title-wrapper">
             <span>综合评价：<i>{{comment.avg_mark && comment.avg_mark.toFixed(1)}}</i></span>
             <span>{{comment.count}}次评价</span>
@@ -15,7 +15,7 @@
         <div v-else class="s-d-l-m-message-empty">
             <span>暂无评价</span>
         </div>
-    </div>
+    </el-card>
 </template>
 
 <script>
@@ -82,7 +82,7 @@ export default {
 @import '~styles/varibles.styl'
 @import '~styles/mixin.styl'
 .s-d-comment-container
-    border-top #f5f5f5 solid rem(.1)
+    margin rem(.2)
     .s-d-comment-title-wrapper
         overflow hidden
         padding rem(.2)
