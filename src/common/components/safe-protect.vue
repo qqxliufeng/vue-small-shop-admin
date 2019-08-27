@@ -41,7 +41,6 @@ export default {
 @import '~styles/mixin.styl'
 .o-i-ticket-safe-container
     background-color #EDF8F7
-    border-bottom .02rem solid #f5f5f5
     padding .2rem
     & p
         color $primary

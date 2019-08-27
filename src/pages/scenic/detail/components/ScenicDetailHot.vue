@@ -30,10 +30,13 @@ export default {
 @import '~styles/mixin.styl'
 .s-d-hot-container
     margin rem(.2)
+<<<<<<< HEAD
     .ticket-wrapper
         border-radius rem(.1)
         background-color #f5f7f8
         margin rem(.15)
+=======
+>>>>>>> 1.0.1-dev
     .s-d-hot-title-wrapper
         padding rem(.2)
         borderBottom()

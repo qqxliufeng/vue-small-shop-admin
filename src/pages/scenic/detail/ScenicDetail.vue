@@ -10,11 +10,6 @@
                       <p class="s-d-info-scenic-info-title">景区须知</p>
                       <p class="s-d-info-scenic-info-info">{{delHtmlTag(slotPropes.scenicInfo.brief)}}</p>
                   </div>
-                  <!-- <div class="vertical-line"></div>
-                  <div @click="startScenicInfo('scenicInfoForOrderNotify')">
-                      <p class="s-d-info-scenic-info-title">预定须知</p>
-                      <p class="s-d-info-scenic-info-info">预定须知预定须知预定须知预定须知预定须知预定须知</p>
-                  </div> -->
               </div>
               <div class="s-d-info-scenic-open-time-wrapper">
                   <p>营业时间</p>
@@ -46,6 +41,7 @@ import ScenicDetailHot from './components/ScenicDetailHot'
 import ScenicDetailTicketType from './components/ScenicDetailTicketType'
 import ScenicDetailLeaveMessage from './components/ScenicDetailLeaveMessage'
 import ScenicDetailComment from './components/ScenicDetailComment'
+import SafeProtect from 'common/components/safe-protect'
 import LoadFail from 'common/components/loading/load-fail'
 export default {
   name: 'scenicDetail',
@@ -58,7 +54,8 @@ export default {
     ScenicDetailTicketType,
     ScenicDetailLeaveMessage,
     ScenicDetailComment,
-    LoadFail
+    LoadFail,
+    SafeProtect
   },
   data () {
     return {
