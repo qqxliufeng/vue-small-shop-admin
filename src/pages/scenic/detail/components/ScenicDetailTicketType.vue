@@ -134,13 +134,10 @@ export default {
     margin-top 2 * $headerHeight
 .s-d-t-type-container
     margin rem(.2)
-<<<<<<< HEAD
     .ticket-wrapper
         border-radius rem(.1)
         background-color #f5f7f8
         margin rem(.15)
-=======
->>>>>>> 1.0.1-dev
     .s-d-t-type-title-wrapper
         normalTextStyle(#333, .32)
         borderBottom()

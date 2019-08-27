@@ -41,7 +41,6 @@ import ScenicDetailHot from './components/ScenicDetailHot'
 import ScenicDetailTicketType from './components/ScenicDetailTicketType'
 import ScenicDetailLeaveMessage from './components/ScenicDetailLeaveMessage'
 import ScenicDetailComment from './components/ScenicDetailComment'
-import SafeProtect from 'common/components/safe-protect'
 import LoadFail from 'common/components/loading/load-fail'
 export default {
   name: 'scenicDetail',
@@ -54,8 +53,7 @@ export default {
     ScenicDetailTicketType,
     ScenicDetailLeaveMessage,
     ScenicDetailComment,
-    LoadFail,
-    SafeProtect
+    LoadFail
   },
   data () {
     return {
