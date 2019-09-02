@@ -37,10 +37,10 @@ export default {
       this.$router.replace({name: 'scenicDetail', query: {scenicId: this.scenicId, identity: this.identity, storeId: this.storeId}})
     },
     seeOrder () {
-      this.$router.push({name: 'orderInfo', params: {orderId: this.orderId.toString(), orderType: '2'}})
+      this.$router.replace({name: 'orderInfo', params: {orderId: this.orderId.toString(), orderType: '2'}})
     },
     back () {
-      this.$router.push({name: 'home'})
+      this.$router.replace({name: 'home'})
     }
   },
   beforeRouteEnter (to, from, next) {
@@ -51,8 +51,12 @@ export default {
       } else {
         vm.from = from
         if (from.name) {
-          if (!vm.$route.query.payType) { // 如果是授信和余额购买的，则不用跳转
-            vm.$router.replace({name: 'home'})
+          if (navigator.userAgent.toLowerCase().indexOf('micromessenger') !== -1) {
+            console.log('在微信里面')
+          } else {
+            if (!vm.$route.query.payType) { // 如果是授信和余额购买的，则不用跳转
+              vm.$router.replace({name: 'home'})
+            }
           }
         }
       }

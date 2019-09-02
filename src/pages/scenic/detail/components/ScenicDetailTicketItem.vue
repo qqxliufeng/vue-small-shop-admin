@@ -84,9 +84,7 @@ export default {
     .bg
         position absolute
         top 0
-        left 0
-        right 0
-        bottom 0
+        left 30%
         overflow hidden
         opacity .2
         text-align center
