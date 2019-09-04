@@ -75,7 +75,7 @@ export default {
             {
               icon: '&#xe60b;',
               iconColor: '#EC8E8B',
-              title: '活动列表',
+              title: '红包/福利',
               callBack: () => {
                 this.$router.push({name: 'activityList'})
               }

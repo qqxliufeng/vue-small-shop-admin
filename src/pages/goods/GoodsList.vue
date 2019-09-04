@@ -36,7 +36,7 @@
                     </el-rate></div>
                   <!-- <p><span class="info-money">￥89</span><span class="info-money-tag">起</span><span class="info-old-money">￥109</span></p> -->
                   <div class="info-action-wrapper">
-                    <span class="info-sale-count">已售{{trasformNum(content.people_num)}}</span>
+                    <span class="info-sale-count" v-if="content.people_num > 0">已售{{$utils.common.trasformNum(content.people_num)}}</span>
                     <span>
                       <button class="info-detail" @click.stop="startScenicDetail(content)">预定</button>
                       <button class="info-share" @click.stop="selectScenicShare(content)" v-if="isCanShare">分享</button>
@@ -116,17 +116,6 @@ export default {
       }, (errorCode, error) => {
         this.$toast(error)
       })
-    },
-    trasformNum (num) {
-      if (!num || isNaN(num) || Number(num) === 0) {
-        return 0
-      }
-      let intNum = Number(num)
-      if (intNum / 10000 >= 1) {
-        return Math.floor(intNum / 10000) + '万+'
-      } else {
-        return intNum
-      }
     }
   },
   mounted () {

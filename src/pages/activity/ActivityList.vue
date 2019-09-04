@@ -1,6 +1,6 @@
 <template>
   <div class='activity-list-container'>
-    <my-navi title="活动列表" :isFixed="true"></my-navi>
+    <my-navi title="红包/福利" :isFixed="true"></my-navi>
     <div class="list-content">
       <el-tabs :stretch="true" value="first" @tab-click="tabClick">
          <el-tab-pane label="进行中" name="first">
@@ -10,7 +10,7 @@
             </li>
           </ul>
           <div v-else class="empty-activity-list">
-            暂无活动列表
+            暂无列表
           </div>
          </el-tab-pane>
          <el-tab-pane label="已结束" name="second">
@@ -20,7 +20,7 @@
             </li>
           </ul>
           <div v-else class="empty-activity-list">
-            暂无活动列表
+            暂无列表
           </div>
          </el-tab-pane>
       </el-tabs>

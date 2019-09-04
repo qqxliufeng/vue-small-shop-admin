@@ -21,7 +21,7 @@
               <p class="item-lvxingshe">{{selectType === '1' ? item.store_name : item.goods_name}}</p>
               <p class="item-info" v-show="selectType === '1'">
                 <span>{{item.score}}分</span>
-                <span>{{item.number_of_people}}人次</span>
+                <span v-if="item.number_of_people > 0">{{$utils.common.trasformNum(item.number_of_people)}}次</span>
               </p>
             </div>
           </el-card>

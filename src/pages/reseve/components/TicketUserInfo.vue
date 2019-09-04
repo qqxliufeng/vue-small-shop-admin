@@ -1,7 +1,7 @@
 <template>
     <div class="r-d-user-info-container">
         <p class="r-d-user-info-title">
-            <span>游客信息<i class="tourist-count">(需要提供<i>{{touristCount}}</i>位游客信息)</i></span>
+            <span>游客信息<i class="tourist-count">(需要提供<i>{{touristCount - 1}}</i>位游客信息)</i></span>
         </p>
         <div class="r-d-user-info-content-wrapper">
             <el-tag class="r-d-user-info-content"
@@ -202,6 +202,7 @@ export default {
             & i
               textStyle($orangeColor, .25)
               font-weight bold
+              margin 0 rem(.1)
         .select-user-info
             float right
             textStyle($primary, .3)

@@ -14,6 +14,7 @@
                 </div>
               </div>
               <div class="status-wrapper">
+                <span class="scenic-title">{{item.scenic_name}}</span>
                 <el-button size="mini" class="status" :type="buttonStateType" round>{{buttonStateTip}}：￥{{item.rebate_amount}}</el-button>
               </div>
             </el-card>
@@ -134,6 +135,12 @@ export default {
                     textStyle(#888, .25)
                     line-height rem(.28)
         .status-wrapper
-            text-align right
+            display flex
+            align-items center
             padding-top rem(.2)
+            .scenic-title
+                flex 1
+                textStyle(#333, .3)
+                ellipsis()
+                margin-right rem(.1)
 </style>
