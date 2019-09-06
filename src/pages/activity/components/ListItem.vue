@@ -5,7 +5,7 @@
     </div>
     <div class="conent-wrapper">
       <div class="title">{{item.title}}</div>
-      <p class="sub-title">二次返利活动</p>
+      <!-- <p class="sub-title">二次返利活动</p> -->
       <p class="time">剩余时间:
         <count-down :time="item.status === 3 ? 0 : (Number(item.end_time) - Number(item.now_time)) * 1000">
             <template slot-scope="props">
@@ -16,6 +16,7 @@
         </count-down>
       </p>
       <div class="action-wrapper">
+        <span class="price">红包金额:<i>{{'￥'+item.money}}</i></span>
         <span class="detail">查看详情</span>
       </div>
     </div>
@@ -55,7 +56,7 @@ export default {
     border-bottom 1px solid #f5f5f5
     .img-wrapper
         flex 1
-        height rem(2)
+        height rem(1.9)
         & > img
             width 100%
             height 100%
@@ -65,7 +66,7 @@ export default {
         width 70%
         display flex
         flex-direction column
-        justify-content space-around
+        justify-content space-between
         padding-left rem(.2)
         .title
             font-size rem(.3)
@@ -85,11 +86,17 @@ export default {
                     margin 0 rem(.05)
         .action-wrapper
             overflow hidden
+            display flex
+            justify-content space-between
+            align-items center
+            .price
+                textStyle(#333, .25)
+                & > i
+                    textStyle($orangeColor, .32)
             .detail
-                float right
                 border-radius rem(.05)
                 background-color $orangeColor
                 color #fff
-                padding rem(.08) rem(.28)
-                font-size rem(.28)
+                padding rem(.07) rem(.26)
+                font-size rem(.24)
 </style>

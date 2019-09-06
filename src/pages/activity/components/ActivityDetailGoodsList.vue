@@ -11,12 +11,14 @@
               <img v-lazy="$utils.image.getImagePath(item.share_image)">
             </div>
             <div class="conent-wrapper">
-              <p class="content-title">{{item.goods_name}}</p>
+              <p class="content-title">{{item.scenic_name}}</p>
+              <p class="goods-title">{{item.goods_name}}</p>
               <div class="content-info">
                 <!-- <span class="content-price-wrapper"><i>￥89</i>起</span> -->
-                <span class="content-sales-num">已售{{trasformNum(item.total_sales)}}</span>
+                <span class="content-sales-num" v-if="item.total_sales > 0">已售{{$utils.common.trasformNum(item.total_sales)}}</span>
               </div>
               <div class="action-wrapper">
+                <span class="price">{{'￥' + item.price}}</span>
                 <span class="detail" @click="share(item)">立即分享</span>
               </div>
             </div>
@@ -88,14 +90,14 @@ export default {
             justify-content space-around
             .img-wrapper
                 flex 1
-                height rem(2)
+                height rem(1.7)
                 & > img
                     width 100%
                     height 100%
                     border-radius rem(.08)
                     object-fit cover
             .conent-wrapper
-                width 60%
+                width 65%
                 display flex
                 flex-direction column
                 justify-content space-between
@@ -103,8 +105,11 @@ export default {
                 .content-title
                     font-size rem(.3)
                     color #333
-                    line-height rem(.4)
-                    muitlLineEllipsis(2)
+                    ellipsis()
+                .goods-title
+                    ellipsis()
+                    font-size rem(.25)
+                    color $orangeColor
                 .sub-title
                     color $primary
                     ellipsis()
@@ -115,6 +120,11 @@ export default {
                         color $orangeColor
                 .action-wrapper
                     overflow hidden
+                    display flex
+                    justify-content space-between
+                    align-items center
+                    .price
+                        textStyle($orangeColor, .35)
                     .detail
                         float right
                         border-radius rem(.05)
@@ -122,7 +132,7 @@ export default {
                         border 1px solid $orangeColor
                         color #fff
                         padding rem(.08) rem(.18)
-                        font-size rem(.28)
+                        font-size rem(.24)
                     .share
                         background-color #ffffff
                         border 1px solid $orangeColor
@@ -130,6 +140,7 @@ export default {
                         margin-right rem(.15)
                 .content-info
                     color #888
+                    font-size rem(.24)
                     .content-price-wrapper
                         font-size rem(.2)
                         & > i
