@@ -50,17 +50,6 @@ export default {
         return
       }
       this.$router.push({name: 'shareTicket', query: { s_id: item.scenic_id, goods_id: item.goods_id }})
-    },
-    trasformNum (num) {
-      if (!num || isNaN(num) || Number(num) === 0) {
-        return 0
-      }
-      let intNum = Number(num)
-      if (intNum / 10000 >= 1) {
-        return Math.floor(intNum / 10000) + '万+'
-      } else {
-        return intNum
-      }
     }
   }
 }

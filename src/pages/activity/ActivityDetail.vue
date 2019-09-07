@@ -1,25 +1,25 @@
 <template>
   <div class='activity-detail-container'>
     <my-navi title="活动详情" :isFixed="true"></my-navi>
-    <div class="content-wrapper" v-if="deailInfo">
+    <div class="content-wrapper" v-if="detailInfo">
       <div class="img-bg-wrapper">
           <img :src="headerImage">
       </div>
       <div class="detail-wrapper">
-        <activity-detail-info :info="deailInfo" @countDownEnd="countDownEnd"></activity-detail-info>
+        <activity-detail-info :info="detailInfo" @countDownEnd="countDownEnd" @gotoStart="gotoStart"></activity-detail-info>
+      </div>
+      <div class="goods-list-wrapper" id="list">
+        <activity-detail-goods-list :goods="detailInfo.goods" :status="detailInfo.status" :finish_status="detailInfo.details_status"></activity-detail-goods-list>
       </div>
       <div class="goods-list-wrapper">
-        <activity-detail-goods-list :goods="deailInfo.goods" :status="deailInfo.status" :finish_status="deailInfo.details_status"></activity-detail-goods-list>
-      </div>
-      <div class="goods-list-wrapper">
-        <activity-detail-rule :statistic_type="deailInfo.statistic_type" :award_type="deailInfo.award_type"></activity-detail-rule>
+        <activity-detail-rule :statistic_type="detailInfo.statistic_type" :award_type="detailInfo.award_type"></activity-detail-rule>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import headerImage from 'images/img_activity_detail_bg.png'
+import headerImage from 'images/img_activity_detail_bg.jpg'
 import ActivityDetailInfo from './components/ActivityDetailInfo'
 import ActivityDetailGoodsList from './components/ActivityDetailGoodsList'
 import ActivityDetailRule from './components/ActivityDetailRule'
@@ -33,7 +33,7 @@ export default {
   data () {
     return {
       headerImage,
-      deailInfo: null
+      detailInfo: null
     }
   },
   methods: {
@@ -41,7 +41,7 @@ export default {
       this.$http(this.$urlPath.activityDetails, {
         id: this.$route.query.aid
       }, '', (data) => {
-        this.deailInfo = data.data
+        this.detailInfo = data.data
       }, (errorCode, error) => {
         this.$toast(error)
       })
@@ -50,6 +50,9 @@ export default {
       if (this.detailInfo) {
         this.detailInfo.status = 3
       }
+    },
+    gotoStart () {
+      document.querySelector('#list').scrollIntoView()
     }
   },
   mounted () {

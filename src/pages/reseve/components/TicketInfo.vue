@@ -65,6 +65,7 @@ export default {
     return {
       num: 1,
       minNum: 1,
+      maxNum: 1000000,
       isShowCanlendarDialog: false,
       showRemark: false,
       showModal: false,
@@ -147,6 +148,7 @@ export default {
           this.tempTime.price = this.ticketInfo.calendar.sale_price
           this.tempTime.raw = this.ticketInfo.calendar
           this.minNum = this.ticketInfo.goods.min_number
+          this.maxNum = this.ticketInfo.goods.highest_number === 0 ? 1000000 : this.ticketInfo.goods.highest_number
           this.num = this.minNum
           this.emit()
         } else {
@@ -223,11 +225,11 @@ export default {
     },
     maxCount (count) {
       if (count === -1) {
-        return Number.MAX_VALUE
+        return this.maxNum
       } else if (count === -2) {
         return 1
       } else {
-        return count || 1
+        return Math.min(count || 1, this.maxNum)
       }
     },
     onNumberChange () {

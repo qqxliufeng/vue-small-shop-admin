@@ -3,7 +3,7 @@
     <p class="title">游客信息<i>(需要提供<i>1</i>位游客信息)</i></p>
     <div class="user-info-container" v-if="visitorInfo.indexOf('n') !== -1">
       <span>姓&nbsp;&nbsp;&nbsp;名：</span>
-      <input type="text" maxlength="6" placeholder="请输入(1)位联系人姓名" v-model="tempUserInfo.name">
+      <input type="text" maxlength="6" placeholder="请输入(1)位游客姓名" v-model="tempUserInfo.name">
     </div>
     <div class="user-info-container" v-if="visitorInfo.indexOf('m') !== -1">
       <span>手机号：</span>
@@ -11,15 +11,15 @@
     </div>
     <div class="user-info-container"  v-if="visitorInfo.indexOf('id') !== -1">
       <span>身份证号：</span>
-      <input type="text" placeholder="请输入身份证号" v-model="tempUserInfo.idCard" maxlength="18">
+      <input type="text" placeholder="请输入(1)位游客身份证号" v-model="tempUserInfo.idCard" maxlength="18">
     </div>
     <div class="user-info-container"  v-if="visitorInfo.indexOf('u') !== -1">
       <span>学校名称：</span>
-      <input type="text" placeholder="请输入学校名称" v-model="tempUserInfo.schoolName" maxlength="15">
+      <input type="text" placeholder="请输入(1)位游客学校名称" v-model="tempUserInfo.schoolName" maxlength="15">
     </div>
     <div class="user-info-container" v-if="visitorInfo.indexOf('s') !== -1">
       <span>学生证号：</span>
-      <input type="text" placeholder="请输入学生证号" v-model="tempUserInfo.studentId" maxlength="20">
+      <input type="text" placeholder="请输入(1)位游客学生证号" v-model="tempUserInfo.studentId" maxlength="20">
     </div>
     <el-dialog :visible.sync="showVerifyDialog" :modal="false" width="90%">
       <slide-verify
