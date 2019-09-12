@@ -12,11 +12,6 @@
                 <span class="menu-item" @click="menuItemClick(item)" :class="{'menu-item-select' : item.showActiveStyle}" :style="{color:item.showActiveStyle ? '#64BBAE' : '#666'}" >{{item.name}}</span>
             </swiper-slide>
         </swiper>
-        <!-- <ul>
-         <li v-for="(item, index) of menuList" :key="index" class="menu-item" :class="{'menu-item-select' : item.showActiveStyle}" :style="{color:item.showActiveStyle ? '#64BBAE' : '#333'}" @click="menuItemClick(item)">
-           {{item.name}}
-         </li>
-        </ul> -->
       </div>
       <div class="content-list" v-if="tempMenu"  @scroll="onScroll">
          <ul v-if="tempMenu.data && tempMenu.data.length > 0">
@@ -34,12 +29,12 @@
                      text-color="#ff9900"
                      score-template="{value}分">
                     </el-rate></div>
-                  <!-- <p><span class="info-money">￥89</span><span class="info-money-tag">起</span><span class="info-old-money">￥109</span></p> -->
                   <div class="info-action-wrapper">
                     <span class="info-sale-count" v-if="content.people_num > 0">已售{{$utils.common.trasformNum(content.people_num)}}</span>
+                    <span v-if="content.people_num <= 0"></span>
                     <span>
+                      <button class="info-share" @click.stop="selectScenicShare(content)" v-if="isCanShare">{{shareTipName(content)}}</button>
                       <button class="info-detail" @click.stop="startScenicDetail(content)">预定</button>
-                      <button class="info-share" @click.stop="selectScenicShare(content)" v-if="isCanShare">分享</button>
                     </span>
                   </div>
                 </div>
@@ -87,6 +82,17 @@ export default {
         return path
       } else {
         return path.split(',')[0]
+      }
+    },
+    shareTipName (item) {
+      if (item) {
+        if (Number(item.min_price) === 0) {
+          return '分:￥' + item.max_price
+        } else {
+          return '分:￥' + item.min_price + '~￥' + item.max_price
+        }
+      } else {
+        return '分享'
       }
     },
     menuItemClick (item) {
@@ -233,7 +239,6 @@ export default {
                                 padding 0 rem(.3)
                                 box-sizing border-box
                                 display inline-block
-                                margin-right rem(.2)
                                 line-height rem(.35)
                             .info-share
                                 border 1px solid #EA782F
@@ -243,4 +248,5 @@ export default {
                                 font-size rem(.25)
                                 padding 0 rem(.3)
                                 line-height rem(.35)
+                                margin-right rem(.2)
 </style>

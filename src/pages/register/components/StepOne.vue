@@ -27,6 +27,13 @@
       </div>
     </div> -->
     <el-button class="next-step" @click="nextStep">下一步</el-button>
+    <el-dialog :visible.sync="showVerifyDialog" width="80%" :modal="false">
+        <slide-verify
+        :w="width"
+        @success="onSlideSuccess"
+        ref="slideVerfiy"></slide-verify>
+    </el-dialog>
+    <div class="modal" v-show="showVerifyDialog"></div>
   </div>
 </template>
 
@@ -55,7 +62,9 @@ export default {
       },
       countDownText: '获取验证码',
       disabled: false,
-      verifyCode: ''
+      verifyCode: '',
+      width: document.body.clientWidth * 0.8 - 40,
+      showVerifyDialog: false
     }
   },
   methods: {
@@ -78,15 +87,11 @@ export default {
       }
       this.$router.replace({name: 'stepTwo'})
     },
-    getCode () {
-      if (!this.registerInfo.phone) {
-        this.$toast('请输入手机号')
-        return
+    onSlideSuccess () {
+      if (this.$refs.slideVerfiy) {
+        this.$refs.slideVerfiy.reset()
       }
-      if (!this.$utils.validator.isPhone(this.registerInfo.phone)) {
-        this.$toast('请输入合法手机号')
-        return
-      }
+      this.showVerifyDialog = false
       this.$http(this.$urlPath.getCaptcha, {
         mobile: this.registerInfo.phone,
         pid: this.$route.query.pid,
@@ -110,6 +115,20 @@ export default {
       }, (errorCode, error) => {
         this.$toast(error)
       })
+    },
+    getCode () {
+      if (!this.registerInfo.phone) {
+        this.$toast('请输入手机号')
+        return
+      }
+      if (!this.$utils.validator.isPhone(this.registerInfo.phone)) {
+        this.$toast('请输入合法手机号')
+        return
+      }
+      if (this.$refs.slideVerfiy) {
+        this.$refs.slideVerfiy.reset()
+      }
+      this.showVerifyDialog = true
     }
   },
   mounted () {
@@ -191,4 +210,12 @@ export default {
         margin 0 auto
         position absolute
         bottom rem(.5)
+    .modal
+        position: fixed;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        opacity: .5;
+        background: #000;
 </style>

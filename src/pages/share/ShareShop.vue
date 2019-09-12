@@ -1,9 +1,11 @@
 <template>
   <div class='s-shop-container' v-if="info">
     <my-navi title="分享店铺" :isFixed="true"></my-navi>
-    <share-tip></share-tip>
     <div class="content">
         <share-component>
+          <template slot="shareTip">
+            <share-tip></share-tip>
+          </template>
           <template slot="shareHeader">
             <img class="share-image" :src="image" alt="">
           </template>

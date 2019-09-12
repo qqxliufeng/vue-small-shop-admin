@@ -43,7 +43,8 @@ import BalanceDetails from '@/pages/balance/BalanceDetails'
 import Auth from '@/pages/wx/Auth'
 
 import ActivityList from '@/pages/activity/ActivityList'
-import ActivityDetail from '@/pages/activity/ActivityDetail'
+// import ActivityDetail from '@/pages/activity/ActivityDetail'
+import ActivityDetail from '@/pages/activity/ActivityNewDetail'
 Vue.use(Router)
 
 export default new Router({
@@ -361,6 +362,11 @@ export default new Router({
       path: '/activitydetail',
       name: 'activityDetail',
       component: ActivityDetail
+    },
+    {
+      path: '/activityrule',
+      name: 'activityRule',
+      component: () => import('@/pages/activity/ActivityRule')
     }
   ],
   scrollBehavior (to, from, saveTop) {

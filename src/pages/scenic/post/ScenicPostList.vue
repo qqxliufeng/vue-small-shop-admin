@@ -19,6 +19,14 @@
             <div class="item-info-wrapper">
               <p class="item-title">{{item.scenic_name}}</p>
               <p class="item-lvxingshe">{{selectType === '1' ? item.store_name : item.goods_name}}</p>
+              <div class="item-make-money" v-if="selectType === '1'">
+                <span class="fen">分</span>
+                <span class="price">￥{{makeMoney(item)}}</span>
+              </div>
+              <div class="item-make-money" v-else>
+                <span class="fen">分</span>
+                <span class="price">￥{{item.price}}</span>
+              </div>
               <p class="item-info" v-show="selectType === '1'">
                 <span>{{item.score}}分</span>
                 <span v-if="item.number_of_people > 0">{{$utils.common.trasformNum(item.number_of_people)}}次</span>
@@ -59,6 +67,12 @@ export default {
         this.scenicPostList = null
       }
       this.getData()
+    },
+    makeMoney (item) {
+      if (Number(item.min_price) === 0) {
+        return item.max_price
+      }
+      return item.min_price + '~' + item.max_price
     },
     startScenicPost (item) {
       if (this.selectType === '1') {
@@ -155,6 +169,23 @@ export default {
                 .item-lvxingshe
                     normalTextStyle(#888, .28)
                     ellipsis()
+                .item-make-money
+                    line-height rem(.5)
+                    .fen
+                        background-color $orangeColor
+                        border-radius 50%
+                        padding rem(.05)
+                        font-size rem(.2)
+                        display inline-block
+                        width rem(.3)
+                        height rem(.3)
+                        line-height rem(.3)
+                        text-align center
+                        color #fff
+                        vertical-align middle
+                    .price
+                        color $orangeColor
+                        vertical-align middle
                 .item-info
                     line-height rem(.5)
                     overflow hidden

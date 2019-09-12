@@ -51,6 +51,9 @@ export default {
       return isJPG && isLt2M
     },
     getImagePath (image) {
+      if (image.indexOf('http://') === 0 || image.indexOf('https://') === 0) {
+        return image
+      }
       return imageUrl + image
     }
   },

@@ -1,9 +1,11 @@
 <template>
 <div class='share-ticket-container'>
   <my-navi title="邀请好友" :isFixed="true"></my-navi>
-  <share-tip></share-tip>
   <div class="content" v-if="info">
     <share-component>
+      <template slot="shareTip">
+        <share-tip></share-tip>
+      </template>
       <template slot="shareHeader">
         <div class="header-content-wrapper">
           <div class="header-content">

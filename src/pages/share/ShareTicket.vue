@@ -1,9 +1,12 @@
 <template>
 <div class='share-ticket-container'>
   <my-navi title="分享门票" :isFixed="true"></my-navi>
-  <share-tip></share-tip>
   <div class="content" v-if="info">
     <share-component>
+      <template slot="shareTip">
+        <share-tip></share-tip>
+        <share-header-info :goods="info.goods"></share-header-info>
+      </template>
       <template slot="shareHeader">
           <img class="share-image" :src="$utils.image.getImagePath(info.share_image)" alt="">
       </template>
@@ -25,13 +28,15 @@ import ShareCode from './components/ShareCode'
 import ShareComponent from './Share'
 import ShareTip from './components/ShareTip'
 import IdMixin from 'common/mixins/id-mixin'
+import ShareHeaderInfo from './components/ShareHeaderInfo'
 export default {
   name: 'shareTicket',
   mixins: [IdMixin],
   components: {
     ShareComponent,
     ShareCode,
-    ShareTip
+    ShareTip,
+    ShareHeaderInfo
   },
   data () {
     return {
@@ -70,6 +75,7 @@ export default {
 .share-ticket-container
     .content
         contentFixed()
+        z-index 1
         .share-image
             width 100%
             height 100%

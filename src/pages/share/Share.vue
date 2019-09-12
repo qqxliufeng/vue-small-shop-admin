@@ -1,5 +1,6 @@
 <template>
     <div class='share-container'>
+        <slot name="shareTip"></slot>
         <div ref="post">
             <div class="share-header">
                 <slot name="shareHeader"></slot>

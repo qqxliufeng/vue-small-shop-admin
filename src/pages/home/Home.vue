@@ -85,14 +85,14 @@ export default {
         myTeam: {
           title: '我的团队',
           menus: [
-            {
-              icon: '&#xe654;',
-              iconColor: '#99DCFB',
-              title: '如何发展团队',
-              callBack: () => {
-                this.$router.push('teamFlow')
-              }
-            },
+            // {
+            //   icon: '&#xe654;',
+            //   iconColor: '#99DCFB',
+            //   title: '如何发展团队',
+            //   callBack: () => {
+            //     this.$router.push('teamFlow')
+            //   }
+            // },
             {
               icon: '&#xe63f;',
               iconColor: '#99DCFB',

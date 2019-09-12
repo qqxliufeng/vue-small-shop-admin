@@ -21,7 +21,7 @@
 <script>
 import headerImage from 'images/img_activity_detail_bg.jpg'
 import ActivityDetailInfo from './components/ActivityDetailInfo'
-import ActivityDetailGoodsList from './components/ActivityDetailGoodsList'
+import ActivityDetailGoodsList from './components/ActivityInfoGoodsList'
 import ActivityDetailRule from './components/ActivityDetailRule'
 export default {
   name: 'activityDetail',

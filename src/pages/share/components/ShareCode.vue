@@ -6,13 +6,13 @@
       <div class="post-info">
         <p><span class="iconfont icon">&#xe736;</span>{{$root.userInfo.state.name}}</p>
         <p><span class="iconfont icon">&#xe613;</span>{{$root.userInfo.state.linkname}}</p>
-        <p><span class="iconfont icon">&#xe615;</span>{{$root.userInfo.state.phone}}</p>
+        <p><span class="iconfont icon">&#xe615;</span>{{$root.userInfo.state.id}}</p>
       </div>
       <div class="post-code-wrapper">
         <div class="post-code">
           <canvas ref="codeCanvas" class="code-canvas"></canvas>
         </div>
-        <p>长按识别进入</p>
+        <p>{{ $isWeiXin ? '微信扫码' : '长按识别进入'}}</p>
       </div>
   </div>
 </template>
@@ -85,5 +85,5 @@ export default {
                 height rem(1.6) !important
         & p
             color red
-            font-size rem(.2)
+            font-size rem(.25)
 </style>

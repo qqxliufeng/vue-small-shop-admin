@@ -20,10 +20,6 @@ export default {
 @import '~styles/mixin.styl'
 .share-tip-container
     .tip
-        position fixed
-        top $headerHeight
-        left 0
-        right 0
         height rem(.6)
         line-height rem(.6)
         background-color #eea53a

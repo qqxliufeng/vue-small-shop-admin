@@ -94,6 +94,8 @@ export const activityList = distributorModuleUrl + 'secondary_rebate'
 
 export const activityDetails = distributorModuleUrl + 'secondary_rebate_details'
 
+export const activityDetailsRules = distributorModuleUrl + 'secondary_rebate_rules'
+
 const orderUrl = baseUrl + 'order/'
 
 export const createOrder = orderUrl + 'create_order'

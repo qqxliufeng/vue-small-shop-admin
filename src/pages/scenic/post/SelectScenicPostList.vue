@@ -9,6 +9,10 @@
           <div class="item-info-wrapper">
             <p class="item-title">{{item.scenic_name}}</p>
             <p class="item-lvxingshe">{{item.store_name ? item.store_name : '暂无'}}</p>
+            <div class="item-make-money">
+              <span class="fen">分</span>
+              <span class="price">￥{{makeMoney(item)}}</span>
+            </div>
           </div>
         </el-card>
       </li>
@@ -34,6 +38,12 @@ export default {
   methods: {
     startScenicPost (item) {
       this.$router.push({name: 'shareSelectScenic', query: {scenic_id: item.scenic_id, sid: item.store_id}})
+    },
+    makeMoney (item) {
+      if (Number(item.min_price) === 0) {
+        return item.max_price
+      }
+      return item.min_price + '~' + item.max_price
     },
     getData () {
       this.$http(this.$urlPath.selectScenicPosterList, {
@@ -113,6 +123,23 @@ export default {
                     & span:nth-child(2)
                         float right
                         textStyle(#888, .25)
+                .item-make-money
+                    line-height rem(.5)
+                    .fen
+                        background-color $orangeColor
+                        border-radius 50%
+                        padding rem(.05)
+                        font-size rem(.2)
+                        display inline-block
+                        width rem(.3)
+                        height rem(.3)
+                        line-height rem(.3)
+                        text-align center
+                        color #fff
+                        vertical-align middle
+                    .price
+                        color $orangeColor
+                        vertical-align middle
         .empty-list
             height 80vh
             display flex

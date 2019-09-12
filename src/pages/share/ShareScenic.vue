@@ -1,10 +1,13 @@
 <template>
 <div class='share-scenic-container'>
   <my-navi title="分享景区" :isFixed="true"></my-navi>
-  <share-tip></share-tip>
   <section v-if="info">
     <div class="content">
       <share-component>
+        <template slot="shareTip">
+          <share-tip></share-tip>
+          <share-header-info :goods="goods"></share-header-info>
+        </template>
         <template slot="shareHeader">
             <img class="share-image" :src="$utils.image.getImagePath(info.poster_image)" :key="info.poster_image">
         </template>
@@ -38,18 +41,25 @@ import ShareComponent from './Share'
 import ShareCode from './components/ShareCode'
 import ShareTip from './components/ShareTip'
 import IdMixin from 'common/mixins/id-mixin'
+import ShareHeaderInfo from './components/ShareHeaderInfo'
 export default {
   name: 'shareScenic',
   mixins: [IdMixin],
   components: {
     ShareComponent,
     ShareCode,
-    ShareTip
+    ShareTip,
+    ShareHeaderInfo
   },
   data () {
     return {
       info: null,
-      wexin_url: null
+      wexin_url: null,
+      goods: {
+        max_price: 0,
+        min_price: 0,
+        price: 0
+      }
     }
   },
   computed: {
@@ -67,6 +77,9 @@ export default {
       }, '', (data) => {
         this.info = data.data
         this.wexin_url = this.info.wexin_url
+        this.goods.max_price = this.info.max_price
+        this.goods.min_price = this.info.min_price
+        this.goods.price = Number(this.info.min_price) === 0 ? this.goods.max_price : this.goods.min_price + '~' + this.goods.max_price
       }, (errorCode, error) => {
         this.$toast(error)
       })
