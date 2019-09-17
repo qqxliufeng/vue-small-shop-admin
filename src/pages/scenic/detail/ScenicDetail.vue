@@ -18,7 +18,7 @@
             </template>
           </scenic-detail-info>
           <safe-protect></safe-protect>
-          <scenic-detail-hot v-if="hotGoodsList && hotGoodsList.length > 0" :hotGoodsList="hotGoodsList"></scenic-detail-hot>
+          <scenic-detail-hot v-if="hotGoodsList && hotGoodsList.length > 0" :hotGoodsList="hotGoodsList" @reseve-detail="reseveDetail" @share-ticket="shareTicket"></scenic-detail-hot>
           <scenic-detail-ticket-type :typeGoodsList="typeGoodsList"></scenic-detail-ticket-type>
           <scenic-detail-leave-message :ask="ask"></scenic-detail-leave-message>
           <scenic-detail-comment :comment="comment" :tagCanSelected="false"></scenic-detail-comment>
@@ -90,6 +90,16 @@ export default {
         return str.replace(/<[^>]+>/g, '')
       }
       return ''
+    },
+    reseveDetail (item) {
+      this.$router.push({name: 'reseveDetail', query: { goods_id: item.goodsId, scenicId: this.$route.query.scenicId }})
+    },
+    shareTicket (item) {
+      if (item.is_promotion > 0) {
+        this.$router.push({name: 'shareTicket', query: { s_id: this.$route.query.scenicId, goods_id: item.goodsId, promotion_id: item.is_promotion }})
+      } else {
+        this.$router.push({name: 'shareTicket', query: { s_id: this.$route.query.scenicId, goods_id: item.goodsId }})
+      }
     },
     getData () {
       this.$http(this.$urlPath.scenicDetail2Url, {

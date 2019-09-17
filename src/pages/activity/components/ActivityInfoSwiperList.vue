@@ -3,16 +3,12 @@
     <div class="bg"></div>
     <div class="content-wrapper">
       <div class="content">
-        <swiper :options="swiperOption">
-          <swiper-slide v-for="item of users" :key="item.id">
+        <swiper :options="swiperOption" ref="swiper">
+          <swiper-slide v-for="item of tempUsers" :key="item.id">
             <div class="user-info">
-              <!-- <img :src="$utils.image.getImagePath(item.avatar)">
-              <span class="nick-name">
-                <span>{{$utils.common.hiddenMobile(item.phone)}}</span>
-                <span>已赚{{Number(item.rebate).toFixed(2)}}元</span>
-              </span> -->
               <img :src="$utils.image.getImagePath(item.avatar)">
               {{$utils.common.hiddenMobile(item.phone)}}
+              <span>已赚{{Number(item.rebate).toFixed(2)}}元</span>
             </div>
           </swiper-slide>
         </swiper>
@@ -34,7 +30,13 @@ export default {
         loop: true,
         autoplay: true,
         direction: 'vertical'
-      }
+      },
+      tempUsers: this.users
+    }
+  },
+  watch: {
+    users (newVal) {
+      this.tempUsers = newVal
     }
   },
   methods: {

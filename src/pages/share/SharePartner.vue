@@ -1,6 +1,5 @@
 <template>
 <div class='share-ticket-container'>
-  <my-navi title="邀请好友" :isFixed="true"></my-navi>
   <div class="content" v-if="info">
     <share-component>
       <template slot="shareTip">
@@ -101,7 +100,6 @@ export default {
 @import '~styles/mixin.styl'
 .share-ticket-container
     .content
-        contentFixed()
         .header-content-wrapper
             background $primary
             height 100%

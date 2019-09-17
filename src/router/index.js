@@ -134,9 +134,9 @@ export default new Router({
       component: AddPartner
     },
     {
-      path: '/teamflow',
-      name: 'teamFlow',
-      component: () => import('@/pages/partner/TeamFlow')
+      path: '/artener',
+      name: 'partener',
+      component: () => import('@/pages/partner/Partener')
     },
     {
       path: '/goodslist',

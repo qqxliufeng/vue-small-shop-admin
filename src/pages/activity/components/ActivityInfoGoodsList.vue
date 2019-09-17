@@ -27,7 +27,6 @@
                 <span class="content-sales-num" v-if="item.total_sales > 0">已售{{$utils.common.trasformNum(item.total_sales)}}</span>
               </div>
               <div class="action-wrapper">
-                <span class="ticket-detail" @click="share(item)">门票详情</span>
                 <span class="detail" @click="share(item)">立即分享</span>
               </div>
             </div>
@@ -46,20 +45,25 @@ export default {
   props: {
     info: Object
   },
+  data () {
+    return {
+      countDown: false
+    }
+  },
   components: {
     ActivityInfoTitle,
     CountDown
   },
   methods: {
     share (item) {
-      if (this.info.status === 3) {
+      if (this.countDown || this.info.status === 3) {
         this.$toast('此活动已结束')
         return
       }
       this.$router.push({name: 'shareTicket', query: { s_id: item.scenic_id, goods_id: item.goods_id }})
     },
     countDownEnd () {
-
+      this.countDown = true
     }
   }
 }
@@ -136,7 +140,7 @@ export default {
                     overflow hidden
                     display flex
                     align-items center
-                    justify-content space-around
+                    justify-content flex-end
                     .ticket-detail
                         background-color $orangeColor
                         color #fff

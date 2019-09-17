@@ -4,11 +4,10 @@
         <img src="../../../assets/images/activity/img_info_header_bg.png">
       </div>
       <div class="rule-info" @click="ruleClick">活动规则</div>
-      <activity-info-swiper-list :users="users"></activity-info-swiper-list>
       <div class="bg-red-pack-wrapper">
          <img src="../../../assets/images/activity/img_info_red_pack_bg.png">
          <div class="detail-info-wrapper" @click="showRedDialog">
-           <p class="title">邀好友参与此次销售活动满{{info.need_finish_num}}张</p>
+           <p class="title">邀好友参与此次销售活动满{{info.need_finish_num}}{{unit()}}</p>
            <div class="money-wrapper">
              <span>您多赚</span>
              <span class="money">{{info.money}}</span>
@@ -19,38 +18,35 @@
            </p>
          </div>
          <div class="bottom-action-wrapper">
-           <img src="../../../assets/images/activity/img_invite.png">
-           <img src="../../../assets/images/activity/img_mian_to_mian.png">
+           <img src="../../../assets/images/activity/img_invite.png" @click="invite">
+           <img src="../../../assets/images/activity/img_mian_to_mian.png" @click="showCodeDialog">
          </div>
       </div>
   </div>
 </template>
 
 <script>
-import ActivityInfoSwiperList from './ActivityInfoSwiperList'
+
 export default {
   name: 'activityInfoHeader',
   props: {
     info: Object
   },
-  components: {
-    ActivityInfoSwiperList
-  },
-  computed: {
-    users () {
-      if (this.info) {
-        return this.info.user
-      } else {
-        return []
-      }
-    }
-  },
   methods: {
+    unit () {
+      return Number(this.info.statistic_type) === 1 ? '单' : '张'
+    },
     ruleClick () {
       this.$emit('rule')
     },
     showRedDialog () {
       this.$emit('showRedDialog')
+    },
+    invite () {
+      this.$emit('invite')
+    },
+    showCodeDialog () {
+      this.$emit('show-code-dialog')
     }
   }
 }

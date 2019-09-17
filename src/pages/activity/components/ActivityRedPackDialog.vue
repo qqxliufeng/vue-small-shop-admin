@@ -10,14 +10,14 @@
             <img src="../../../assets/images/activity/img_red_pack.png">
             <span class="money">{{Number(info.money).toFixed(2)}}元</span>
          </div>
-         <div class="tip1">销售<span>活动商品</span>满{{info.need_finish_num}}单时您获得{{Number(info.money).toFixed(2)}}元红包</div>
+         <div class="tip1">销售<span>活动商品</span>满{{info.need_finish_num}}{{unit()}}时您获得{{Number(info.money).toFixed(2)}}元红包</div>
          <div class="line">
            <img src="../../../assets/images/activity/img_red_pack_line.png" alt="">
          </div>
          <div class="tip2">不论销售何种商品，您都会获得<span>分销返利</span></div>
       </div>
       <div class="button-wrapper">
-        <div class="invite-info">立即邀请</div>
+        <div class="invite-info" @click="invite">立即邀请</div>
       </div>
     </div>
   </div>
@@ -34,8 +34,14 @@ export default {
     info: Object
   },
   methods: {
+    unit () {
+      return Number(this.info.statistic_type) === 1 ? '单' : '张'
+    },
     cancelDialog () {
       this.$emit('dismiss')
+    },
+    invite () {
+      this.$emit('invite')
     }
   }
 }

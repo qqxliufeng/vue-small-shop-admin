@@ -6,7 +6,8 @@
         <img :src="$utils.image.getImagePath($root.userInfo.state.avatar)">
       </div>
       <span class="nick-name">{{$root.userInfo.state.name}}</span>
-      <span class="nick-vip-no">会员号：{{$root.userInfo.state.id}}</span>
+      <span class="nick-vip-no">会&nbsp;&nbsp;员&nbsp;&nbsp;号：{{$root.userInfo.state.id}}</span>
+      <home-shop-num :num="amount ? amount.user_num : 0"></home-shop-num>
       <div class="other-money-wrapper">
         <div class="money-info-wrapper" @click="accountRelease">
           <p class="money-title">账户余额</p>
@@ -30,11 +31,14 @@
 </template>
 
 <script>
-
+import HomeShopNum from './HomeShopNum'
 export default {
   name: 'homeHeader',
   props: {
     amount: Object
+  },
+  components: {
+    HomeShopNum
   },
   data () {
     return {
@@ -60,7 +64,7 @@ export default {
 @import '~styles/mixin.styl'
 .h-header-container
     // margin-top $headerHeight * 1.5
-    height rem(3.8)
+    height rem(4.2)
     background #74D8C9
     overflow hidden
     position relative

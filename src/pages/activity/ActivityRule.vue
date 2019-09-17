@@ -8,7 +8,7 @@
       <div class="rule-info" v-html="rule">
       </div>
     </div>
-    <div class="invite-info">邀请好友赚赏金</div>
+    <div class="invite-info" @click="invite">邀请好友赚赏金</div>
   </div>
 </template>
 
@@ -25,6 +25,9 @@ export default {
     }
   },
   methods: {
+    invite () {
+      this.$router.push({name: 'shareShop'})
+    },
     getData () {
       this.$http(this.$urlPath.activityDetailsRules, {
         id: this.$route.query.id

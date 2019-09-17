@@ -177,8 +177,7 @@ let noLoginContainer = [
   'city',
   'forgetPassword',
   'fastLogin',
-  'rechargePayResult',
-  'orderPayResult'
+  'rechargePayResult'
 ]
 
 /* eslint-disable no-new */

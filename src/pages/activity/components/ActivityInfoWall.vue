@@ -1,9 +1,9 @@
 <template>
-  <div class='activity-info-wall-container' v-if="info">
+  <div class='activity-info-wall-container'>
     <activity-info-title title="分销商财富榜"></activity-info-title>
     <div class="wall-wrapper">
-      <div class="wall-total-num-wrapper">共<span>234567</span>人参加</div>
-      <div class="wall-first-wrapper">
+      <div class="wall-total-num-wrapper">共<span>4567745</span>人参加</div>
+      <div class="wall-first-wrapper" v-if="tempUserList.length > 0">
         <div class="wall-first-item-wrapper">
           <div class="imga-wrapper">
             <img :src="$utils.image.getImagePath(tempUserList[0].avatar)" class="face">
@@ -38,7 +38,7 @@
       <div class="line"></div>
       <ul>
         <li class="wall-item-wrapper" v-for="(item, index) of tempList" :key="item.id">
-          <span class="num">{{index + 1}}</span>
+          <span class="num">{{index + 4}}</span>
           <div class="item-face">
             <img :src="$utils.image.getImagePath(item.avatar)">
           </div>
@@ -66,15 +66,12 @@ export default {
       tempUserList: []
     }
   },
-  watch: {
-    info (newVal) {
+  mounted () {
+    if (this.info) {
       let list = []
-      if (newVal && newVal.user) {
-        newVal.user.forEach(item => {
-          item.rebate = Number(newVal.money) + Number(item.rebate)
-          list.push(item)
-        })
-      }
+      this.info.user.forEach(item => {
+        list.push(item)
+      })
       list.sort((it1, it2) => {
         return it2.rebate - it1.rebate
       })

@@ -57,14 +57,10 @@ export default {
   },
   methods: {
     itemClickOrder (item) {
-      this.$router.push({name: 'reseveDetail', query: { goods_id: item.goodsId, scenicId: this.$route.query.scenicId }})
+      this.$emit('reseve-detail', item)
     },
     itemClickShare (item) {
-      if (item.is_promotion > 0) {
-        this.$router.push({name: 'shareTicket', query: { s_id: this.$route.query.scenicId, goods_id: item.goodsId, promotion_id: item.is_promotion }})
-      } else {
-        this.$router.push({name: 'shareTicket', query: { s_id: this.$route.query.scenicId, goods_id: item.goodsId }})
-      }
+      this.$emit('share-ticket', item)
     }
   }
 }

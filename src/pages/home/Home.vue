@@ -99,7 +99,7 @@ export default {
               title: '发展团队',
               callBack: () => {
                 if (this.authInfo && this.authInfo.auth_set && this.authInfo.auth_set.indexOf('3') !== -1) {
-                  this.$router.push({name: 'sharePartner'})
+                  this.$router.push({name: 'partener'})
                 } else {
                   this.$toast('当前帐号暂无此权限')
                 }

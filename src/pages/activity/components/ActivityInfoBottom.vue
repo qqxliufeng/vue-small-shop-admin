@@ -4,7 +4,7 @@
       <span>活动详情见</span>
       <span class="rules" @click="ruleClick">活动规则></span>
     </div>
-    <div class="invite-info">邀请好友赚赏金</div>
+    <div class="invite-info" @click="invite">邀请好友赚赏金</div>
   </div>
 </template>
 
@@ -15,6 +15,9 @@ export default {
   methods: {
     ruleClick () {
       this.$emit('rule')
+    },
+    invite () {
+      this.$emit('invite')
     }
   }
 }

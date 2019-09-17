@@ -1,6 +1,5 @@
 <template>
   <div class=''>
-    <my-navi title="如何发展团队" :isFixed="true"></my-navi>
     <div class="image-wrapper">
       <img :src="shareTeamFlowImag">
     </div>
@@ -23,7 +22,7 @@ export default {
 @import '~styles/varibles.styl'
 @import '~styles/mixin.styl'
 .image-wrapper
-    padding $headerHeight rem(.2) rem(.2) rem(.2)
+    padding rem(.2)
     overflow hidden
     & img
         width 100%
