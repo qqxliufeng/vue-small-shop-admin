@@ -1,10 +1,10 @@
 <template>
   <div class='a-i-container' style="height:100%; position:relative">
     <my-navi title="认证信息" :isFixed="true">
-        <slot slot="rightAction" v-if="!info.linkname"><span class="p-i-submit" @click="submit">提交</span></slot>
+        <slot slot="rightAction" v-if="canModify"><span class="p-i-submit" @click="submit">提交</span></slot>
     </my-navi>
     <ul class="p-i-ul">
-        <p class="important-info" v-if="!info.linkname"><span class="el-icon-warning-outline"></span>请认真仔细填写认证信息，此信息设置后不可更改</p>
+        <p class="important-info" v-if="canModify"><span class="el-icon-warning-outline"></span>请认真仔细填写认证信息，此信息设置后不可更改</p>
           <li>
               <div class="p-i-item">
                   <span class="p-i-left">联系人姓名</span>
@@ -22,7 +22,7 @@
           <li>
               <div class="p-i-item">
                   <span class="p-i-left">身份类别</span>
-                  <span class="p-i-right p-i-text" v-if="info.linkname">{{info.distributor_type === 1 ? '社会' : '学生'}}</span>
+                  <span class="p-i-right p-i-text" v-if="info.distributor_type !== 0">{{info.distributor_type === 1 ? '社会' : '学生'}}</span>
                   <div v-else>
                     <el-radio v-model="distributorType" label="1" @change="change">社会</el-radio>
                     <el-radio v-model="distributorType" label="2" @change="change">学生</el-radio>
@@ -37,9 +37,9 @@
               </div>
           </li>
           <li>
-              <div>
+              <div v-if="distributorType !== 0">
                   <span class="p-i-left" style="display: block;padding: 0 .2rem; line-height: 1rem; color: #333333; font-size: .32rem">证件信息</span>
-                  <div v-if="distributorType == 1 && info.distributor_type === 1" class="image-wrapper">
+                  <div v-if="distributorType == 1" class="image-wrapper">
                       <img :src="$utils.image.getImagePath(info.ID_card_Front)" alt="" v-if="info.ID_card_Front">
                       <el-upload
                         v-else
@@ -91,8 +91,7 @@
 <script>
 
 export default {
-  name: '',
-  components: {},
+  name: 'authInfo',
   data () {
     return {
       info: {},
@@ -104,7 +103,12 @@ export default {
       selectIdBack: null,
       selectIdStudent: null,
       selectIndex: 0,
-      distributorType: '1'
+      distributorType: 0
+    }
+  },
+  computed: {
+    canModify () {
+      return !this.info.linkname || Number(this.info.distributor_type) === 0 || !this.info.schoolName_companyName || !this.info.city
     }
   },
   methods: {
@@ -149,16 +153,16 @@ export default {
       this.$toast('最多上传' + fileList.length + '张图片')
     },
     submit () {
-      if (this.info.linkname) {
-        this.$toast('认证信息已经提交')
-        return
-      }
       if (!this.name) {
         this.$toast('请输入联系人姓名')
         return
       }
       if (!this.selectedCity) {
         this.$toast('请选择所在城市')
+        return
+      }
+      if (this.distributorType === 0) {
+        this.$toast('请选择身份类别')
         return
       }
       if (!this.workName) {
@@ -174,7 +178,7 @@ export default {
           this.$toast('请上传身份证反面照片')
           return
         }
-      } else {
+      } else if (Number(this.distributorType) === 2) {
         if (!this.selectIdStudent) {
           this.$toast('请上传学生证照片')
           return
@@ -191,6 +195,9 @@ export default {
       }, '正在上传…', (data) => {
         this.$route.meta.keepAlive = false
         this.info.linkname = this.name
+        this.info.city = this.selectedCity
+        this.info.distributor_type = this.distributorType
+        this.info.schoolName_companyName = this.workName
         this.$toast('提交成功')
       }, (errorCode, error) => {
         this.$toast(error)
@@ -205,6 +212,10 @@ export default {
       } else {
         vm.$http(vm.$urlPath.getInformation, {}, '', (data) => {
           vm.info = data.data
+          vm.distributorType = vm.info.distributor_type
+          vm.name = vm.info.linkname
+          vm.selectedCity = vm.info.city
+          vm.workName = vm.info.schoolName_companyName
         }, (errorCode, error) => {
           vm.$toast(error)
         })

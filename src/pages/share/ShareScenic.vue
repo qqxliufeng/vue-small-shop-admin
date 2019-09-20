@@ -101,7 +101,6 @@ export default {
             height 100%
         .info-content-wrapper
             display flex
-            padding rem(.3)
             .post-logo
                 width rem(1.5)
                 height rem(1.5)

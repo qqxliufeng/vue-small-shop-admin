@@ -1,7 +1,7 @@
 <template>
   <div class="info-content-wrapper">
       <div class="post-logo">
-          <img :src="logo">
+          <img src="../../../assets/images/img_logo_icon.png">
       </div>
       <div class="post-info">
         <p><span class="iconfont icon">&#xe736;</span>{{$root.userInfo.state.name}}</p>
@@ -50,7 +50,7 @@ export default {
     display flex
     width 100%
     box-sizing border-box
-    padding rem(.2) rem(.3)
+    padding rem(.15)
     .post-logo
         width rem(1.5)
         height rem(1.6)
@@ -58,10 +58,13 @@ export default {
         display flex
         justify-content center
         align-items center
+        border 1px solid #7ed0ff
+        border-radius 5px
         & img
             width 100%
             height 100%
             object-fit cover
+            border-radius 5px
     .post-info
         flex 1
         display flex

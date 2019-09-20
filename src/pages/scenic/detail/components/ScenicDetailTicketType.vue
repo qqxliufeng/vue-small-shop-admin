@@ -13,7 +13,7 @@
              </swiper>
              <ul v-if="currentTabItems && currentTabItems.length > 0" class="ticket-wrapper">
                 <li v-for="item of currentTabItems" :key="item.goodsId">
-                    <scenic-detail-ticket-item :item="item"></scenic-detail-ticket-item>
+                    <scenic-detail-ticket-item :item="item" @reseve-detail="reseveDetail" @share-ticket="shareTicket"></scenic-detail-ticket-item>
                 </li>
             </ul>
             <div v-else class="s-d-l-m-message-empty">
@@ -85,6 +85,12 @@ export default {
       } else {
         this.currentTabItems = null
       }
+    },
+    reseveDetail (item) {
+      this.$emit('reseve-detail', item)
+    },
+    shareTicket (item) {
+      this.$emit('share-ticket', item)
     }
   },
   mounted () {

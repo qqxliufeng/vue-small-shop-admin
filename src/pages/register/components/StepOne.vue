@@ -14,6 +14,12 @@
         <button class="bt-code" @click="getCode" :disabled="disabled">{{countDownText}}</button>
       </div>
     </div>
+    <div class="info-wrapper">
+      <span class="info-title">姓&nbsp;&nbsp;&nbsp;&nbsp;名：</span>
+      <div class="info-content-wrapper">
+        <input type="text" class="input" placeholder="请输入真实姓名" v-model="registerInfo.realName" maxlength="6">
+      </div>
+    </div>
     <!-- <div class="info-wrapper">
       <span class="info-title">密码：</span>
       <div class="info-content-wrapper">
@@ -83,6 +89,15 @@ export default {
       }
       if (this.registerInfo.verifyCode !== this.verifyCode) {
         this.$toast('请输入正确的验证码')
+        return
+      }
+      if (!this.registerInfo.realName) {
+        this.$toast('请输入姓名')
+        return
+      }
+      const reg = new RegExp('[\\u4E00-\\u9FFF]+', 'g')
+      if (!reg.test(this.registerInfo.realName)) {
+        this.$toast('请输入中文名称')
         return
       }
       this.$router.replace({name: 'stepTwo'})

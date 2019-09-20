@@ -85,7 +85,6 @@ export default {
             display flex
             width 100%
             box-sizing border-box
-            padding rem(.2) rem(.3)
             .post-logo
                 width rem(1.5)
                 & img

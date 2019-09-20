@@ -19,7 +19,7 @@
           </scenic-detail-info>
           <safe-protect></safe-protect>
           <scenic-detail-hot v-if="hotGoodsList && hotGoodsList.length > 0" :hotGoodsList="hotGoodsList" @reseve-detail="reseveDetail" @share-ticket="shareTicket"></scenic-detail-hot>
-          <scenic-detail-ticket-type :typeGoodsList="typeGoodsList"></scenic-detail-ticket-type>
+          <scenic-detail-ticket-type :typeGoodsList="typeGoodsList" @reseve-detail="reseveDetail" @share-ticket="shareTicket"></scenic-detail-ticket-type>
           <scenic-detail-leave-message :ask="ask"></scenic-detail-leave-message>
           <scenic-detail-comment :comment="comment" :tagCanSelected="false"></scenic-detail-comment>
           <div class="s-d-l-m-comment-info-see-more" @click="seeMoreComment">

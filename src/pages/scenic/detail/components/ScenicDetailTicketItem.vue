@@ -27,6 +27,7 @@
                 </div>
             </div>
         </div>
+        <p v-if="Number(this.item.buy_status) !== 1" class="reseve-tip">提示：此商品只能用于分享</p>
         <div class="line"></div>
         <div class="bg" v-if="item.is_promotion > 0">
             <div class="iconfont">&#xe69c;</div>
@@ -47,7 +48,7 @@ export default {
     },
     isCanReseve () {
       // 判断是不是可以购买此产品
-      return Boolean(this.$root.state.canFloorBuyTicket) && Number(this.item.buy_status) === 1
+      return Boolean(this.$root.state.canFloorBuyTicket)
     }
   },
   data () {
@@ -57,7 +58,11 @@ export default {
   },
   methods: {
     itemClickOrder (item) {
-      this.$emit('reseve-detail', item)
+      if (Number(this.item.buy_status) === 1) {
+        this.$emit('reseve-detail', item)
+      } else {
+        this.$toast('此商品只能用于分享')
+      }
     },
     itemClickShare (item) {
       this.$emit('share-ticket', item)
@@ -77,6 +82,11 @@ export default {
         height 1px
         background-color #eee
         margin 0 auto
+    .reseve-tip
+        padding rem(.1)
+        padding-right rem(.3)
+        text-align right
+        textStyle($orangeColor, .25)
     .bg
         position absolute
         top 0
