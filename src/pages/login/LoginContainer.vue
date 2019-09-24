@@ -2,11 +2,11 @@
   <div class='l-c-container'>
     <my-navi title="登录" :isShowBack="false"></my-navi>
     <el-tabs :stretch="true" v-model="activeName">
-      <el-tab-pane label="快捷登录" name="first">
-        <fast-login></fast-login>
-      </el-tab-pane>
-      <el-tab-pane label="账号登录" name="second">
+      <el-tab-pane label="账号登录" name="first">
         <login></login>
+      </el-tab-pane>
+      <el-tab-pane label="快捷登录" name="second">
+        <fast-login></fast-login>
       </el-tab-pane>
     </el-tabs>
   </div>
@@ -29,7 +29,7 @@ export default {
   beforeRouteEnter (to, from, next) {
     next(vm => {
       if (from.name === 'forgetPassword') {
-        vm.activeName = 'second'
+        vm.activeName = 'first'
       }
     })
   }

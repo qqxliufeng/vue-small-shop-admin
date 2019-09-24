@@ -1,6 +1,6 @@
 <template>
   <div class='home-shop-num-container'>
-    <span>店铺人数：</span>
+    <span>店铺粉丝：</span>
     <span>{{num}}</span>
   </div>
 </template>

@@ -58,7 +58,6 @@ export default {
         display flex
         justify-content center
         align-items center
-        border 1px solid #7ed0ff
         border-radius 5px
         & img
             width 100%
