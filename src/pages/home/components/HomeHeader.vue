@@ -6,8 +6,8 @@
         <img :src="$utils.image.getImagePath($root.userInfo.state.avatar)">
       </div>
       <span class="nick-name">{{$root.userInfo.state.name}}</span>
-      <span class="nick-vip-no">会&nbsp;&nbsp;员&nbsp;&nbsp;号：{{$root.userInfo.state.id}}</span>
-      <home-shop-num :num="amount ? amount.user_num : 0"></home-shop-num>
+      <home-shop-num title="会 员 号：" :num="Number($root.userInfo.state.id)"></home-shop-num>
+      <home-shop-num title="店铺粉丝：" :num="amount ? amount.user_num : 0"></home-shop-num>
       <div class="other-money-wrapper">
         <div class="money-info-wrapper" @click="accountRelease">
           <p class="money-title">账户余额</p>

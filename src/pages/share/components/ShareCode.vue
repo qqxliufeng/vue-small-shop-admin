@@ -12,7 +12,7 @@
         <div class="post-code">
           <canvas ref="codeCanvas" class="code-canvas"></canvas>
         </div>
-        <p>{{ $isWeiXin ? '微信扫码' : '长按识别进入'}}</p>
+        <p>{{ $isWeiXin ? '微&nbsp;信&nbsp;扫&nbsp;码' : '长&nbsp;按&nbsp;识&nbsp;别'}}</p>
       </div>
   </div>
 </template>

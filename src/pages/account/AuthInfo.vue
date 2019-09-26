@@ -214,8 +214,11 @@ export default {
           vm.info = data.data
           vm.distributorType = vm.info.distributor_type
           vm.name = vm.info.linkname
-          vm.selectedCity = vm.info.city
+          vm.city = vm.info.city
           vm.workName = vm.info.schoolName_companyName
+          vm.selectIdFront = vm.info.ID_card_Front
+          vm.selectIdBack = vm.info.ID_card_Reverse
+          vm.selectIdStudent = vm.info.student_identity_card
         }, (errorCode, error) => {
           vm.$toast(error)
         })
