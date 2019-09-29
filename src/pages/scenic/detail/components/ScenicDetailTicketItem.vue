@@ -22,7 +22,7 @@
                     </p>
                 </div>
                 <div class="s-d-hot-item-info-info-action">
-                    <el-button type="primary" size="mini" @click="itemClickShare(item)" v-if="isCanShare">分:￥{{item.price}}</el-button>
+                    <el-button type="primary" size="mini" @click="itemClickShare(item)" v-if="isCanShare">分享:￥{{item.price}}</el-button>
                     <el-button type="primary" size="mini" @click="itemClickOrder(item)" class="button" v-if="isCanReseve">立即预定</el-button>
                 </div>
             </div>

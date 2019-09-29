@@ -19,6 +19,16 @@
         <div v-if="item.images && item.images.length > 0" class="s-d-comment-item-imags-wrapper" v-lazy-container="{ selector: 'img' }">
             <img v-for="(image, index) of item.images" :key="index" :data-src="$utils.image.getImagePath(image)" @click="imageClick">
         </div>
+        <div class="reply-container" v-if="item.answer && item.answer.content">
+            <div>
+              <span class="reply-title">商家回复:</span>
+              <span class="reply-content">{{item.answer.content}}</span>
+              <div class="reply-time">{{item.answer.add_time}}</div>
+            </div>
+        </div>
+        <div class="time">
+          {{item.create_time}}
+        </div>
     </div>
 </template>
 
@@ -78,7 +88,7 @@ export default {
             margin-left rem(.2)
     .s-d-comment-item-content-wrapper
         font-size rem(.28)
-        color #aaaaaa
+        color #333
         margin-top rem(.2)
         line-height rem(.35)
         position relative
@@ -99,4 +109,25 @@ export default {
             height 100%
             object-fit cover
             margin-left 2.5%
+    .reply-container
+        background-color #f5f5f5
+        padding rem(.2)
+        border-radius rem(.05)
+        margin-top rem(.3)
+        font-size rem(.25)
+        overflow hidden
+        .reply-title
+            color $primary
+        .reply-content
+            color #666
+            margin-left rem(.1)
+            line-height rem(.35)
+        .reply-time
+            textStyle(#888, .25)
+            text-align right
+            margin rem(.1) 0 0 0
+    .time
+        textStyle(#888, .24)
+        margin-top rem(.3)
+        text-align right
 </style>

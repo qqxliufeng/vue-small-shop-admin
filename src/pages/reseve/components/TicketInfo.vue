@@ -217,10 +217,11 @@ export default {
       it.raw = temp
     },
     releaseCount (count) {
-      if (count === -1 || count === -2) {
+      if (count === null) return ''
+      if (count === -1 || count === -2 || count === 0) {
         return ''
       } else {
-        return '余' + count + '张'
+        return '余' + Math.min(count, 99999)
       }
     },
     maxCount (count) {
