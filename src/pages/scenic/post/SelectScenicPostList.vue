@@ -1,6 +1,6 @@
 <template>
 <div class='s-p-list-container'>
-  <my-navi title="选择要分享的景区" :isFixed="true"></my-navi>
+  <my-navi title="选择要分享的商家" :isFixed="true"></my-navi>
   <div class="content">
     <ul v-if="scenicPostList">
       <li v-for="item of scenicPostList" :key="item.id" class="scenic-post-item-wrapper" @click="startScenicPost(item)">
@@ -18,7 +18,7 @@
       </li>
     </ul>
     <div v-else class="empty-list">
-      暂无景区海报
+      暂无商家海报
     </div>
   </div>
 </div>

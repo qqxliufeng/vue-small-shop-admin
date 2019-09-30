@@ -1,6 +1,6 @@
 <template>
 <div class='share-scenic-container'>
-  <my-navi title="分享景区" :isFixed="true"></my-navi>
+  <my-navi title="分享商家" :isFixed="true"></my-navi>
   <section v-if="info">
     <div class="content">
       <share-component>
@@ -15,19 +15,19 @@
           <share-code :logo="$utils.image.getImagePath($root.userInfo.state.avatar)" :url="wexin_url ? wexin_url : url"></share-code>
         </template>
         <template slot="shareAddress">
-          <span class="shop-address-title">景区链接:</span>
+          <span class="shop-address-title">商家链接:</span>
           <!-- <span class="shop-address">{{url}}</span> -->
           <textarea class="shop-address" :value="wexin_url ? wexin_url : url" rows="2"></textarea>
         </template>
         <template slot="otherInfo">
           <div class="other-info-wrapper">
-            <p class="other-info-title">所含门票：</p>
+            <p class="other-info-title">所含商品：</p>
             <div class="other-info-content">
               <ul>
                 <li v-for="(item, index) of info.goods_name" :key="index" class="goods-name">{{item.goods_name}}</li>
               </ul>
             </div>
-            <p class="other-info-bottom" v-if="info.store_name">以上门票由{{info.store_name}}提供</p>
+            <p class="other-info-bottom" v-if="info.store_name">以上商品由{{info.store_name}}提供</p>
           </div>
         </template>
       </share-component>

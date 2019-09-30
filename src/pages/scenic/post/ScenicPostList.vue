@@ -8,8 +8,8 @@
       </div> -->
       <div class="radio-container">
         <el-radio-group size="medium" v-model="selectType" @change="change">
-          <el-radio-button label="1">景区海报</el-radio-button>
-          <el-radio-button label="2">门票海报</el-radio-button>
+          <el-radio-button label="1">商家海报</el-radio-button>
+          <el-radio-button label="2">商品海报</el-radio-button>
         </el-radio-group>
       </div>
       <ul v-if="scenicPostList">

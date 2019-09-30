@@ -1,6 +1,6 @@
 <template>
 <div class='share-ticket-container'>
-  <my-navi title="分享门票" :isFixed="true"></my-navi>
+  <my-navi title="分享商品" :isFixed="true"></my-navi>
   <div class="content" v-if="info">
     <share-component>
       <template slot="shareTip">
@@ -14,7 +14,7 @@
         <share-code :logo="$utils.image.getImagePath($root.userInfo.state.avatar)" :url="wexin_url ? wexin_url: url"></share-code>
       </template>
       <template slot="shareAddress">
-        <span class="shop-address-title">门票链接:</span>
+        <span class="shop-address-title">商品链接:</span>
         <!-- <span class="shop-address">{{url}}</span> -->
         <textarea class="shop-address" :value="wexin_url ? wexin_url: url" rows="2"></textarea>
       </template>
