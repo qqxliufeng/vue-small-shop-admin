@@ -2,12 +2,12 @@
   <div class='s-shop-container' v-if="info">
     <my-navi title="分享店铺" :isFixed="true"></my-navi>
     <div class="content">
-        <share-component>
+        <share-component ref="share">
           <template slot="shareTip">
             <share-tip></share-tip>
           </template>
           <template slot="shareHeader">
-            <img class="share-image" :src="image" alt="">
+            <img class="share-image" :src="image" alt="" id="shareImage">
           </template>
           <template slot="shareInfo">
             <share-code :logo="logo" :url="wexin_url ? wexin_url : url"></share-code>
@@ -60,6 +60,9 @@ export default {
       }, '', (data) => {
         this.info = data.data
         this.wexin_url = this.info.wexin_url
+        this.$nextTick(() => {
+          this.$refs.share.createPost()
+        })
       }, (errorCode, error) => {
         this.$toast(error)
       })

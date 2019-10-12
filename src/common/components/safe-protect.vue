@@ -1,8 +1,8 @@
 <template>
   <el-card :body-style="{padding: 0}">
       <div class="o-i-ticket-safe-container" @click="dialogVisible = true">
-        <p>消费保障</p>
         <div class="o-i-ticket-info-tag">
+            <span class="title">消费保障</span>
             <span><i class="iconfont">&#xe69e;</i> 入园保障</span>
             <span><i class="iconfont">&#xe69e;</i> 官方</span>
         </div>
@@ -56,8 +56,9 @@ export default {
         color $primary
     .o-i-ticket-info-tag
         overflow hidden
-        margin-top .2rem
-        line-height .27rem
+        line-height .32rem
+        .title
+            textStyle(#333, .3)
         & span
             float left
             color #333333

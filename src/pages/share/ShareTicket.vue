@@ -2,7 +2,7 @@
 <div class='share-ticket-container'>
   <my-navi title="分享商品" :isFixed="true"></my-navi>
   <div class="content" v-if="info">
-    <share-component>
+    <share-component ref="share">
       <template slot="shareTip">
         <share-tip></share-tip>
         <share-header-info :goods="info.goods"></share-header-info>
@@ -59,6 +59,9 @@ export default {
       }, '', (data) => {
         this.info = data.data
         this.wexin_url = this.info.wexin_url
+        this.$nextTick(() => {
+          this.$refs.share.createPost()
+        })
       }, (errorCode, error) => {
         this.$toast(error)
       })

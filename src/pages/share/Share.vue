@@ -64,6 +64,11 @@ export default {
       this.dialogTitle = '分享流程'
       this.showDialog = true
       this.postUrl = shareFlowImage
+    },
+    createPost () {
+      document.getElementsByClassName('share-image')[0].onload = () => {
+        this.savePost()
+      }
     }
   }
 }

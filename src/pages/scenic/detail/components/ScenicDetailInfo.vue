@@ -16,7 +16,6 @@
                     <span class="iconfont s-d-info-scenic-location-icon">&#xe850;</span>
                     <div class="s-d-info-scenic-location">
                         <p>{{scenicInfo.city}}</p>
-                        <p>{{scenicInfo.tel}}</p>
                     </div>
                     <a :href="'tel:' + scenicInfo.tel" class="iconfont s-d-info-scenic-phone">&#xe6a9;</a>
                 </div>
@@ -49,9 +48,9 @@ export default {
     position relative
     z-index 1
     .s-d-info-header-wrapper
-        padding rem(.3)
+        padding rem(.2)
         & div:nth-child(1)
-            margin-bottom rem(.2)
+            margin-bottom rem(.1)
             overflow hidden
             & span:nth-child(1)
                 float left
@@ -65,7 +64,7 @@ export default {
                 color #fff
                 padding 0 rem(.2)
         .s-d-info-header-tags-wrapper
-            padding-bottom rem(.3)
+            padding-bottom rem(.1)
             borderBottom()
             .s-d-info-tag
                 margin-right rem(.2)
@@ -74,7 +73,7 @@ export default {
                 float right
                 normalTextStyle(#888888, .25)
         .s-d-info-middle-wrapper
-            padding-top rem(.3)
+            padding-top rem(.1)
             overflow hidden
             .s-d-info-scenic-location-wrapper
                 margin-top rem(.3)
@@ -85,7 +84,7 @@ export default {
                 .s-d-info-scenic-location
                     flex 1
                 .s-d-info-scenic-phone
-                    textStyle($primary, .65)
+                    textStyle($primary, .5)
             .s-d-info-scenic-location-icon
                 font-size rem(.4)
                 margin-right rem(.2)

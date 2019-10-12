@@ -3,7 +3,7 @@
   <my-navi title="分享商家" :isFixed="true"></my-navi>
   <section v-if="info">
     <div class="content">
-      <share-component>
+      <share-component ref="share">
         <template slot="shareTip">
           <share-tip></share-tip>
           <share-header-info :goods="goods"></share-header-info>
@@ -80,6 +80,9 @@ export default {
         this.goods.max_price = this.info.max_price
         this.goods.min_price = this.info.min_price
         this.goods.price = Number(this.info.min_price) === 0 ? this.goods.max_price : this.goods.min_price + '~' + this.goods.max_price
+        this.$nextTick(() => {
+          this.$refs.share.createPost()
+        })
       }, (errorCode, error) => {
         this.$toast(error)
       })
