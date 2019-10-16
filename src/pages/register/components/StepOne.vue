@@ -2,36 +2,16 @@
   <div class='r-s-one-container'>
     <p class="title">请填写您的身份信息</p>
     <div class="info-wrapper">
-      <span class="info-title">手机号：</span>
       <div class="info-content-wrapper">
         <input type="text" class="input" placeholder="请输入手机号" v-model="registerInfo.phone" maxlength="11">
       </div>
     </div>
     <div class="info-wrapper">
-      <span class="info-title">验证码：</span>
       <div class="info-code-wrapper">
         <input type="text" class="input" placeholder="请输入验证码" v-model="registerInfo.verifyCode">
         <button class="bt-code" @click="getCode" :disabled="disabled">{{countDownText}}</button>
       </div>
     </div>
-    <div class="info-wrapper">
-      <span class="info-title">姓&nbsp;&nbsp;&nbsp;&nbsp;名：</span>
-      <div class="info-content-wrapper">
-        <input type="text" class="input" placeholder="请输入真实姓名" v-model="registerInfo.realName" maxlength="6">
-      </div>
-    </div>
-    <!-- <div class="info-wrapper">
-      <span class="info-title">密码：</span>
-      <div class="info-content-wrapper">
-        <input type="password" class="input" placeholder="请输入密码" v-model="registerInfo.password" maxlength="16">
-      </div>
-    </div>
-    <div class="info-wrapper">
-      <span class="info-title">确认密码：</span>
-      <div class="info-content-wrapper">
-        <input type="password" class="input" placeholder="请再次输入密码" v-model="registerInfo.confirmPassword">
-      </div>
-    </div> -->
     <el-button class="next-step" @click="nextStep">下一步</el-button>
     <el-dialog :visible.sync="showVerifyDialog" width="80%" :modal="false">
         <slide-verify
@@ -66,7 +46,7 @@ export default {
         shopArea: '',
         shopPhone: ''
       },
-      countDownText: '获取验证码',
+      countDownText: '获取验证码', // 获取验证码
       disabled: false,
       verifyCode: '',
       width: document.body.clientWidth * 0.8 - 40,
@@ -89,15 +69,6 @@ export default {
       }
       if (this.registerInfo.verifyCode !== this.verifyCode) {
         this.$toast('请输入正确的验证码')
-        return
-      }
-      if (!this.registerInfo.realName) {
-        this.$toast('请输入姓名')
-        return
-      }
-      const reg = new RegExp('[\\u4E00-\\u9FFF]+', 'g')
-      if (!reg.test(this.registerInfo.realName)) {
-        this.$toast('请输入中文名称')
         return
       }
       this.$router.replace({name: 'stepTwo'})
@@ -178,45 +149,44 @@ export default {
         display flex
         align-items center
         padding rem(.4) 0
-        .info-title
-            width 20%
-            textStyle(#333, .3)
-            & i
-                textStyle(#888, .25)
         .info-content-wrapper
-            width 80%
+            width 100%
             display flex
             justify-content space-between
+            border-bottom 1px solid #ccc
             .input
                 border-radius rem(.02)
                 background #fff
-                border 1px solid #EDEEEE
                 padding rem(.2)
                 padding rem(.1)
-                font-size 12px
+                font-size 14px
                 flex 1
           .info-code-wrapper
-                width 80%
+                width 100%
+                border-bottom 1px solid #ccc
                 display flex
-                justify-content space-between
                 .input
                     border-radius rem(.02)
                     background #fff
-                    border 1px solid #EDEEEE
                     padding rem(.1)
-                    font-size 12px
-                    flex 2
-                .bt-code
-                    font-size 12px
-                    padding 0 rem(.1)
-                    background $primary
-                    border-radius rem(.1)
-                    color #fff
-                    margin-left rem(.2)
-                    white-space nowrap
-                    // min-width rem(1.5)
-                    // width 100%
+                    font-size 14px
+                    display inline-block
                     flex 1
+                .bt-code
+                    font-size 14px
+                    padding 0 rem(.1)
+                    color $primary
+                    border-radius rem(.1)
+                    background-color #fff
+                    display inline-block
+                    width 40%
+                    &::before
+                        content '|'
+                        display inline-block
+                        width 2px
+                        color $primary
+                        height 100%
+                        margin-right rem(.5)
     .next-step
         background $primary
         color #fff

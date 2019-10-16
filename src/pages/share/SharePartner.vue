@@ -1,7 +1,7 @@
 <template>
 <div class='share-ticket-container'>
   <div class="content" v-if="info">
-    <share-component>
+    <share-component ref="share">
       <template slot="shareTip">
         <share-tip></share-tip>
       </template>
@@ -28,14 +28,9 @@
         </div>
       </template>
       <template slot="shareInfo">
-        <!-- <div class="info-content-wrapper">
-          加盟须知：
-          这是一个很重要的事这是一个很重要的事这是一个很重要的事这是一个很重要的事这是一个很重要的事这是一个很重要的事这是一个很重要的事这是一个很重要的事这是一个很重要的事
-        </div> -->
       </template>
       <template slot="shareAddress">
         <span class="shop-address-title">注册链接:</span>
-        <!-- <span class="shop-address">{{$urlPath.getShareRegisterUrl($root.userInfo.state.id)}}</span> -->
         <textarea class="shop-address" type="text" :value="wexin_url ? wexin_url : $urlPath.getShareRegisterUrl($root.userInfo.state.id)"></textarea>
       </template>
     </share-component>
@@ -85,6 +80,9 @@ export default {
       (data) => {
         this.info = data.data
         this.wexin_url = this.info.wexin_url
+        this.$nextTick(() => {
+          this.$refs.share.savePost()
+        })
       }, (errorCode, error) => {
         this.$toast(error)
       })

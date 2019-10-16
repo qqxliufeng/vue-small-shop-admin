@@ -6,25 +6,17 @@
       <p class="info-title">店铺名称：</p>
     </div>
     <div class="info-content-wrapper">
-      <input type="text" class="input" placeholder="请输入店铺名称" v-model="registerInfo.shopName" maxlength="8">
-    </div>
-  </div>
-  <!-- <div class="info-wrapper">
-    <div class="info-item-wrapper">
-      <p class="info-title">所在区域：</p>
-    </div>
-    <div class="info-area-wrapper" @click="selectArea">
-      {{city ? city : '选择所在地区'}}<span class="el-icon-arrow-right"></span>
+      <input type="text" class="input" placeholder="给自己店铺起个好听的名称吧（8字以内）" v-model="registerInfo.shopName" maxlength="8">
     </div>
   </div>
   <div class="info-wrapper">
     <div class="info-item-wrapper">
-      <p class="info-title">客服电话：</p>
+    <p class="info-title">姓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名：</p>
     </div>
     <div class="info-content-wrapper">
-      <input type="text" class="input" placeholder="请输入客服电话"  v-model="registerInfo.shopPhone" maxlength="11">
+      <input type="text" class="input" placeholder="请输入真实姓名" v-model="registerInfo.realName" maxlength="6">
     </div>
-  </div> -->
+    </div>
   <el-button class="next-step" @click="submit">提交</el-button>
 </div>
 </template>
@@ -52,18 +44,15 @@ export default {
         this.$toast('店铺名称最多8位')
         return
       }
-      // if (!this.registerInfo.shopArea) {
-      //   this.$toast('请输入所在区域')
-      //   return
-      // }
-      // if (!this.registerInfo.shopPhone) {
-      //   this.$toast('请输入客服电话')
-      //   return
-      // }
-      // if (!this.$utils.validator.isPhone(this.registerInfo.shopPhone)) {
-      //   this.$toast('请输入合法的客服电话')
-      //   return
-      // }
+      if (!this.registerInfo.realName) {
+        this.$toast('请输入真实姓名')
+        return
+      }
+      const reg = new RegExp('[\\u4E00-\\u9FFF]+', 'g')
+      if (!reg.test(this.registerInfo.realName)) {
+        this.$toast('请输入中文名称')
+        return
+      }
       if (!this.registerInfo.parentId) {
         this.$toast('注册失败，请重试…')
         return

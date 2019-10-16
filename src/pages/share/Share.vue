@@ -13,8 +13,8 @@
         <slot name="otherInfo"></slot>
         <div class="seperator-line"></div>
         <div class="post-action-wrapper">
-          <span class="action action1" @click="savePost">保存图片</span>
-          <span class="action action2" @click="sharePost">分享图片</span>
+          <span class="action action1" @click="savePost">分享图片</span>
+          <span class="action action2" @click="sharePost">如何分享</span>
         </div>
         <el-dialog :visible.sync="showDialog" width="90%" :modal="false" :title="dialogTitle" center>
               <div class="share-img-post-wrapper">

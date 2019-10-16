@@ -4,6 +4,7 @@ let storeId = '1'
 let registerInfo = null
 let canShareTicket = false
 let canFloorBuyTicket = false
+let numberTask = null
 try {
   if (localStorage) {
     token = localStorage.getItem('token')
@@ -11,6 +12,7 @@ try {
     storeId = localStorage.getItem('storeId')
     canShareTicket = sessionStorage.getItem('canShareTicket')
     canFloorBuyTicket = sessionStorage.getItem('canFloorBuyTicket')
+    numberTask = JSON.parse(sessionStorage.getItem('numberTask'))
   }
 } catch (error) {
   console.log(error)
@@ -23,6 +25,7 @@ export default {
   registerInfo,
   canShareTicket,
   canFloorBuyTicket,
+  numberTask,
   saveCanShareTicket (enable) {
     this.canShareTicket = enable
     sessionStorage.setItem('canShareTicket', enable)
@@ -38,6 +41,10 @@ export default {
     } catch (error) {
       console.log(error)
     }
+  },
+  setUserInfoTask (numberTask) {
+    this.numberTask = numberTask
+    sessionStorage.setItem('numberTask', JSON.stringify(numberTask))
   },
   saveSallerInfo (identity, storeId) {
     this.identity = identity

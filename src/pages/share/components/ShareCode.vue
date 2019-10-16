@@ -4,15 +4,17 @@
           <img src="../../../assets/images/img_logo_icon.png">
       </div>
       <div class="post-info">
-        <p><span class="iconfont icon">&#xe736;</span>{{$root.userInfo.state.name}}</p>
+        <!-- <p><span class="iconfont icon">&#xe736;</span>{{$root.userInfo.state.name}}</p>
         <p><span class="iconfont icon">&#xe613;</span>{{$root.userInfo.state.linkname}}</p>
-        <p><span class="iconfont icon">&#xe615;</span>{{$root.userInfo.state.id}}</p>
+        <p><span class="iconfont icon">&#xe615;</span>{{$root.userInfo.state.id}}</p> -->
+        <p class="tip">{{$isWeiXin ? '微信识别二维码' : '长按识别二维码'}}</p>
+        <p class="tip tip1">即可购票</p>
       </div>
       <div class="post-code-wrapper">
         <div class="post-code">
           <canvas ref="codeCanvas" class="code-canvas"></canvas>
         </div>
-        <p>{{ $isWeiXin ? '微&nbsp;信&nbsp;扫&nbsp;码' : '长&nbsp;按&nbsp;识&nbsp;别'}}</p>
+        <!-- <p>{{ $isWeiXin ? '微&nbsp;信&nbsp;扫&nbsp;码' : '长&nbsp;按&nbsp;识&nbsp;别'}}</p> -->
       </div>
   </div>
 </template>
@@ -50,10 +52,10 @@ export default {
     display flex
     width 100%
     box-sizing border-box
-    padding rem(.15)
+    padding rem(.15) rem(.5)
     .post-logo
         width rem(1.5)
-        height rem(1.6)
+        height rem(1.5)
         margin-top rem(.15)
         display flex
         justify-content center
@@ -67,15 +69,21 @@ export default {
     .post-info
         flex 1
         display flex
-        justify-content space-around
+        justify-content center
         flex-direction column
         color #333
         font-size rem(.3)
-        margin-left rem(.2)
         .icon
             color #EEA53A
             font-size rem(.35)
             margin-right rem(.1)
+        .tip
+            text-align center
+            font-size rem(.32)
+        .tip1
+            font-size rem(.5)
+            font-weight bold
+            margin-top rem(.2)
     .post-code-wrapper
         text-align center
         width rem(1.8)
@@ -83,8 +91,8 @@ export default {
         .post-code
             text-align center
             .code-canvas
-                width rem(1.6) !important
-                height rem(1.6) !important
+                width rem(1.8) !important
+                height rem(1.8) !important
         & p
             color red
             font-size rem(.25)

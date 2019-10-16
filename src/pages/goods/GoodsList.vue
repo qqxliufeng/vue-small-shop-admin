@@ -73,7 +73,7 @@ export default {
   },
   computed: {
     isCanShare () {
-      return Boolean(this.$root.state.canShareTicket)
+      return this.$root.state.canShareTicket === '1'
     }
   },
   methods: {

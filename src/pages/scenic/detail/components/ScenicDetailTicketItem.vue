@@ -23,7 +23,7 @@
                 </div>
                 <div class="s-d-hot-item-info-info-action">
                     <el-button type="primary" size="mini" @click="itemClickShare(item)" v-if="isCanShare">分享:￥{{item.price}}</el-button>
-                    <el-button type="primary" size="mini" @click="itemClickOrder(item)" class="button" v-if="isCanReseve">立即预定</el-button>
+                    <el-button type="primary" size="mini" @click="itemClickOrder(item)" class="button">立即预定</el-button>
                 </div>
             </div>
         </div>
@@ -44,22 +44,35 @@ export default {
   },
   computed: {
     isCanShare () {
-      return Boolean(this.$root.state.canShareTicket)
+      return this.$root.state.canShareTicket === '1'
     },
     isCanReseve () {
       // 判断是不是可以购买此产品
-      return Boolean(this.$root.state.canFloorBuyTicket)
+      return this.$root.state.canFloorBuyTicket === '1'
     }
   },
   data () {
     return {
-      qianggouIcon
+      qianggouIcon,
+      numberTask: this.$root.state.numberTask
     }
   },
   methods: {
     itemClickOrder (item) {
       if (Number(this.item.buy_status) === 1) {
-        this.$emit('reseve-detail', item)
+        if (this.isCanReseve) {
+          this.$emit('reseve-detail', item)
+        } else {
+          if (this.numberTask) {
+            if (Number(this.numberTask.floorBuyNumber) > 0) {
+              this.$toast('您需要完成' + this.numberTask.floorBuyNumber + '单任务才能底价购买')
+            } else {
+              this.$emit('reseve-detail', item)
+            }
+          } else {
+            this.$emit('reseve-detail', item)
+          }
+        }
       } else {
         this.$toast('此商品只能用于分享')
       }

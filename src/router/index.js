@@ -134,7 +134,7 @@ export default new Router({
       component: AddPartner
     },
     {
-      path: '/artener',
+      path: '/partener',
       name: 'partener',
       component: () => import('@/pages/partner/Partener')
     },

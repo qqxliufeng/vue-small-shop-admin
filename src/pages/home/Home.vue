@@ -174,8 +174,12 @@ export default {
           canShareTicket = authSet && authSet.indexOf('1') !== -1 // 是不是能分享图片
           canFloorBuyTicket = authSet && authSet.indexOf('2') !== -1 // 是不是能低价购买
         }
-        this.$root.state.saveCanShareTicket(canShareTicket)
-        this.$root.state.saveCanFloorBuyTicket(canFloorBuyTicket)
+        this.$root.state.setUserInfoTask({
+          floorBuyNumber: this.amount.lower_level_buy_number,
+          shareOrderNumber: this.amount.photo_sharing_order_number
+        })
+        this.$root.state.saveCanShareTicket(canShareTicket ? '1' : '0')
+        this.$root.state.saveCanFloorBuyTicket(canFloorBuyTicket ? '1' : '0')
         // 当有红包活动的时候  先要进行展示红包活动，若是没有红包的话并且是从登录或者注册页面跳转来的，则直接跳转到商品列表
         if (!this.showRedPacket && (this.from.name === 'login' || this.from.name === 'stepThree' || this.from.path === '/registerseller')) {
           this.$router.push({name: 'goodsList'})
