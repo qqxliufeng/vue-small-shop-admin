@@ -2,7 +2,7 @@
 <div class='p-list-container'>
   <my-navi :title="countTitle" :isFixed="true"></my-navi>
   <div class="content" v-if="partners">
-    <el-collapse value="0">
+    <el-collapse v-model="activeNames" accordion>
       <el-collapse-item :name="index" v-for="(title, index) of titles" :key="index">
         <template slot="title">
           <div class="item-title-wrapper">
@@ -12,9 +12,15 @@
         <ul class="list-wrapper">
           <li v-for="(item, index) of partners['partners'][title]" :key="index" class="item-wrapper">
             <img v-lazy="$utils.image.getImagePath(item.avatar)" class="item-face-icon" :key="item.avatar">
-            <div>
-              <p class="item-name">{{item.linkname}}</p>
-              <p class="item-phone">{{item.phone}}</p>
+            <div style="flex: 1;border-bottom: 1px solid #f5f5f5">
+              <div class="item-name">
+                <span>{{item.linkname}}</span>
+                <span class="register-phone">手机号：{{item.phone}}</span>
+              </div>
+              <p class="item-phone">
+                <span class="register-id">会员号：{{item.id}}</span>
+                <span class="register-time">注册时间：{{item.create_time}}</span>
+              </p>
             </div>
           </li>
         </ul>
@@ -32,7 +38,8 @@ export default {
   data () {
     return {
       partners: null,
-      errorTip: null
+      errorTip: null,
+      activeNames: [0]
     }
   },
   methods: {
@@ -42,7 +49,6 @@ export default {
         this.partners = data.data
       }, (errorCode, error) => {
         this.errorTip = error
-        this.$toast(error)
       })
     }
   },
@@ -72,8 +78,6 @@ export default {
             .item-wrapper
                 display flex
                 padding rem(.15)
-                // padding rem(.2) 0
-                // border-bottom 1px solid #f5f5f5
                 .item-face-icon
                     border-radius 50%
                     width rem(1)
@@ -82,8 +86,19 @@ export default {
                     margin-right rem(.2)
                 .item-name
                     textStyle(#333, .3)
+                    display flex
+                    justify-content space-between
+                    align-items center
+                    .register-phone
+                      textStyle(#333, .28)
                 .item-phone
-                    textStyle(#888, .28)
+                    display flex
+                    justify-content space-between
+                    align-items center
+                    .register-id
+                      textStyle(#888, .28)
+                    .register-time
+                      textStyle(#888, .25)
     .error-tip
         display flex
         height 100vh

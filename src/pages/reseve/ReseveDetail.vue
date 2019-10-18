@@ -7,7 +7,7 @@
             <ticket-user-info :contacts="contacts" :touristCount="touristCount" ref="userInfo" v-if="ticketInfo.goods && ticketInfo.goods.play_info === 2 && touristCount > 1" :visitorInfo="ticketInfo.goods.visitor_info"></ticket-user-info>
             <div class="r-d-detail-pay-action-wrapper">
                 <span class="r-d-pay-action-price">总价：<i>￥{{totalPrice}}</i></span>
-                <span class="r-d-pay-action-pay" :style="{'background' : totalPrice === 0 ? '#cccccc' : '#E18234', 'pointer-events': totalPrice === 0 ? 'none' : 'auto'}" @click="reserve">立即预定</span>
+                <span class="r-d-pay-action-pay" :style="{'background' : totalPrice === 0 ? '#cccccc' : '#E18234', 'pointer-events': totalPrice === 0 ? 'none' : 'auto'}" @click="reserve">提交订单</span>
             </div>
             <div class="release-time" v-if="isShowCountDown">距离开售剩余时间：
               <count-down :time="releaseTime * 1000" @end="countDownEnd">

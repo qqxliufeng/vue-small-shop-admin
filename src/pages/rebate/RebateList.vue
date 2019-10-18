@@ -11,9 +11,6 @@
         <el-tab-pane label="伙伴待返利" class="c-tabs-item" name="third" lazy v-if="Number($root.userInfo.state.rank) < 3">
            <rebate-list-item state="3"></rebate-list-item>
         </el-tab-pane>
-        <el-tab-pane label="未付款" class="c-tabs-item" name="fourth" lazy>
-           <rebate-list-item state="4"></rebate-list-item>
-        </el-tab-pane>
     </el-tabs>
   </div>
 </template>
@@ -24,10 +21,6 @@ export default {
   name: 'rebateList',
   components: {
     RebateListItem
-  },
-  data () {
-    return {
-    }
   }
 }
 </script>

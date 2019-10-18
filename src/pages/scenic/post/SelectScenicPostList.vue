@@ -8,7 +8,6 @@
           <img class="item-image" v-lazy="$utils.image.getImagePath(item.poster_image)" :key="item.poster_image">
           <div class="item-info-wrapper">
             <p class="item-title">{{item.scenic_name}}</p>
-            <p class="item-lvxingshe">{{item.store_name ? item.store_name : '暂无'}}</p>
             <div class="item-make-money">
               <span class="fen">分</span>
               <span class="price">￥{{makeMoney(item)}}</span>

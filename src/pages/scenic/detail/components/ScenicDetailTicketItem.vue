@@ -66,6 +66,9 @@ export default {
           if (this.numberTask) {
             if (Number(this.numberTask.floorBuyNumber) > 0) {
               this.$toast('您需要完成' + this.numberTask.floorBuyNumber + '单任务才能底价购买')
+              this.$nextTick(() => {
+                this.$router.push({name: 'scenicPostList'})
+              })
             } else {
               this.$emit('reseve-detail', item)
             }

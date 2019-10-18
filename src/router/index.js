@@ -81,7 +81,10 @@ export default new Router({
     {
       path: '/scenicpostlist',
       name: 'scenicPostList',
-      component: ScenicPostList
+      component: ScenicPostList,
+      meta: {
+        keepAlive: true
+      }
     },
     {
       path: '/selectscenicpostList',

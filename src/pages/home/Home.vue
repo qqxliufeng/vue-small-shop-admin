@@ -48,18 +48,18 @@ export default {
         makeMoney: {
           title: '我要赚钱',
           menus: [
-            {
-              icon: '&#xe7d6;',
-              iconColor: '#EC8E8B',
-              title: '分享店铺',
-              callBack: () => {
-                this.$router.push({name: 'shareShop'})
-              }
-            },
+            // {
+            //   icon: '&#xe7d6;',
+            //   iconColor: '#EC8E8B',
+            //   title: '分享店铺',
+            //   callBack: () => {
+            //     this.$router.push({name: 'shareShop'})
+            //   }
+            // },
             {
               icon: '&#xe652;',
               iconColor: '#EC8E8B',
-              title: '分享海报',
+              title: '我要分享',
               callBack: () => {
                 this.$router.push({name: 'scenicPostList'})
               }
@@ -182,7 +182,7 @@ export default {
         this.$root.state.saveCanFloorBuyTicket(canFloorBuyTicket ? '1' : '0')
         // 当有红包活动的时候  先要进行展示红包活动，若是没有红包的话并且是从登录或者注册页面跳转来的，则直接跳转到商品列表
         if (!this.showRedPacket && (this.from.name === 'login' || this.from.name === 'stepThree' || this.from.path === '/registerseller')) {
-          this.$router.push({name: 'goodsList'})
+          this.$router.push({name: 'scenicPostList'})
         }
         // end************根据接口返回来的数据判断是不是有对应的权限************
       }, (errorCode, error) => {

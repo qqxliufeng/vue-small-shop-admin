@@ -1,6 +1,5 @@
 <template>
   <div class='s-shop-container' v-if="info">
-    <my-navi title="分享店铺" :isFixed="true"></my-navi>
     <div class="content">
         <share-component ref="share">
           <template slot="shareTip">
@@ -80,7 +79,6 @@ export default {
     overflow scroll
     .content
         overflow-y scroll
-        padding-top $headerHeight
         .share-image
             width 100%
             background #f5f5f5

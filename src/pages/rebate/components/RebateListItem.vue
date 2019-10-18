@@ -10,7 +10,7 @@
                   <p class="title">{{item.ord_product_name || '暂无'}}</p>
                   <p class="vip">会员号：{{item.ord_uid || '暂无'}}</p>
                   <p class="num">购买数量：{{item.number || 0}}张</p>
-                  <p class="time">消费时间：{{item.create_time || '暂无'}}</p>
+                  <p class="time">下单时间：{{item.create_time || '暂无'}}</p>
                 </div>
               </div>
               <div class="status-wrapper">
