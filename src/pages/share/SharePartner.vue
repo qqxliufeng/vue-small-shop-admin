@@ -6,28 +6,10 @@
         <share-tip></share-tip>
       </template>
       <template slot="shareHeader">
-        <div class="header-content-wrapper">
-          <div class="header-content">
-            <div class="content-title-wrapper">
-              <img :src="$utils.image.getImagePath($root.userInfo.state.avatar)" class="item-face-icon">
-              <div class="item-info">
-                <p class="item-name">{{$root.userInfo.state.name}}</p>
-                <p class="item-phone">邀请您成为他的分销商</p>
-              </div>
-            </div>
-            <div class="separator-wrapper">
-              <span class="left"></span>
-              <span class="center"></span>
-              <span class="right"></span>
-            </div>
-            <div class="code-wrapper">
-              <canvas class="code" ref="qrcode"/>
-              <p class="flag">长按识别二维码</p>
-            </div>
-          </div>
-        </div>
+        <img class="share-image" src="../../assets/images/img_share_register_bg.jpg">
       </template>
       <template slot="shareInfo">
+          <share-code :url="wexin_url ? wexin_url : url" tip="即可加盟"></share-code>
       </template>
       <template slot="shareAddress">
         <span class="shop-address-title">注册链接:</span>
@@ -39,14 +21,15 @@
 </template>
 
 <script>
-import QRCode from 'qrcode'
 import ShareComponent from './Share'
 import ShareTip from './components/ShareTip'
+import ShareCode from './components/ShareCode'
 export default {
   name: 'shareTicket',
   components: {
     ShareComponent,
-    ShareTip
+    ShareTip,
+    ShareCode
   },
   data () {
     return {
@@ -54,25 +37,12 @@ export default {
       wexin_url: null
     }
   },
-  watch: {
-    info (newVal, oldVal) {
-      if (newVal) {
-        this.qrCode()
-      }
+  computed: {
+    url () {
+      return this.$urlPath.getShareRegisterUrl(this.$root.userInfo.state.id)
     }
   },
   methods: {
-    qrCode () {
-      this.$nextTick(() => {
-        QRCode.toCanvas(this.$refs.qrcode, this.wexin_url ? this.wexin_url : this.$urlPath.getShareRegisterUrl(this.$root.userInfo.state.id), error => {
-          if (error) {
-            console.log(error)
-          } else {
-            console.log('success')
-          }
-        })
-      })
-    },
     getData () {
       this.$http(this.$urlPath.shareReigsterUrl, {
         isWeiXin: this.$isWeiXin ? '1' : '0'
@@ -98,8 +68,10 @@ export default {
 @import '~styles/mixin.styl'
 .share-ticket-container
     .content
+        .share-image
+            width 100%
+            height 100%
         .header-content-wrapper
-            background $primary
             height 100%
             overflow hidden
             .header-content
@@ -164,17 +136,6 @@ export default {
                           height 42vw!important
                       .flag
                           textStyle($orangeColor, .28)
-      .info-content-wrapper
-          background $primary
-          height 100%
-          width 100%
-          textStyle(#fff, .28)
-          line-height rem(.35)
-          padding-left rem(.3)
-          padding-right rem(.3)
-          padding-bottom rem(.3)
-          margin-top rem(-1.6)
-          box-sizing border-box
     .loading-fail
         margin-top rem(1)
         text-align center

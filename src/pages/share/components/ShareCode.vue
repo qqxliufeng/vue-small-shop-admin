@@ -4,17 +4,13 @@
           <img src="../../../assets/images/img_logo_icon.png">
       </div>
       <div class="post-info">
-        <!-- <p><span class="iconfont icon">&#xe736;</span>{{$root.userInfo.state.name}}</p>
-        <p><span class="iconfont icon">&#xe613;</span>{{$root.userInfo.state.linkname}}</p>
-        <p><span class="iconfont icon">&#xe615;</span>{{$root.userInfo.state.id}}</p> -->
         <p class="tip">{{$isWeiXin ? '微信识别二维码' : '长按识别二维码'}}</p>
-        <p class="tip tip1">即可购票</p>
+        <p class="tip tip1">{{tip}}</p>
       </div>
       <div class="post-code-wrapper">
         <div class="post-code">
           <canvas ref="codeCanvas" class="code-canvas"></canvas>
         </div>
-        <!-- <p>{{ $isWeiXin ? '微&nbsp;信&nbsp;扫&nbsp;码' : '长&nbsp;按&nbsp;识&nbsp;别'}}</p> -->
       </div>
   </div>
 </template>
@@ -25,7 +21,11 @@ export default {
   name: 'shareCode',
   props: {
     logo: String,
-    url: String
+    url: String,
+    tip: {
+      type: String,
+      default: '即可购票'
+    }
   },
   components: {},
   data () {
