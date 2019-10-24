@@ -3,7 +3,7 @@
     <div class="money-flag">￥</div>
     <div class="money-info">
       <p class="sales" v-if="sales > 0">已售：<i>{{sales}}</i>&nbsp;张</p>
-      <p class="money">分享佣金：<i>￥{{goods.price}}</i></p>
+      <p class="money">分享佣金<i>{{goods.price}}</i></p>
     </div>
   </div>
 </template>
@@ -12,7 +12,6 @@
 
 export default {
   name: 'shareHeaderInfo',
-  components: {},
   props: {
     goods: Object
   },

@@ -270,6 +270,8 @@ export default {
             margin-right .2rem
         .p-i-input
             text-align right
+            flex 1
+            margin-left rem(.2)
     .image-wrapper
         padding 0 rem(.2)
         & > img

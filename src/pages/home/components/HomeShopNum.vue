@@ -1,6 +1,6 @@
 <template>
   <div class='home-shop-num-container'>
-    <span>{{title}}</span><span>{{num}}</span>
+    <span>{{title}}</span><span class="num">{{num}}</span>
   </div>
 </template>
 
@@ -20,4 +20,7 @@ export default {
 .home-shop-num-container
     textStyle(#888, .25)
     padding rem(.1) 0
+    .num
+        textStyle($orangeColor, .28)
+        font-weight bold
 </style>

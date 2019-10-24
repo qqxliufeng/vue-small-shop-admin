@@ -23,7 +23,7 @@
                 </div>
                 <div class="s-d-hot-item-info-info-action">
                     <el-button type="primary" size="mini" @click="itemClickShare(item)" v-if="isCanShare">分享:￥{{item.price}}</el-button>
-                    <el-button type="primary" size="mini" @click="itemClickOrder(item)" class="button">立即预定</el-button>
+                    <el-button type="primary" size="mini" @click="itemClickOrder(item)" class="button">立即预订</el-button>
                 </div>
             </div>
         </div>
@@ -65,10 +65,11 @@ export default {
         } else {
           if (this.numberTask) {
             if (Number(this.numberTask.floorBuyNumber) > 0) {
-              this.$toast('您需要完成' + this.numberTask.floorBuyNumber + '单任务才能底价购买')
-              this.$nextTick(() => {
-                this.$router.push({name: 'scenicPostList'})
-              })
+              // this.$toast('您需要完成' + this.numberTask.floorBuyNumber + '单任务才能底价购买')
+              // this.$nextTick(() => {
+              //   this.$router.push({name: 'scenicPostList'})
+              // })
+              this.$emit('show-tip-dialog', {number: this.numberTask.floorBuyNumber})
             } else {
               this.$emit('reseve-detail', item)
             }

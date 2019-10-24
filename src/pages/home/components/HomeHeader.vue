@@ -7,7 +7,11 @@
       </div>
       <span class="nick-name">{{$root.userInfo.state.name}}</span>
       <home-shop-num title="会 员 号：" :num="Number($root.userInfo.state.id)"></home-shop-num>
-      <home-shop-num title="店铺粉丝：" :num="amount ? amount.user_num : 0"></home-shop-num>
+      <div class="num-wraper">
+        <home-shop-num title="店铺粉丝：" :num="amount ? amount.user_num : 0"></home-shop-num>
+        <div style="color:#ccc">|</div>
+        <home-shop-num title="今日新增：" :num="amount ? amount.today_add : 0"></home-shop-num>
+      </div>
       <div class="other-money-wrapper">
         <div class="money-info-wrapper" @click="accountRelease">
           <p class="money-title">账户余额</p>
@@ -109,11 +113,17 @@ export default {
             normalTextStyle(#333, .32)
         .nick-vip-no
             normalTextStyle(#888, .25)
+        .num-wraper
+            display flex
+            justify-content space-around
+            align-items center
+            width 100%
+            margin-top rem(.2)
         .other-money-wrapper
             font-size rem(.3)
             display flex
             flex-direction row
-            margin-top rem(.5)
+            margin-top rem(.2)
             width 100%
             .money-info-wrapper
                 flex 1

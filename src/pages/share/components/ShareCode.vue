@@ -6,6 +6,7 @@
       <div class="post-info">
         <p class="tip">{{$isWeiXin ? '微信识别二维码' : '长按识别二维码'}}</p>
         <p class="tip tip1">{{tip}}</p>
+        <p class="tip tip2">分销号：{{$root.userInfo.state.id}}</p>
       </div>
       <div class="post-code-wrapper">
         <div class="post-code">
@@ -84,6 +85,10 @@ export default {
             font-size rem(.5)
             font-weight bold
             margin-top rem(.2)
+        .tip2
+            text-align center
+            margin-top rem(.1)
+            textStyle(#ddd, .25)
     .post-code-wrapper
         text-align center
         width rem(1.8)

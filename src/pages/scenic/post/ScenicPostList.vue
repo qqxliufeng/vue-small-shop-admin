@@ -18,7 +18,7 @@
                     <p class="item-title">{{item.scenic_name}}</p>
                     <div class="item-make-money">
                       <span class="fen">分</span>
-                      <span class="price">￥{{makeMoney(item)}}</span>
+                      <span class="price">{{makeMoney(item)}}</span>
                     </div>
                   </div>
                 </el-card>
@@ -81,7 +81,7 @@ export default {
       if (Number(item.min_price) === 0) {
         return item.max_price
       }
-      return item.min_price + '~' + item.max_price
+      return '最高返:￥' + item.max_price
     },
     startScenicPost (item) {
       this.$router.push({name: 'shareScenic', query: {scenic_id: item.scenic_id, store_id: item.store_id}})
@@ -147,9 +147,11 @@ export default {
 @import '~styles/varibles.styl'
 @import '~styles/mixin.styl'
 .s-p-list-container
-    & >>> .el-tabs__header
-        margin 0
     .content
+        & >>> .el-tabs__header
+            margin 0
+            z-index 1
+            background-color #fff
         padding-top $headerHeight
         position relative
         .item-wrapper

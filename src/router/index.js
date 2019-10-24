@@ -370,6 +370,14 @@ export default new Router({
       path: '/activityrule',
       name: 'activityRule',
       component: () => import('@/pages/activity/ActivityRule')
+    },
+    {
+      path: '/shareflow',
+      name: 'shareFlow',
+      component: () => import('@/pages/share/ShareFlow'),
+      meta: {
+        keepAlive: true
+      }
     }
   ],
   scrollBehavior (to, from, saveTop) {

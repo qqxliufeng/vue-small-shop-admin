@@ -1,7 +1,7 @@
 <template>
     <div class='share-container'>
         <slot name="shareTip"></slot>
-        <div ref="post">
+        <div ref="post" style="position: relative">
             <div class="share-header">
                 <slot name="shareHeader"></slot>
             </div>
@@ -26,7 +26,6 @@
 </template>
 
 <script>
-import shareFlowImage from 'images/img_share_flow.png'
 import html2canvas from 'html2canvas'
 export default {
   name: 'shareComponent',
@@ -61,9 +60,10 @@ export default {
       })
     },
     sharePost () {
-      this.dialogTitle = '分享流程'
-      this.showDialog = true
-      this.postUrl = shareFlowImage
+      // this.dialogTitle = '分享流程'
+      // this.showDialog = true
+      // this.postUrl = shareFlowImage
+      this.$router.push({name: 'shareFlow'})
     },
     createPost () {
       document.getElementsByClassName('share-image')[0].onload = () => {
@@ -84,6 +84,19 @@ export default {
     font-size rem(.28)
 .share-container
     overflow-y scroll
+    position relative
+    .store-id
+        position absolute
+        top rem(.2)
+        left 0
+        background-color #000
+        opacity .5
+        color #fff
+        border-top-right-radius rem(.3)
+        border-bottom-right-radius rem(.3)
+        padding rem(.1) rem(.2)
+        text-align center
+        z-index 999
     .share-header
         width 100%
         height 117vw

@@ -2,7 +2,7 @@
     <el-card :body-style="{padding: 0}" class="s-d-t-type-container" v-if="typeGoodsList && typeGoodsList.length > 0">
         <div class="s-d-t-type-title-wrapper" :class="{'tab-fixed' : isFixed}"  ref="type" @click="positionType">
           <span class="el-icon-tickets icon"></span>
-          <span>门票类型</span>
+          <span>优惠信息</span>
         </div>
         <div id="tab" v-show="isFixed" style="height: 1.72rem"></div>
         <div>
@@ -13,7 +13,7 @@
              </swiper>
              <ul v-if="currentTabItems && currentTabItems.length > 0" class="ticket-wrapper">
                 <li v-for="item of tempCurrentTabItems" :key="item.goodsId">
-                    <scenic-detail-ticket-item :item="item" @reseve-detail="reseveDetail" @share-ticket="shareTicket"></scenic-detail-ticket-item>
+                    <scenic-detail-ticket-item :item="item" @reseve-detail="reseveDetail" @share-ticket="shareTicket" @show-tip-dialog="shareTipDialog"></scenic-detail-ticket-item>
                 </li>
                 <div v-if="tempCurrentTabItems && tempCurrentTabItems.length < currentTabItems.length" class="show-more" @click="showMore">
                   加载更多
@@ -22,6 +22,27 @@
             <div v-else class="s-d-l-m-message-empty">
                 <span>暂无门票</span>
             </div>
+        </div>
+        <div class="dialog-tip-wrapper" v-if="dialogVisible">
+          <div class="tip-bg" @click="dialogVisible = false"></div>
+          <div class="dialog-content">
+            <div class="content-top">
+              <div class="img-wrapper">
+                <img src="../../../../assets/images/img_buy_number_tip.png">
+              </div>
+              <div class="tip">
+                <span>您还需要完成<span class="number">{{number}}</span>单才能进行底价购买哦~</span>
+              </div>
+              <span class="el-icon-close close" @click="dialogVisible = false"></span>
+            </div>
+            <div class="content-center">
+              <span>您可以通过分享店铺或者分享商家、产品完成<span class="number">{{number}}</span>单后，会自动开启底价购买的功能</span>
+            </div>
+            <div class="content-bottom">
+              <el-button size="mini" @click="dialogVisible = false">取&nbsp;&nbsp;&nbsp;消</el-button>
+              <el-button type="primary" size="mini" @click="goShare">去分享</el-button>
+            </div>
+          </div>
         </div>
     </el-card>
 </template>
@@ -48,7 +69,9 @@ export default {
       currentTabItems: null,
       tempCurrentTabItems: null,
       tempTypeGoodsList: [],
-      sliceSize: 3
+      sliceSize: 3,
+      dialogVisible: false,
+      number: 0
     }
   },
   watch: {
@@ -75,6 +98,13 @@ export default {
       }
       this.isFixed = scrollTop + this.headerHeight >= this.offsetTop
       this.isScroll = false
+    },
+    shareTipDialog (params) {
+      this.number = params.number
+      this.dialogVisible = true
+    },
+    goShare () {
+      this.$router.push({name: 'scenicPostList'})
     },
     positionType () {
       if (this.isFixed) {
@@ -179,4 +209,74 @@ export default {
         align-items center
         min-height rem(2)
         normalTextStyle(#888, .3)
+.dialog-tip-wrapper
+    position fixed
+    top 0
+    left 0
+    right 0
+    bottom 0
+    z-index 999
+    display flex
+    justify-content center
+    align-items center
+    .tip-bg
+        position fixed
+        top 0
+        left 0
+        right 0
+        bottom 0
+        background-color #000
+        opacity .8
+    .dialog-content
+        width 75%
+        height 90vw
+        background-color #fff
+        border-radius rem(.1)
+        position relative
+        z-index 1
+        display flex
+        flex-direction column
+        .content-top
+            background-color $primary
+            border-top-left-radius rem(.1)
+            border-top-right-radius rem(.1)
+            position relative
+            display flex
+            flex-direction column
+            overflow hidden
+            height 60%
+            .close
+                position absolute
+                top rem(.2)
+                right rem(.2)
+                z-index 1
+                textStyle(#fff, .4)
+            .img-wrapper
+                height 70%
+                text-align center
+                & img
+                    height 100%
+            .tip
+                flex 1
+                padding 0 rem(.2)
+                textStyle(#fff, .3)
+                display flex
+                flex-direction column
+                justify-content center
+                .number
+                    textStyle(#dc4141, .5)
+                    font-weight bold
+                    margin 0 rem(.1)
+        .content-center
+            textStyle(#666, .3)
+            padding rem(.2)
+            line-height rem(.35)
+            flex 1
+            display flex
+            flex-direction column
+            justify-content center
+        .content-bottom
+            display flex
+            margin-bottom rem(.4)
+            justify-content space-around
 </style>

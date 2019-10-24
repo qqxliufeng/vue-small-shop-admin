@@ -10,7 +10,7 @@
             <p class="item-title">{{item.scenic_name}}</p>
             <div class="item-make-money">
               <span class="fen">分</span>
-              <span class="price">￥{{makeMoney(item)}}</span>
+              <span class="price">{{makeMoney(item)}}</span>
             </div>
           </div>
         </el-card>
@@ -42,7 +42,7 @@ export default {
       if (Number(item.min_price) === 0) {
         return item.max_price
       }
-      return item.min_price + '~' + item.max_price
+      return '最高返:￥' + item.max_price
     },
     getData () {
       this.$http(this.$urlPath.selectScenicPosterList, {

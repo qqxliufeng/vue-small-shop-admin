@@ -175,7 +175,7 @@ export default {
           canFloorBuyTicket = authSet && authSet.indexOf('2') !== -1 // 是不是能低价购买
         }
         this.$root.state.setUserInfoTask({
-          floorBuyNumber: this.amount.lower_level_buy_number,
+          floorBuyNumber: this.amount.floor_buy_number,
           shareOrderNumber: this.amount.photo_sharing_order_number
         })
         this.$root.state.saveCanShareTicket(canShareTicket ? '1' : '0')

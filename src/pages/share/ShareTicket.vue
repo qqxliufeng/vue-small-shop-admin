@@ -58,6 +58,7 @@ export default {
         isWeiXin: this.$isWeiXin ? '1' : '0'
       }, '', (data) => {
         this.info = data.data
+        this.info.goods.price = ':￥' + this.info.goods.price
         this.wexin_url = this.info.wexin_url
         this.$nextTick(() => {
           this.$refs.share.createPost()

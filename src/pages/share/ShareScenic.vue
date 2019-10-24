@@ -79,7 +79,7 @@ export default {
         this.wexin_url = this.info.wexin_url
         this.goods.max_price = this.info.max_price
         this.goods.min_price = this.info.min_price
-        this.goods.price = Number(this.info.min_price) === 0 ? this.goods.max_price : this.goods.min_price + '~' + this.goods.max_price
+        this.goods.price = '最高返:￥' + this.goods.max_price
         this.$nextTick(() => {
           this.$refs.share.createPost()
         })

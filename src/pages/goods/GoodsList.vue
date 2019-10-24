@@ -86,11 +86,7 @@ export default {
     },
     shareTipName (item) {
       if (item) {
-        if (Number(item.min_price) === 0) {
-          return '分:￥' + item.max_price
-        } else {
-          return '分:￥' + item.min_price + '~￥' + item.max_price
-        }
+        return '最高返:￥' + item.max_price
       } else {
         return '分享'
       }

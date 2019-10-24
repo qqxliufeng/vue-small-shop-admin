@@ -37,7 +37,7 @@ export default {
         password: '',
         confirmPassword: '',
         realName: '',
-        idCard: 1,
+        idType: '2',
         workName: '',
         idFront: '',
         idBack: '',

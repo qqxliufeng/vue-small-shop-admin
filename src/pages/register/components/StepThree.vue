@@ -11,12 +11,29 @@
   </div>
   <div class="info-wrapper">
     <div class="info-item-wrapper">
-    <p class="info-title">姓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名：</p>
+      <p class="info-title">姓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名：</p>
     </div>
     <div class="info-content-wrapper">
       <input type="text" class="input" placeholder="请输入真实姓名" v-model="registerInfo.realName" maxlength="6">
     </div>
+  </div>
+  <div class="info-wrapper">
+    <div class="info-item-wrapper">
+      <p class="info-title">身份类别：</p>
     </div>
+    <div class="info-content-wrapper">
+      <el-radio v-model="registerInfo.idType" label="2">学生</el-radio>
+      <el-radio v-model="registerInfo.idType" label="1">社会</el-radio>
+    </div>
+  </div>
+  <div class="info-wrapper">
+    <div class="info-item-wrapper">
+      <p class="info-title">{{registerInfo.idType === '2' ? '学校' : '单位'}}名称：</p>
+    </div>
+    <div class="info-content-wrapper">
+      <input type="text" class="input" :placeholder="'请输入' + (registerInfo.idType === '2' ? '学校' : '单位') + '名称'" v-model="registerInfo.workName" maxlength="20">
+    </div>
+  </div>
   <el-button class="next-step" @click="submit">提交</el-button>
 </div>
 </template>
@@ -24,7 +41,6 @@
 <script>
 export default {
   name: 'stepThree',
-  components: {},
   data () {
     return {
       registerInfo: this.$root.state.registerInfo,
@@ -51,6 +67,10 @@ export default {
       const reg = new RegExp('[\\u4E00-\\u9FFF]+', 'g')
       if (!reg.test(this.registerInfo.realName)) {
         this.$toast('请输入中文名称')
+        return
+      }
+      if (!this.registerInfo.workName) {
+        this.$toast(`请输入${this.registerInfo.idType === '2' ? '学校名称' : '单位名称'}`)
         return
       }
       if (!this.registerInfo.parentId) {
