@@ -76,6 +76,7 @@ export default {
           tempEvent[item.date] = item
         })
         this.minNum = ticketInfo.goods.min_number
+        this.maxNum = ticketInfo.goods.highest_number === 0 ? 1000000 : ticketInfo.goods.highest_number
         this.num = this.minNum
         this.events = tempEvent
         this.initDate()

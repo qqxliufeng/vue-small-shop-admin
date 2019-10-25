@@ -34,7 +34,7 @@
                     <span v-if="content.people_num <= 0"></span>
                     <span>
                       <button class="info-share" @click.stop="selectScenicShare(content)" v-if="isCanShare">{{shareTipName(content)}}</button>
-                      <button class="info-detail" @click.stop="startScenicDetail(content)">预定</button>
+                      <button class="info-detail" @click.stop="startScenicDetail(content)">预订</button>
                     </span>
                   </div>
                 </div>
