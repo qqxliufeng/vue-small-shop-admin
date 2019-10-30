@@ -12,7 +12,7 @@
             </div>
             <div class="s-d-info-middle-wrapper">
                 <slot name="info" :scenicInfo="scenicInfo"></slot>
-                <div class="s-d-info-scenic-location-wrapper">
+                <div class="s-d-info-scenic-location-wrapper" @click="location">
                     <span class="iconfont s-d-info-scenic-location-icon">&#xe850;</span>
                     <div class="s-d-info-scenic-location">
                         <p>{{scenicInfo.city}}</p>
@@ -35,6 +35,11 @@ export default {
   methods: {
     startScenicInfo (type) {
       this.$router.push({name: 'scenicInfo', params: {selected: type}})
+    },
+    location () {
+      if (this.scenicInfo.latitude && this.scenicInfo.longitude) {
+        this.$router.push({name: 'map', query: { lng: this.scenicInfo.longitude, lat: this.scenicInfo.latitude, title: this.scenicInfo.title }})
+      }
     }
   }
 }

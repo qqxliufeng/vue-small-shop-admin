@@ -126,6 +126,8 @@ export const scenicDetailUrl = scenicDetailModuleUrl + 'scenic_details'
 
 export const scenicDetail2Url = scenicDetailModuleUrl + 'scenic_details2'
 
+export const goodsDetailUrl2 = scenicDetailModuleUrl + 'goods_detail2'
+
 export const scenicNotesUrl = scenicDetailModuleUrl + 'scenic_notes'
 
 const payModuleUrl = baseUrl2 + 'payment/'

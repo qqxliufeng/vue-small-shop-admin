@@ -91,7 +91,11 @@ export default {
       return ''
     },
     reseveDetail (item) {
-      this.$router.push({name: 'reseveDetail', query: { goods_id: item.goodsId, scenicId: this.$route.query.scenicId }})
+      if (Number(this.scenicInfo.categoryId) === 13) {
+        this.$router.push({name: 'reseveDetail', query: { goods_id: item.goodsId, scenicId: this.$route.query.scenicId }})
+      } else {
+        this.$router.push({name: 'productionDetail', query: { goodsId: item.goodsId }})
+      }
     },
     shareTicket (item) {
       if (item.is_promotion > 0) {
@@ -123,6 +127,9 @@ export default {
           info.brief = data.data.brief
           info.isFavorites = data.data.is_favorites
           info.content = data.data.s_content
+          info.categoryId = data.data.category_id
+          info.latitude = data.data.latitude
+          info.longitude = data.data.longitude
           this.scenicInfo = info
           this.hotGoodsList = data.data.hot_goods
           this.typeGoodsList = data.data.type_list

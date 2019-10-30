@@ -26,12 +26,19 @@ import state from 'common/data/state'
 import loadingImage from 'images/img_loading_list.png'
 import loadFailedImage from 'images/img_loading_failed_list.png'
 import WebpPlugun from 'vue-webp-plugin'
+import VueAMap from 'vue-amap'
 import 'common/utils/weixin.js'
 
 Vue.use(WebpPlugun)
 
 Vue.config.productionTip = false
 Vue.use(ElementUI)
+Vue.use(VueAMap)
+VueAMap.initAMapApiLoader({
+  key: '9caebd5712374a94a3d247f7ff51de9f',
+  plugin: ['AMap.Geolocation'],
+  v: '1.4.4'
+})
 Vue.use(MyNavigation)
 Vue.use(Loading)
 Vue.use(VueAwesomeSwiper)

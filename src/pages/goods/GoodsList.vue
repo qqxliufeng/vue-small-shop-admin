@@ -227,19 +227,19 @@ export default {
                             justify-content space-between
                             align-items center
                             .info-detail
-                                border 1px solid #EA782F
+                                border 1px solid $orangeColor
                                 border-radius rem(.05)
                                 background-color #fff
-                                color #EA782F
+                                color $orangeColor
                                 font-size rem(.25)
                                 padding 0 rem(.3)
                                 box-sizing border-box
                                 display inline-block
                                 line-height rem(.35)
                             .info-share
-                                border 1px solid #EA782F
+                                border 1px solid $orangeColor
                                 border-radius rem(.05)
-                                background-color #EA782F
+                                background-color $orangeColor
                                 color #fff
                                 font-size rem(.25)
                                 padding 0 rem(.3)

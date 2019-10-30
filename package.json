@@ -29,7 +29,8 @@
     "vue-lazyload": "^1.2.6",
     "vue-router": "^3.0.1",
     "vue-webp-plugin": "^1.0.2",
-    "vue2-toast": "^2.0.2"
+    "vue2-toast": "^2.0.2",
+    "vue-amap": "^0.5.8"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",

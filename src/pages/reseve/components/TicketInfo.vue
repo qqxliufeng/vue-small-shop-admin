@@ -96,7 +96,7 @@ export default {
           return
         }
         this.initCalendar(this.ticketInfo)
-        this.showRemark = true
+        this.showRemark = this.ticketInfo.is_notes
       }
     }
   },

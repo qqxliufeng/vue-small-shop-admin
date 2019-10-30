@@ -45,6 +45,7 @@ import Auth from '@/pages/wx/Auth'
 import ActivityList from '@/pages/activity/ActivityList'
 // import ActivityDetail from '@/pages/activity/ActivityDetail'
 import ActivityDetail from '@/pages/activity/ActivityNewDetail'
+import ProductionDetail from '@/pages/product/ProductionDetail'
 Vue.use(Router)
 
 export default new Router({
@@ -378,6 +379,16 @@ export default new Router({
       meta: {
         keepAlive: true
       }
+    },
+    {
+      path: '/productiondetail',
+      name: 'productionDetail',
+      component: ProductionDetail
+    },
+    {
+      path: '/map',
+      name: 'map',
+      component: () => import('@/pages/common/Map')
     }
   ],
   scrollBehavior (to, from, saveTop) {

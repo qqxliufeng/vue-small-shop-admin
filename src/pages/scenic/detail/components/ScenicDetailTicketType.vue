@@ -135,13 +135,13 @@ export default {
     }
   },
   mounted () {
-    window.addEventListener('scroll', this.handlerScroll, true)
+    window.addEventListener('scroll', this.handlerScroll)
     if (this.$refs.tabs) {
       this.offsetTop = this.$refs.type.offsetTop
     }
   },
   destroyed () {
-    window.removeEventListener('scroll', this.handlerScroll, true)
+    window.removeEventListener('scroll', this.handlerScroll)
   }
 }
 </script>

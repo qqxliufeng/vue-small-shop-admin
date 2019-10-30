@@ -84,6 +84,16 @@ export default {
     },
     initDate () {
       let date = new Date()
+      const time = (new Date(date.getFullYear(), date.getMonth(), date.getDate())).getTime()
+      for (let obj in this.events) {
+        const temp = this.events[obj]
+        const objDate = new Date(obj.replace(/-/g, '/'))
+        const objTime = objDate.getTime()
+        if (temp && temp.one_stock && parseInt(temp.one_stock) !== 0 && parseInt(temp.one_stock) !== -2 && (time <= objTime)) {
+          date = objDate
+          break
+        }
+      }
       this.times.forEach((it, index) => {
         this.setTimesItem(date, it, index)
       })

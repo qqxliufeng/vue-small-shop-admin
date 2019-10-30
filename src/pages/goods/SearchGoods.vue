@@ -23,10 +23,10 @@
                   score-template="{value}分">
                 </el-rate></div>
               <div class="info-action-wrapper">
-                <span class="info-sale-count">已售{{content.people_num}}</span>
+                <span class="info-sale-count" v-if="content.people_num > 0">已售{{$utils.common.trasformNum(content.people_num)}}</span>
                 <span>
-                  <button class="info-detail" @click.stop="startScenicDetail(content)">详情</button>
-                  <button class="info-share" @click.stop="selectScenicShare(content)" v-if="isCanShare">分享</button>
+                  <button class="info-share" @click.stop="selectScenicShare(content)" v-if="isCanShare">{{shareTipName(content)}}</button>
+                  <button class="info-detail" @click.stop="startScenicDetail(content)">预订</button>
                 </span>
               </div>
             </div>
@@ -69,6 +69,13 @@ export default {
       }, (errorCode, error) => {
         this.$toast(error)
       })
+    },
+    shareTipName (item) {
+      if (item) {
+        return '最高返:￥' + item.max_price
+      } else {
+        return '分享'
+      }
     },
     getPath (path) {
       if (path.indexOf(',') === -1) {

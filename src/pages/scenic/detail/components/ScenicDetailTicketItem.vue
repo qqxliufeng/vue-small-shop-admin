@@ -29,9 +29,6 @@
         </div>
         <p v-if="Number(this.item.buy_status) !== 1" class="reseve-tip">提示：此商品只能用于分享</p>
         <div class="line"></div>
-        <div class="bg" v-if="item.is_promotion > 0">
-            <div class="iconfont">&#xe69c;</div>
-        </div>
     </div>
 </template>
 
