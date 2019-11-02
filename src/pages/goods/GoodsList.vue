@@ -13,7 +13,7 @@
             </swiper-slide>
         </swiper>
       </div>
-      <div class="content-list" v-if="tempMenu"  @scroll="onScroll">
+      <div class="content-list" v-if="tempMenu">
          <ul v-if="tempMenu.data && tempMenu.data.length > 0">
            <li v-for="(content, index) of tempMenu.data" :key="index" class="content-item">
               <div class="content-item-info-wrapper" @click="startScenicDetail(content)">
@@ -42,7 +42,7 @@
            </li>
         </ul>
         <div v-else class="scenic-empty">
-          暂无景区
+          暂无商家
         </div>
       </div>
   </div>
@@ -106,9 +106,6 @@ export default {
     selectScenicShare (item) {
       this.$router.push({name: 'selectScenicPostList', query: {scenic_id: item.scenic_id}})
     },
-    onScroll () {
-      console.log(1)
-    },
     getData () {
       this.$http(this.$urlPath.goodsList, {}, '', (data) => {
         this.menuList = data.data
@@ -169,6 +166,8 @@ export default {
             top $headerHeight * 2.1
             left 0
             right 0
+            height 86%
+            overflow scroll
             .list-title
                 textStyle(#666, .3)
                 line-height $headerHeight

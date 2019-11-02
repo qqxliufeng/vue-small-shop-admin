@@ -5,9 +5,9 @@
           <scenic-detail-images :imageList="imageList"></scenic-detail-images>
           <scenic-detail-info :scenicInfo="scenicInfo">
             <template slot="info" slot-scope="slotPropes">
-              <div class="s-d-info-scenic-info-wrapper">
+              <div class="s-d-info-scenic-info-wrapper" v-if="scenicInfo.categoryId !== 14">
                   <div @click="startScenicInfo('scenicInfoForIntro')">
-                      <p class="s-d-info-scenic-info-title">景区须知</p>
+                      <p class="s-d-info-scenic-info-title">{{ scenicInfo.categoryId === 13 ? '景区须知' : '简介' }}</p>
                       <p class="s-d-info-scenic-info-info">{{delHtmlTag(slotPropes.scenicInfo.brief)}}</p>
                   </div>
               </div>
@@ -18,8 +18,9 @@
           </scenic-detail-info>
           <safe-protect></safe-protect>
           <!-- <scenic-detail-hot v-if="hotGoodsList && hotGoodsList.length > 0" :hotGoodsList="hotGoodsList" @reseve-detail="reseveDetail" @share-ticket="shareTicket"></scenic-detail-hot> -->
-          <scenic-detail-ticket-type :typeGoodsList="typeGoodsList" @reseve-detail="reseveDetail" @share-ticket="shareTicket"></scenic-detail-ticket-type>
-          <scenic-detail-leave-message :ask="ask"></scenic-detail-leave-message>
+          <scenic-detail-ticket-type :typeGoodsList="typeGoodsList" @reseve-detail="reseveDetail" @share-ticket="shareTicket" :title="scenicInfo.categoryId === 14 ? '跟团游' : '优惠信息'"></scenic-detail-ticket-type>
+          <scenic-detail-ticket-type v-show="isShowRoute" :typeGoodsList="route" @reseve-detail="reseveRouteDetail" @share-ticket="shareTicket" title="跟团游"></scenic-detail-ticket-type>
+          <scenic-detail-leave-message v-if="scenicInfo.messageSwitch === 1" :ask="ask"></scenic-detail-leave-message>
           <scenic-detail-comment :comment="comment" :tagCanSelected="false"></scenic-detail-comment>
           <div class="s-d-l-m-comment-info-see-more" @click="seeMoreComment">
             查看更多
@@ -64,11 +65,24 @@ export default {
       scenicInfo: {},
       hotGoodsList: [],
       typeGoodsList: [],
+      route: null,
       scenicId: null,
       identity: null,
       storeId: null,
       show: true,
       from: null
+    }
+  },
+  computed: {
+    isShowRoute () {
+      if (this.route) {
+        for (const item of this.route) {
+          if (item.goods_list && item.goods_list.length > 0) {
+            return true
+          }
+        }
+      }
+      return false
     }
   },
   methods: {
@@ -96,6 +110,9 @@ export default {
       } else {
         this.$router.push({name: 'productionDetail', query: { goodsId: item.goodsId }})
       }
+    },
+    reseveRouteDetail (item) {
+      this.$router.push({name: 'productionDetail', query: { goodsId: item.goodsId }})
     },
     shareTicket (item) {
       if (item.is_promotion > 0) {
@@ -130,9 +147,12 @@ export default {
           info.categoryId = data.data.category_id
           info.latitude = data.data.latitude
           info.longitude = data.data.longitude
+          info.messageSwitch = data.data.message_switch
+          info.businessName = data.data.business_name
           this.scenicInfo = info
           this.hotGoodsList = data.data.hot_goods
           this.typeGoodsList = data.data.type_list
+          this.route = data.data.route
           this.comment = data.data.comment
           this.ask = data.data.ask
         } else {

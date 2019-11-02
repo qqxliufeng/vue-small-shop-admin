@@ -1,10 +1,9 @@
 <template>
     <el-card :body-style="{padding: 0}" class="s-d-t-type-container" v-if="typeGoodsList && typeGoodsList.length > 0">
-        <div class="s-d-t-type-title-wrapper" :class="{'tab-fixed' : isFixed}"  ref="type" @click="positionType">
+        <div class="s-d-t-type-title-wrapper" ref="type" @click="positionType">
           <span class="el-icon-tickets icon"></span>
-          <span>优惠信息</span>
+          <span>{{title}}</span>
         </div>
-        <div id="tab" v-show="isFixed" style="height: 1.72rem"></div>
         <div>
              <swiper :options="swiperOption" class="h-h-hot-card">
                  <swiper-slide v-for="(tabItem, index) of tempTypeGoodsList" :key="tabItem.goodsTypeId">
@@ -52,7 +51,11 @@ import ScenicDetailTicketItem from './ScenicDetailTicketItem'
 export default {
   name: 'scenicDetailTicketType',
   props: {
-    typeGoodsList: Array
+    typeGoodsList: Array,
+    title: {
+      type: String,
+      default: '优惠信息'
+    }
   },
   components: {
     ScenicDetailTicketItem
@@ -93,7 +96,7 @@ export default {
   methods: {
     handlerScroll () {
       let scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
-      if (!this.offsetTop) {
+      if (!this.offsetTop && this.$refs.type) {
         this.offsetTop = this.$refs.type.offsetTop
       }
       this.isFixed = scrollTop + this.headerHeight >= this.offsetTop

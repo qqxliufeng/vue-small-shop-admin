@@ -1,7 +1,7 @@
 <template>
     <div class="r-d-ticket-info-container">
         <div class="r-d-ticket-info-title-wrapper">
-            <span class="r-d-ticket-info-title" v-if="ticketInfo.goods">【{{ticketInfo.goods.goods_title}}】</span>
+            <span class="r-d-ticket-info-title" v-if="ticketInfo.goods">{{ticketInfo.goods.goods_title}}</span>
             <span class="r-d-ticket-info-title-info" @click="showRemark = !showRemark">购买须知<i class="el-icon-arrow-right"></i></span>
         </div>
         <div class="r-d-ticket-info-title-wrapper">
@@ -15,6 +15,9 @@
                 <p>{{item.date}}</p>
                 <p>周{{$utils.getWeekByWeek(item.week)}}</p>
                 <p>￥{{item.price}}</p>
+                <div v-show="item.isSelected" class="img-wrapper">
+                  <img src="../../../assets/images/img_selected_icon.png" alt="">
+                </div>
             </div>
             <div class="r-d-ticket-info-time-item" style="border: #63BBB0 solid 1px" @click="isShowCanlendarDialog = true">
                 <p class="more-date">更多日期></p>
@@ -96,7 +99,7 @@ export default {
           return
         }
         this.initCalendar(this.ticketInfo)
-        this.showRemark = this.ticketInfo.is_notes
+        this.showRemark = this.ticketInfo.goods.is_notes === 1
       }
     }
   },
@@ -163,6 +166,7 @@ export default {
         .r-d-ticket-info-title
             flex 1
             normalTextStyle(#333, .3)
+            font-weight bold
         .r-d-ticket-info-title-info
             textStyle($primary, .3)
         .r-d-ticket-info-time-title
@@ -210,6 +214,7 @@ export default {
             flex-direction column
             border-radius rem(.1)
             color #333
+            position relative
             & p:nth-child(2)
                 color #888
                 font-size rem(.2)
@@ -217,6 +222,19 @@ export default {
             & p:nth-child(3)
                 margin-top rem(.2)
                 color $orangeColor
+            .img-wrapper
+                position absolute
+                right 0
+                bottom 0
+                width rem(.4)
+                height rem(.4)
+                margin-bottom rem(-.04)
+                margin-right rem(-.03)
+                border-radius rem(.15)
+                & img
+                    width 100%
+                    height 100%
+                    border-radius rem(.15)
         .r-d-ticket-info-time-selected
             border $primary solid 1px
         .r-d-ticket-info-time-uneable
