@@ -1,29 +1,44 @@
 <template>
     <div>
         <section v-if="loadState">
-          <scenic-detail-header :scenicInfo="scenicInfo" @back="back"></scenic-detail-header>
-          <scenic-detail-images :imageList="imageList"></scenic-detail-images>
-          <scenic-detail-info :scenicInfo="scenicInfo">
-            <template slot="info" slot-scope="slotPropes">
-              <div class="s-d-info-scenic-info-wrapper" v-if="scenicInfo.categoryId !== 14">
-                  <div @click="startScenicInfo('scenicInfoForIntro')">
-                      <p class="s-d-info-scenic-info-title">{{ scenicInfo.categoryId === 13 ? '景区须知' : '简介' }}</p>
-                      <p class="s-d-info-scenic-info-info">{{delHtmlTag(slotPropes.scenicInfo.brief)}}</p>
-                  </div>
-              </div>
-              <div class="s-d-info-scenic-open-time-wrapper">
-                  <div>营业时间: <span class="time">{{slotPropes.scenicInfo.open}}</span></div>
-              </div>
-            </template>
-          </scenic-detail-info>
-          <safe-protect></safe-protect>
+          <div id="header">
+            <scenic-detail-header :scenicInfo="scenicInfo" @back="back"></scenic-detail-header>
+            <scenic-detail-images :imageList="imageList"></scenic-detail-images>
+            <scenic-detail-info :scenicInfo="scenicInfo">
+              <template slot="info" slot-scope="slotPropes">
+                <div class="s-d-info-scenic-info-wrapper" v-if="scenicInfo.categoryId !== 14">
+                    <div @click="startScenicInfo('scenicInfoForIntro')">
+                        <p class="s-d-info-scenic-info-title">{{ scenicInfo.categoryId === 13 ? '景区须知' : '简介' }}</p>
+                        <p class="s-d-info-scenic-info-info">{{delHtmlTag(slotPropes.scenicInfo.brief)}}</p>
+                    </div>
+                </div>
+                <div class="s-d-info-scenic-open-time-wrapper">
+                    <div>营业时间: <span class="time">{{slotPropes.scenicInfo.open}}</span></div>
+                </div>
+              </template>
+            </scenic-detail-info>
+            <safe-protect></safe-protect>
+          </div>
           <!-- <scenic-detail-hot v-if="hotGoodsList && hotGoodsList.length > 0" :hotGoodsList="hotGoodsList" @reseve-detail="reseveDetail" @share-ticket="shareTicket"></scenic-detail-hot> -->
-          <scenic-detail-ticket-type :typeGoodsList="typeGoodsList" @reseve-detail="reseveDetail" @share-ticket="shareTicket" :title="scenicInfo.categoryId === 14 ? '跟团游' : '优惠信息'"></scenic-detail-ticket-type>
-          <scenic-detail-ticket-type v-show="isShowRoute" :typeGoodsList="route" @reseve-detail="reseveRouteDetail" @share-ticket="shareTicket" title="跟团游"></scenic-detail-ticket-type>
-          <scenic-detail-leave-message v-if="scenicInfo.messageSwitch === 1" :ask="ask"></scenic-detail-leave-message>
-          <scenic-detail-comment :comment="comment" :tagCanSelected="false"></scenic-detail-comment>
+          <div id="ticketType">
+            <scenic-detail-ticket-type :typeGoodsList="typeGoodsList" @reseve-detail="reseveDetail" @share-ticket="shareTicket" :title="scenicInfo.categoryId === 14 ? '跟团游' : '优惠信息'" @show-more="showMoreTicket"></scenic-detail-ticket-type>
+          </div>
+          <div id="route">
+            <scenic-detail-ticket-type v-show="isShowRoute" :typeGoodsList="route" @reseve-detail="reseveRouteDetail" @share-ticket="shareTicket" title="跟团游"></scenic-detail-ticket-type>
+          </div>
+          <div id="message">
+            <scenic-detail-leave-message :ask="ask"></scenic-detail-leave-message>
+          </div>
+          <div id="comment">
+            <scenic-detail-comment :comment="comment" :tagCanSelected="false"></scenic-detail-comment>
+          </div>
           <div class="s-d-l-m-comment-info-see-more" @click="seeMoreComment">
             查看更多
+          </div>
+          <div v-if="showTab" class="tab-wrapper">
+            <div v-for="(item, index) of tabList" :key="index" @click="tabItemClick(index)">
+              <span class="tab-item" :class="{'tab-item-selected' : index === mTabIndex}">{{item.title}}</span>
+            </div>
           </div>
         </section>
         <section v-else>
@@ -70,7 +85,13 @@ export default {
       identity: null,
       storeId: null,
       show: true,
-      from: null
+      from: null,
+      scrollTop: -100,
+      headerHeight: 0,
+      marginTop: 86,
+      heightListInfo: {},
+      tabList: [],
+      mTabIndex: -1
     }
   },
   computed: {
@@ -83,6 +104,9 @@ export default {
         }
       }
       return false
+    },
+    showTab () {
+      return this.scrollTop >= this.headerHeight - this.marginTop
     }
   },
   methods: {
@@ -155,12 +179,91 @@ export default {
           this.route = data.data.route
           this.comment = data.data.comment
           this.ask = data.data.ask
+          if (info.messageSwitch !== 1) {
+            this.ask = {}
+          }
+          this.tabList.push({
+            title: this.scenicInfo.categoryId === 14 ? '跟团游' : '优惠信息',
+            type: 'ticketType'
+          })
+          if (this.isShowRoute) {
+            this.tabList.push({
+              title: '跟团游',
+              type: 'route'
+            })
+          }
+          this.tabList.push({
+            title: '留言',
+            type: 'message'
+          })
+          this.tabList.push({
+            title: '综合评价',
+            type: 'comment'
+          })
+          this.heightInfo()
         } else {
           this.loadState = false
         }
       }, (errorCode, error) => {
         this.loadState = false
       })
+    },
+    heightInfo () {
+      setTimeout(_ => {
+        this.$nextTick(_ => {
+          this.headerHeight = document.getElementById('header').offsetHeight
+          this.heightListInfo.ticketType = {
+            start: this.headerHeight - this.marginTop,
+            end: this.headerHeight - this.marginTop + document.getElementById('ticketType').offsetHeight + 11
+          }
+          this.heightListInfo.route = {
+            start: this.heightListInfo.ticketType.end,
+            end: this.heightListInfo.ticketType.end + document.getElementById('route').offsetHeight + 11
+          }
+          this.heightListInfo.message = {
+            start: this.heightListInfo.route.end,
+            end: this.heightListInfo.route.end + document.getElementById('message').offsetHeight + 11
+          }
+          this.heightListInfo.comment = {
+            start: this.heightListInfo.message.end,
+            end: this.heightListInfo.message.end + document.getElementById('comment').offsetHeight + 11
+          }
+        })
+      }, 500)
+    },
+    handlerScroll () {
+      if (!this.heightListInfo.ticketType) {
+        return
+      }
+      this.scrollTop = document.documentElement.scrollTop || document.body.scrollTop
+      if (this.scrollTop >= this.heightListInfo.ticketType.start && this.scrollTop <= this.heightListInfo.ticketType.end) {
+        this.mTabIndex = 0
+      }
+      if (this.tabList.length === 4) {
+        if (this.scrollTop >= this.heightListInfo.route.start && this.scrollTop <= this.heightListInfo.route.end) {
+          this.mTabIndex = 1
+        }
+        if (this.scrollTop >= this.heightListInfo.message.start && this.scrollTop <= this.heightListInfo.message.end) {
+          this.mTabIndex = 2
+        }
+        if (this.scrollTop >= this.heightListInfo.comment.start && this.scrollTop <= this.heightListInfo.comment.end) {
+          this.mTabIndex = 3
+        }
+      } else {
+        if (this.scrollTop >= this.heightListInfo.message.start && this.scrollTop <= this.heightListInfo.message.end) {
+          this.mTabIndex = 1
+        }
+        if (this.scrollTop >= this.heightListInfo.comment.start && this.scrollTop <= this.heightListInfo.comment.end) {
+          this.mTabIndex = 2
+        }
+      }
+    },
+    tabItemClick (index) {
+      const item = this.heightListInfo[this.tabList[index].type]
+      window.scrollTo({top: item.start + 1, behavior: 'smooth'})
+    },
+    showMoreTicket () {
+      this.heightInfo()
     },
     back () {
       if (this.from) {
@@ -186,7 +289,11 @@ export default {
     this.storeId = this.sellerInfo.storeId
   },
   mounted () {
+    window.addEventListener('scroll', this.handlerScroll)
     this.getData()
+  },
+  destroyed () {
+    window.removeEventListener('scroll', this.handlerScroll)
   },
   beforeRouteEnter (to, from, next) {
     next(vm => {
@@ -238,4 +345,27 @@ export default {
     padding rem(.2)
     text-align center
     border-top #f5f5f5 solid rem(.05)
+.tab-wrapper
+    display flex
+    align-items center
+    position fixed
+    top $headerHeight
+    left 0
+    right 0
+    background-color white
+    line-height $headerHeight
+    box-shadow 0px 7px 7px rgba(0, 0, 0, 0.1)
+    z-index 1000
+    & div
+        flex 1
+        text-align center
+    .tab-item
+        text-align center
+        display inline-block
+        width auto
+        height 100%
+        textStyle(#333, .28)
+    .tab-item-selected
+        textStyle($orangeColor, .3)
+        border-bottom $orangeColor solid 1px
 </style>

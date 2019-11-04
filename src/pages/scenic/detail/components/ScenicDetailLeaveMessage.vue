@@ -2,7 +2,7 @@
     <el-card :body-style="{padding: 0}" class="s-d-l-m-message-container" v-if="ask">
         <div class="s-d-l-m-message-title">
             <span><span class="el-icon-chat-line-square icon"></span>留言板</span>
-            <span>{{ask.ask_count}}条留言</span>
+            <span>{{ask.ask_count || 0}}条留言</span>
         </div>
         <div v-if="showEmpty" class="s-d-l-m-message-empty">
             <span>暂无留言哦~</span>
@@ -30,13 +30,9 @@ export default {
   props: {
     ask: Object
   },
-  data () {
-    return {
-    }
-  },
   computed: {
     showEmpty () {
-      return this.ask.ask_list && this.ask.ask_list.length === 0
+      return !this.ask.ask_list || this.ask.ask_list.length === 0
     }
   },
   methods: {

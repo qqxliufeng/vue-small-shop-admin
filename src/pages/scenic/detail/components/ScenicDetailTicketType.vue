@@ -135,6 +135,7 @@ export default {
     },
     showMore () {
       this.tempCurrentTabItems = this.currentTabItems
+      this.$emit('show-more')
     }
   },
   mounted () {
