@@ -71,13 +71,16 @@ export default {
 @import '~styles/mixin.styl'
 .s-d-comment-item-container
     padding rem(.2)
-    borderBottom()
+    border-bottom 5px solid #f5f5f5
+    & >>> .el-rate__icon
+        font-size 15px
+        margin-right 0
     .s-d-comment-item-title-wrapper
         display flex
         align-items center
         & img
-            width rem(.8)
-            height rem(.8)
+            width rem(.6)
+            height rem(.6)
             object-fit cover
             background #f5f5f5
             border-radius 50%
@@ -109,6 +112,7 @@ export default {
             height 100%
             object-fit cover
             margin-left 2.5%
+            border-radius rem(.1)
     .reply-container
         background-color #f5f5f5
         padding rem(.2)

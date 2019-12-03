@@ -193,7 +193,7 @@ export default {
             })
           }
           this.tabList.push({
-            title: '留言',
+            title: '留言板',
             type: 'message'
           })
           this.tabList.push({
@@ -341,10 +341,10 @@ export default {
     & p:nth-child(1)
         normalTextStyle(#333, .28)
 .s-d-l-m-comment-info-see-more
-    normalTextStyle(#666, .3)
+    normalTextStyle(#666, .26)
     padding rem(.2)
     text-align center
-    border-top #f5f5f5 solid rem(.05)
+    border-top #f5f5f5 solid 1px
 .tab-wrapper
     display flex
     align-items center
