@@ -97,23 +97,14 @@ export default {
     },
     isShowSharePartner () {
       if (this.authInfo) { // 是否获取到数据了
-        // let auth = Number(this.authInfo.auth)
-        // let authSet = this.authInfo.auth_set
+        let authSet = this.authInfo.auth_set
+        console.log(authSet)
+        return authSet && authSet.indexOf('2') !== -1
         // if (Number(this.$root.userInfo.state.rank) < 3) { // 当前账号是不是三级分销商
-        //   if (auth === 1) { // 是否是做任务开启权限
-        //     return Number(this.authInfo.finish_order_number) >= Number(this.authInfo.lower_level_buy_number) // 判断任务是否是完成了
-        //   } else if (auth === 2) { // 手动开启权限
-        //     return authSet && authSet.indexOf('3') !== -1
-        //   }
+        //   return authSet && authSet.indexOf('3') !== -1
         // } else {
         //   return false
         // }
-        let authSet = this.authInfo.auth_set
-        if (Number(this.$root.userInfo.state.rank) < 3) { // 当前账号是不是三级分销商
-          return authSet && authSet.indexOf('3') !== -1
-        } else {
-          return false
-        }
       } else {
         return false
       }

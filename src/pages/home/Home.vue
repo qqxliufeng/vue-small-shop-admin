@@ -2,14 +2,10 @@
 <div class='home-container'>
   <home-navigation></home-navigation>
   <div class="tip-wrapper">
-      <p class="tip-content" v-if="showTip" @click="tipClick">
-        温馨提示：更多功能敬请登录电脑端进行查看。
-        <span class="el-icon-error close-tip"></span>
-      </p>
       <home-header :amount="amount"></home-header>
   </div>
   <home-order-info @orderClick="orderClick" :orderInfo="amount.my_order" v-if="amount"></home-order-info>
-  <home-menu :menu="menus.myTeam" v-if="Number(this.$root.userInfo.state.rank) < 3"></home-menu>
+  <home-menu :menu="menus.myTeam"></home-menu>
   <home-menu :menu="menus.makeMoney"></home-menu>
   <home-menu :menu="menus.mySetting"></home-menu>
   <div style="height: 20px"></div>
@@ -20,7 +16,6 @@
 <script>
 import HomeHeader from './components/HomeHeader'
 import HomeNavigation from './components/HomeNavigation'
-import HomeTools from './components/HomeTool'
 import HomeOrderInfo from './components/HomeOrderInfo'
 import HomeMenu from './components/HomeMenu'
 import HomeBottomNavigation from './components/HomeBottomNavigation'
@@ -30,7 +25,6 @@ export default {
   components: {
     HomeNavigation,
     HomeHeader,
-    HomeTools,
     HomeOrderInfo,
     HomeBottomNavigation,
     HomeMenu,
@@ -39,7 +33,6 @@ export default {
   data () {
     return {
       msg: '',
-      showTip: true,
       amount: null,
       authInfo: null,
       from: null,
@@ -85,20 +78,12 @@ export default {
         myTeam: {
           title: '我的团队',
           menus: [
-            // {
-            //   icon: '&#xe654;',
-            //   iconColor: '#99DCFB',
-            //   title: '如何发展团队',
-            //   callBack: () => {
-            //     this.$router.push('teamFlow')
-            //   }
-            // },
             {
               icon: '&#xe63f;',
               iconColor: '#99DCFB',
               title: '发展团队',
               callBack: () => {
-                if (this.authInfo && this.authInfo.auth_set && this.authInfo.auth_set.indexOf('3') !== -1) {
+                if (this.authInfo && this.authInfo.auth_set && this.authInfo.auth_set.indexOf('2') !== -1) {
                   this.$router.push({name: 'partener'})
                 } else {
                   this.$toast('当前帐号暂无此权限')
@@ -156,9 +141,6 @@ export default {
     }
   },
   methods: {
-    tipClick () {
-      this.showTip = false
-    },
     getData () {
       this.$http(this.$urlPath.getAmount, {
       }, null, (data) => {
@@ -167,18 +149,18 @@ export default {
         this.showRedPacket = !isNaN(this.amount.red_envelope) && Number(this.amount.red_envelope) === 1
         this.$root.userInfo.setUserInfoBalance(this.amount.balance)
         this.$root.userInfo.setUserInfoRebate(this.amount.rebate)
-        let canShareTicket = false
+        let canShareNext = false
         let canFloorBuyTicket = false
         if (this.authInfo) { // 是否获取到数据了
           let authSet = this.authInfo.auth_set
-          canShareTicket = authSet && authSet.indexOf('1') !== -1 // 是不是能分享图片
-          canFloorBuyTicket = authSet && authSet.indexOf('2') !== -1 // 是不是能低价购买
+          canShareNext = authSet && authSet.indexOf('2') !== -1 // 是不是能发展图片
+          canFloorBuyTicket = authSet && authSet.indexOf('1') !== -1 // 是不是能低价购买
         }
         this.$root.state.setUserInfoTask({
           floorBuyNumber: this.amount.floor_buy_number,
           shareOrderNumber: this.amount.photo_sharing_order_number
         })
-        this.$root.state.saveCanShareTicket(canShareTicket ? '1' : '0')
+        this.$root.state.saveCanShareTicket(canShareNext ? '1' : '0')
         this.$root.state.saveCanFloorBuyTicket(canFloorBuyTicket ? '1' : '0')
         // 当有红包活动的时候  先要进行展示红包活动，若是没有红包的话并且是从登录或者注册页面跳转来的，则直接跳转到商品列表
         if (!this.showRedPacket && (this.from.name === 'login' || this.from.name === 'stepThree' || this.from.path === '/registerseller')) {

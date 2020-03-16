@@ -22,7 +22,7 @@
                     </p>
                 </div>
                 <div class="s-d-hot-item-info-info-action">
-                    <el-button type="primary" size="mini" @click="itemClickShare(item)" v-if="isCanShare">分享:￥{{item.price}}</el-button>
+                    <el-button type="primary" size="mini" @click="itemClickShare(item)">分享:￥{{item.price}}</el-button>
                     <el-button type="primary" size="mini" @click="itemClickOrder(item)" class="button">立即预订</el-button>
                 </div>
             </div>
@@ -40,9 +40,6 @@ export default {
     item: Object
   },
   computed: {
-    isCanShare () {
-      return this.$root.state.canShareTicket === '1'
-    },
     isCanReseve () {
       // 判断是不是可以购买此产品
       return this.$root.state.canFloorBuyTicket === '1'

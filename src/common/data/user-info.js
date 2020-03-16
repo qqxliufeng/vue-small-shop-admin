@@ -14,7 +14,6 @@ const userInfo = {
     balance: sessionStorage.getItem('balance'),
     rebate: sessionStorage.getItem('rebate'),
     credit: sessionStorage.getItem('credit'),
-    rank: sessionStorage.getItem('rank'),
     linkname: sessionStorage.getItem('linkname'),
     openid: sessionStorage.getItem('openid')
   },
@@ -35,7 +34,6 @@ const userInfo = {
     this.state.balance = userInfo.balance
     this.state.rebate = userInfo.rebate
     this.state.credit = userInfo.line_of_credit
-    this.state.rank = userInfo.rank
     this.state.linkname = userInfo.linkname
     this.state.openid = userInfo.openid
     sessionStorage.setItem('id', this.state.id)
@@ -50,7 +48,6 @@ const userInfo = {
     sessionStorage.setItem('balance', this.state.balance)
     sessionStorage.setItem('rebate', this.state.rebate)
     sessionStorage.setItem('credit', this.state.credit)
-    sessionStorage.setItem('rank', this.state.rank)
     sessionStorage.setItem('linkname', this.state.linkname)
     sessionStorage.setItem('openid', this.state.openid)
     state.saveSallerInfo('2', this.state.id)

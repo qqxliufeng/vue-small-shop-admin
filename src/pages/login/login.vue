@@ -95,7 +95,7 @@ export default {
     }
   },
   destroyed () {
-    window.onreset = null
+    window.onresize = null
   }
 }
 </script>
