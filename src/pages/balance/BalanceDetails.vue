@@ -7,7 +7,10 @@
            <el-card shadow="always"  :body-style="{ padding: '.2rem' }" class="item-card">
              <div class="header">
                <span class="title">{{item.typeTip}}<i class="status" :style="item.style">{{item.statusTip}}</i></span>
-               <span class="money">￥{{item.money}}</span>
+               <span v-if="item.type === 2">
+                 提现:<i class="money">￥{{Math.abs(item.money)}}</i>,手续费:<i class="money">￥{{Math.abs(Number(item.service_charge).toFixed(2))}}</i>,实际:<i class="money">￥{{Math.abs(item.money) - Math.abs(item.service_charge)}}</i>
+               </span>
+               <span class="money"  v-else>￥{{item.money}}</span>
              </div>
              <div class="bottom">
                <span>{{item.create_time}}</span>
@@ -123,7 +126,7 @@ export default {
                     padding rem(.06) rem(.15)
                     margin-left rem(.2)
             .money
-                textStyle($primary, .3)
+                textStyle($orangeColor, .3)
         .bottom
             margin-top rem(.2)
             display flex

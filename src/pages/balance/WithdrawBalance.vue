@@ -9,7 +9,7 @@
       <span class="all-money" @click="allMoneyCrash">全部提现</span>
     </div>
     <p class="tip-no-input" v-if="!isInput">当前余额：<i>￥{{$root.userInfo.state.balance || '0.00'}}</i>，提现最低金额：<i>￥{{crashTip.miniCrash || '0.00'}}</i>，账户最低余额：<i>￥{{crashTip.miniBalance || '0.00'}}</i>，提现手续费：<i>{{Number(crashTip.serviceCharge || 0.00) * 100 + '%'}}</i></p>
-    <p class="tip-no-input" v-else>本次提现手续费为：<i>￥{{serviceCharge.toFixed(2)}}</i>服务费（费率{{crashTip.serviceCharge * 100 + '%'}}），此金额将会在您的提现金额中扣除</p>
+    <p class="tip-no-input" v-else>本次提现手续费为：<i>￥{{serviceCharge.toFixed(2)}}</i>服务费（费率{{crashTip.serviceCharge * 100 + '%'}}），此金额将会在您的提现金额中扣除，实际提现到账：<i>￥{{realMoney}}</i></p>
   </div>
   <div class="select-type-container">
     <p class="title-tip">提现方式</p>
@@ -29,6 +29,8 @@
     <div class="sperator"></div>
     <p class="title-tip">提现账号</p>
     <input type="text" class="account-input" placeholder="请输入提现账号" :disabled="!canCrash" v-model="crashAccount">
+    <p class="title-tip">提现人姓名</p>
+    <input type="text" class="account-input" placeholder="请输入提现人姓名" :disabled="!canCrash" v-model="crashName">
   </div>
   <el-button type="primary" class="submit" :disabled="!canCrash" @click="crash">确定</el-button>
   <confirm-dialog content="当前账号未进行认证，请先认证" @dialogConfirm="dialogConfirm" ref="confrimDialog"></confirm-dialog>
@@ -55,7 +57,9 @@ export default {
       crashMoney: '',
       isInput: false,
       serviceCharge: 0.00,
-      crashAccount: ''
+      realMoney: 0.00,
+      crashAccount: '',
+      crashName: ''
     }
   },
   watch: {
@@ -75,6 +79,7 @@ export default {
         this.isInput = true
         if (this.$utils.validator.isMoney(newVal)) {
           this.serviceCharge = Number(newVal) * Number(this.info.service_charge)
+          this.realMoney = Number(newVal - this.serviceCharge).toFixed(2)
         } else {
           this.serviceCharge = 0
         }
@@ -132,10 +137,15 @@ export default {
         this.$toast('请输入提现账号')
         return
       }
+      if (!this.crashName) {
+        this.$toast('请输入提现人姓名')
+        return
+      }
       this.$http(this.$urlPath.withdrawCash, {
         pay_away: this.selectType,
         account_number: this.crashAccount,
-        amount: this.crashMoney
+        amount: this.crashMoney,
+        name: this.crashName
       }, '正在操作…', (data) => {
         this.$toast('提现申请成功')
         this.$root.userInfo.setUserInfoBalance(data.data.balance)

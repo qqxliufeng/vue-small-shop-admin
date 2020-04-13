@@ -66,7 +66,8 @@ export default {
         goods_id: this.$route.query.goods_id,
         identity: this.$root.state.identity,
         store_id: this.$root.state.storeId,
-        s_id: this.$route.query.scenicId
+        s_id: this.$route.query.scenicId,
+        is_dis: 1
       }, '', (data) => {
         this.ticketInfo = data.data
         if (this.ticketInfo.calendar && this.ticketInfo.calendar.constructor === Object) {

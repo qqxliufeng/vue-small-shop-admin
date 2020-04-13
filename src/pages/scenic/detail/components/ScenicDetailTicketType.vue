@@ -22,7 +22,7 @@
                 <span>暂无门票</span>
             </div>
         </div>
-        <div class="dialog-tip-wrapper" v-if="dialogVisible">
+        <!-- <div class="dialog-tip-wrapper" v-if="dialogVisible">
           <div class="tip-bg" @click="dialogVisible = false"></div>
           <div class="dialog-content">
             <div class="content-top">
@@ -42,7 +42,7 @@
               <el-button type="primary" size="mini" @click="goShare">去分享</el-button>
             </div>
           </div>
-        </div>
+        </div> -->
     </el-card>
 </template>
 

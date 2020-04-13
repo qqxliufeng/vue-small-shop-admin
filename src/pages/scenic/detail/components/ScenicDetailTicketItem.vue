@@ -47,26 +47,13 @@ export default {
   },
   data () {
     return {
-      qianggouIcon,
-      numberTask: this.$root.state.numberTask
+      qianggouIcon
     }
   },
   methods: {
     itemClickOrder (item) {
       if (Number(this.item.buy_status) === 1) {
-        if (this.isCanReseve) {
-          this.$emit('reseve-detail', item)
-        } else {
-          if (this.numberTask) {
-            if (Number(this.numberTask.floorBuyNumber) > 0) {
-              this.$emit('show-tip-dialog', {number: this.numberTask.floorBuyNumber})
-            } else {
-              this.$emit('reseve-detail', item)
-            }
-          } else {
-            this.$emit('reseve-detail', item)
-          }
-        }
+        this.$emit('reseve-detail', item)
       } else {
         this.$toast('此商品只能用于分享')
       }
