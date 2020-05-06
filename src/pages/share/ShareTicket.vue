@@ -9,6 +9,24 @@
       </template>
       <template slot="shareHeader">
           <img class="share-image" :src="$utils.image.getImagePath(info.share_image)" alt="">
+          <div class="ticket-info-wrapper">
+            <div class="left-wrapper" :class="[theme[0] + themeFlag]">
+              <div class="origin-price" :class="[theme[1] + themeFlag]">
+                <i>￥</i>{{info.sales.salePrice}}
+              </div>
+              <div class="old-price" :class="[theme[2] + themeFlag]">
+                <span style="font-size: 12px">原价</span><i style="text-decoration: line-through">￥</i><span style="text-decoration: line-through">{{info.sales.retailPrice}}</span>
+              </div>
+            </div>
+            <div class="right-wrapper">
+                <div class="sub-title">
+                  {{info.goods.share_label}}
+                </div>
+                <div class="title">
+                  {{info.goods.share_name}}
+                </div>
+            </div>
+          </div>
       </template>
       <template slot="shareInfo">
         <share-code :logo="$utils.image.getImagePath($root.userInfo.state.avatar)" :url="wexin_url ? wexin_url: url"></share-code>
@@ -41,7 +59,13 @@ export default {
   data () {
     return {
       info: null,
-      wexin_url: null
+      wexin_url: null,
+      theme: [
+        'left-wrapper-theme',
+        'origin-price-theme',
+        'old-price-theme'
+      ],
+      themeFlag: 1
     }
   },
   computed: {
@@ -58,6 +82,16 @@ export default {
         isWeiXin: this.$isWeiXin ? '1' : '0'
       }, '', (data) => {
         this.info = data.data
+        if (parseFloat(this.info.sales.salePrice) === parseInt(this.info.sales.salePrice)) {
+          this.info.sales.salePrice = Number(this.info.sales.salePrice) / 10 * 10
+        } else {
+          this.info.sales.salePrice = Number(this.info.sales.salePrice)
+        }
+        if (parseFloat(this.info.sales.retailPrice) === parseInt(this.info.sales.retailPrice)) {
+          this.info.sales.retailPrice = Number(this.info.sales.retailPrice) / 10 * 10
+        } else {
+          this.info.sales.retailPrice = Number(this.info.sales.retailPrice)
+        }
         this.info.goods.price = ':￥' + this.info.goods.price
         this.wexin_url = this.info.wexin_url
         this.$nextTick(() => {
@@ -82,7 +116,7 @@ export default {
         z-index 1
         .share-image
             width 100%
-            height 100%
+            height 83%
         .info-content-wrapper
             display flex
             .post-logo
@@ -133,4 +167,68 @@ export default {
             .other-info-bottom
                 text-align right
                 textStyle(#ccc, .2)
+        .ticket-info-wrapper
+            display flex
+            width 100%
+            height 17.5%
+            box-sizing border-box
+            border-bottom 1px solid #f5f5f5
+            .left-wrapper
+                height 100%
+                display flex
+                justify-content space-around
+                align-items center
+                flex-direction column
+                padding 0 rem(.2)
+                padding-left rem(.1)
+                .origin-price
+                    font-size rem(1.3)
+                    font-weight bold
+                    font-style italic
+                    text-shadow #fff 3px 0 0, #fff 0 3px 0, #fff -3px 0 0, #fff 0 -3px 0;
+                .old-price
+                    font-size rem(.32)
+                    text-shadow #333 0px 0 0, #333 0 0px 0, #333 0px 0 0, #333 0 0px 0;
+                    margin-bottom 1px
+            .right-wrapper
+                display flex
+                flex 1
+                flex-direction column
+                overflow hidden
+                .title
+                    font-weight bold
+                    font-size rem(.6)
+                    background-color #F8DD4A
+                    padding 10px 0
+                    text-overflow ellipsis
+                    overflow hidden
+                    white-space nowrap
+                    text-shadow #333 0px 0 0, #333 0 0px 0, #333 0px 0 0, #333 0 0px 0;
+                .sub-title
+                    flex 1
+                    color #333
+                    display flex
+                    align-items center
+                    justify-content left
+                    background-color #F5C744
+                    font-size 17px
+                    text-overflow ellipsis
+                    overflow hidden
+                    white-space nowrap
+                    padding-left 3px
+                    text-shadow #333 0px 0 0, #333 0 0px 0, #333 0px 0 0, #333 0 0px 0;
+            & i
+                font-size rem(.2)
+.left-wrapper-theme1
+    background-color #F8DD4A
+.left-wrapper-theme2
+    background-color #F00
+.origin-price-theme1
+    color #FF1717
+.origin-price-theme2
+    color #FF1717
+.old-price-theme1
+    color #333
+.old-price-theme2
+    color #333
 </style>

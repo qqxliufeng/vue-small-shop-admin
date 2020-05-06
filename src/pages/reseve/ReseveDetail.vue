@@ -46,7 +46,13 @@ export default {
       tempDate: null,
       touristCount: 1,
       hasCountDownEnd: false,
-      tempRouteSite: null
+      tempRouteSite: null,
+      idCardCheck: {
+        // 0 不限制 即不用校验身份证号 要是其它 如：37010 就要限制
+        isIdNumber: '0',
+        // 0 限制购买，1 只允许购买
+        idCardRule: 0
+      }
     }
   },
   computed: {
@@ -70,6 +76,8 @@ export default {
         is_dis: 1
       }, '', (data) => {
         this.ticketInfo = data.data
+        this.idCardCheck.isIdNumber = this.ticketInfo.goods.is_id_number
+        this.idCardCheck.idCardRule = this.ticketInfo.goods.id_card_rule
         if (this.ticketInfo.calendar && this.ticketInfo.calendar.constructor === Object) {
           this.ticketInfo.releaseTime = this.ticketInfo.calendar.releaseTime ? this.ticketInfo.calendar.releaseTime : 0
           this.ticketInfo.time = data.time
@@ -190,6 +198,22 @@ export default {
         if (idCard && !this.$utils.validator.checkIdCard(idCard)) {
           this.$toast('请输入合法的身份证号')
           return false
+        }
+        if (Number(this.idCardCheck.isIdNumber) !== 0) {
+          const idReg = new RegExp('^' + this.idCardCheck.isIdNumber + '.*$')
+          const isChecked = idReg.test(idCard)
+          if (Number(this.idCardCheck.idCardRule) === 0) { // 限制购买
+            if (isChecked) {
+              this.$toast('此身份证号不允许购买该票')
+              return false
+            }
+          }
+          if (Number(this.idCardCheck.idCardRule) === 1) { // 只允许购买
+            if (!idReg.test(idCard)) {
+              this.$toast('此身份证号不允许购买该票')
+              return false
+            }
+          }
         }
         if (!schoolName && this.ticketInfo.goods.visitor_info.indexOf('u') !== -1) {
           this.$toast('请输入学校名称')

@@ -25,7 +25,7 @@ export default {
     url: String,
     tip: {
       type: String,
-      default: '即可购票'
+      default: '即可下单'
     }
   },
   components: {},
@@ -53,7 +53,7 @@ export default {
     display flex
     width 100%
     box-sizing border-box
-    padding rem(.15) rem(.5)
+    padding rem(.15) rem(.35)
     .post-logo
         width rem(1.5)
         height rem(1.5)

@@ -23,6 +23,7 @@ export default {
     passwordReg: /^(\w){6,16}$/,
     emailReg: /^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$/,
     moneyReg: /(^[1-9]([0-9]+)?(\.[0-9]{1,2})?$)|(^(0){1}$)|(^[0-9]\.[0-9]([0-9])?$)/,
+    regIdCard: /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/,
     isPhone (phone) {
       return this.phoneReg.test(phone)
     },
@@ -34,6 +35,13 @@ export default {
     },
     isMoney (s) {
       return this.moneyReg.test(s)
+    },
+    checkIdCard (idcard) {
+      if (!this.regIdCard.test(idcard)) {
+        return false
+      } else {
+        return true
+      }
     }
   },
   image: {

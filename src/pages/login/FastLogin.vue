@@ -2,14 +2,14 @@
   <div class='f-p-container'>
       <div class="input-container">
         <div>
-            <input placeholder="请输入手机号" class="user-name" maxlength="11" v-model="phone" type="tel"/>
+            <el-input placeholder="请输入手机号" class="user-name" maxlength="11" v-model="phone" type="tel" clearable />
         </div>
         <!-- <div class="input-password-container">
           <input placeholder="请输入密码" class="user-password" maxlength="16" v-model="userPassword" type="password"/>
           <span class="input-forget-password" @click="forgetPassword">忘记密码</span>
       </div> -->
         <div class="input-password-container">
-            <input placeholder="请输入验证码" class="user-password" maxlength="6" v-model="verifyCode"/>
+            <el-input placeholder="请输入验证码" class="user-password" maxlength="6" v-model="verifyCode"/>
             <span class="input-forget-password" @click="getVerifyCode" :disabled="disabled">{{verifyTip}}</span>
         </div>
         <el-button type="primary" class="input-login" @click="submit">登录</el-button>
@@ -121,6 +121,10 @@ export default {
 <style lang='stylus' scoped>
 @import '~styles/varibles.styl'
 @import '~styles/mixin.styl'
+>>> .el-input__inner
+    border 0
+    height 30px
+    line-height 30px
 .input-container
     margin 1rem .5rem
     position relative

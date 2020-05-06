@@ -2,10 +2,10 @@
 <div class='login-container'>
   <div class="input-container">
       <div>
-          <input placeholder="请输入手机号" class="user-name" maxlength="11" v-model="userName"/>
+          <el-input placeholder="请输入手机号" class="user-name" maxlength="11" v-model="userName" clearable />
       </div>
       <div class="input-password-container">
-          <input placeholder="请输入密码" class="user-password" maxlength="16" v-model="userPassword" type="password"/>
+          <el-input placeholder="请输入密码" class="user-password" maxlength="16" v-model="userPassword" type="password" clearable />
           <span class="input-forget-password" @click="forgetPassword">忘记密码</span>
       </div>
       <el-button type="primary" class="input-login" @click="login">登录</el-button>
@@ -107,6 +107,10 @@ export default {
         width 100%
     & >>> .slide-verify-slider
         width 100%
+    & >>> .el-input__inner
+        border 0
+        height 30px
+        line-height 30px
     .input-container
         margin 1rem .5rem
         position relative
