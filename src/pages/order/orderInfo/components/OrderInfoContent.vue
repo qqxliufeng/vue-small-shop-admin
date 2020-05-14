@@ -9,7 +9,7 @@
         <p class="item-info">验票时间：{{scenic.ticket_check}}</p>
         <p class="item-info">验票地点：{{scenic.ticket_check_info || '暂无'}}</p>
         <div  v-if="voucher && voucher.length > 0">
-          <p class="item-info">凭&nbsp;&nbsp;证&nbsp;&nbsp;号：<span class="no-tip">向商家展示消费</span></p>
+          <p class="item-info">凭&nbsp;&nbsp;证&nbsp;&nbsp;号：<span class="no-tip">{{voucherNum}}</span></p>
           <div class="ticket-info-container" v-if="sendCode === 0">
             <div class="code-wrapper" @click="showFullCode">
               <canvas class="canvas-code" ref="qrcode" :style="{ 'opacity': this.voucher[0].use_status === 0 ? '1': '0.4' }"></canvas>
@@ -71,6 +71,9 @@ export default {
   computed: {
     enableClass () {
       return this.voucher[0].use_status === 0 ? 'o-t-i-enable' : 'o-t-i-unenable'
+    },
+    voucherNum () {
+      return this.voucher && this.voucher.length > 0 ? this.voucher[0].voucher_number : ''
     }
   },
   methods: {

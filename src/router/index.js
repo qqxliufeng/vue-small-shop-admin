@@ -46,6 +46,8 @@ import ActivityList from '@/pages/activity/ActivityList'
 // import ActivityDetail from '@/pages/activity/ActivityDetail'
 import ActivityDetail from '@/pages/activity/ActivityNewDetail'
 import ProductionDetail from '@/pages/product/ProductionDetail'
+import CustomService from '@/pages/home/CustomService'
+import OrderAllList from '@/pages/order/OrderAllList'
 Vue.use(Router)
 
 export default new Router({
@@ -53,17 +55,49 @@ export default new Router({
   routes: [
     {
       path: '/',
+      name: 'goodsList',
+      component: GoodsList,
+      meta: {
+        auth: true,
+        showTab: true,
+        keepAlive: true
+      }
+    },
+    {
+      path: '/home',
       name: 'home',
       component: Home,
       meta: {
-        auth: true
+        auth: true,
+        showTab: true,
+        keepAlive: true
       }
     },
-    // {
-    //   path: '/login',
-    //   name: 'login',
-    //   component: Login
-    // },
+    {
+      path: '/customservice',
+      name: 'customService',
+      component: CustomService,
+      meta: {
+        auth: true,
+        showTab: true,
+        keepAlive: true
+      }
+    },
+    {
+      path: '/orderalllist',
+      name: 'orderAllList',
+      component: OrderAllList,
+      meta: {
+        auth: true,
+        showTab: true,
+        keepAlive: true
+      }
+    },
+    {
+      path: '/orderlist',
+      name: 'orderList',
+      component: OrderList
+    },
     {
       path: '/login',
       name: 'login',
@@ -141,11 +175,6 @@ export default new Router({
       path: '/partener',
       name: 'partener',
       component: () => import('@/pages/partner/Partener')
-    },
-    {
-      path: '/goodslist',
-      name: 'goodsList',
-      component: GoodsList
     },
     {
       path: '/searchgoods',
@@ -235,11 +264,6 @@ export default new Router({
       component: () => import('@/pages/home/other/NoticeDetail')
     },
     {
-      path: '/orderlist',
-      name: 'orderList',
-      component: OrderList
-    },
-    {
       path: '/ordercodeinfo',
       name: 'orderCodeInfo',
       component: () => import('@/pages/order/OrderCodeInfo'),
@@ -310,11 +334,6 @@ export default new Router({
       path: '/balancedetails',
       name: 'balanceDetails',
       component: BalanceDetails
-    },
-    {
-      path: '/customservice',
-      name: 'customService',
-      component: () => import('@/pages/home/CustomService')
     },
     {
       path: '/city',

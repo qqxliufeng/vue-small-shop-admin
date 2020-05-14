@@ -8,7 +8,7 @@
   <home-menu :menu="menus.myTeam"></home-menu>
   <home-menu :menu="menus.makeMoney"></home-menu>
   <home-menu :menu="menus.mySetting"></home-menu>
-  <div style="height: 20px"></div>
+  <div style="height: 1.5rem"></div>
   <red-packet v-if="showRedPacket" @close="closeRedPacket" @open="openRedPacket" :canTouchDismiss="false"></red-packet>
 </div>
 </template>
@@ -62,7 +62,7 @@ export default {
               iconColor: '#EC8E8B',
               title: '商品列表',
               callBack: () => {
-                this.$router.push({name: 'goodsList'})
+                this.$root.$emit('changeTab', {index: '1'})
               }
             },
             {
@@ -172,7 +172,11 @@ export default {
       })
     },
     orderClick (type) {
-      this.$router.push({name: 'orderList', query: { type: type.type }})
+      if (Number(type.type) === 0) {
+        this.$root.$emit('changeTab', {index: '3'})
+      } else {
+        this.$router.push({name: 'orderList', query: { type: type.type }})
+      }
     },
     closeRedPacket () {
       this.showRedPacket = false

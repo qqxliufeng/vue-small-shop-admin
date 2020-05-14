@@ -52,10 +52,16 @@ export default {
   },
   methods: {
     itemClickOrder (item) {
-      if (Number(this.item.buy_status) === 1) {
+      if (!this.isCanReseve) {
+        this.$toast('此商品只能用于分享赚取佣金')
+        this.itemClickShare(item)
+        return
+      }
+      if (Number(this.item.floor_price) === 2) {
         this.$emit('reseve-detail', item)
       } else {
-        this.$toast('此商品只能用于分享')
+        this.$toast('此商品只能用于分享赚取佣金')
+        this.$emit('share-ticket', item)
       }
     },
     itemClickShare (item) {
@@ -150,6 +156,9 @@ export default {
                         margin 0 rem(.1)
                 .ticket-must
                     textStyle($orangeColor, .25)
+            .s-d-hot-item-info-info-action
+                & >>> .el-button--mini
+                         padding: 7px 8px
         .button
             background $orangeColor
             border-color $orangeColor

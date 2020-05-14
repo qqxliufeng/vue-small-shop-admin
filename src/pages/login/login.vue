@@ -41,7 +41,7 @@ export default {
       }, '正在登录…', (data) => {
         if (data.data) {
           this.$root.$data.userInfo.setUserInfo(data.data.distributorinfo)
-          this.$router.replace({name: 'home'})
+          this.$router.replace({path: '/'})
         } else {
           this.$toast('登录失败')
         }

@@ -1,10 +1,10 @@
 <template>
     <div class="o-t-i-container" v-if="itemInfo">
         <div :class="['o-t-i-container-title-wrapper',enableClass]">
-            <div class="o-t-i-container-title-no-wrapper">
+            <!-- <div class="o-t-i-container-title-no-wrapper">
                 <p class="title">凭证号</p>
                 <p class="number">{{itemInfo.voucher_number}}</p>
-            </div>
+            </div> -->
             <div class="o-t-i-container-title-waiting-use-num-wrapper">
                 <p class="title">待消费</p>
                 <p>{{itemInfo.no_check_num}}张</p>

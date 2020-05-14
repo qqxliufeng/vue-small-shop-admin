@@ -1,6 +1,14 @@
+<!--
+ * @Author: your name
+ * @Date: 2019-04-22 19:06:19
+ * @LastEditTime: 2020-05-14 13:49:23
+ * @LastEditors: your name
+ * @Description: In User Settings Edit
+ * @FilePath: /small-shop-admin/src/pages/home/CustomService.vue
+ -->
 <template>
     <div>
-        <my-navi title="联系客服"></my-navi>
+        <my-navi title="联系客服" :isShowBack="false"></my-navi>
         <div class="c-s-container">
             <p class="c-s-title">
                 <i></i>

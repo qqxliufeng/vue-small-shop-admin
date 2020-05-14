@@ -1,6 +1,6 @@
 <template>
 <div class='g-list-container'>
-  <my-navi title="商品列表" :isFixed="true">
+  <my-navi title="首页" :isFixed="true" :isShowBack="false">
     <slot slot="rightAction">
       <span class="el-icon-search search" @click="search"></span>
     </slot>
@@ -40,6 +40,7 @@
                 </div>
               </div>
            </li>
+           <div style="height: 1rem"></div>
         </ul>
         <div v-else class="scenic-empty">
           暂无商家
