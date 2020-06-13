@@ -104,6 +104,9 @@ export default {
               case 'REFUND_PAY_NO':
                 item.stateTip = '退款失败'
                 break
+              case 'REFUND_THIRD_STATUS':
+                item.stateTip = '第三方待审核'
+                break
             }
             item.refund_log.forEach(item => {
               switch (item.type) {
