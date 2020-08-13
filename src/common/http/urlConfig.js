@@ -162,12 +162,12 @@ const baseShareAdminUrl = 'http://www.liuyiqinzi.com/distributor_manage/#/'
 
 // const baseShareAdminUrl = 'http://192.168.0.107:8888/distributor_manage/#/'
 
-export function getShareScenicUrl (identity, storeId, sid, businessesId) {
+export function getShareScenicUrl(identity, storeId, sid, businessesId) {
   // scenicId = s, identity = i, storeId=t, businessesId=b
   return baseShareShopUrl + 'scenicdetail?s=' + sid + '&i=' + identity + '&t=' + storeId + '&b=' + businessesId
 }
 
-export function getShareTicketUrl (identity, storeId, sid, goodsId, promotionId) {
+export function getShareTicketUrl(identity, storeId, sid, goodsId, promotionId) {
   // scenicId = s, identity = i, storeId=t, goodsId=g, promotion=p
   if (promotionId) {
     // 如果是活动商品，则分享活动页面
@@ -178,10 +178,10 @@ export function getShareTicketUrl (identity, storeId, sid, goodsId, promotionId)
   }
 }
 
-export function getShareRegisterUrl (pid) {
+export function getShareRegisterUrl(pid) {
   return baseShareAdminUrl + 'registerseller?pid=' + pid
 }
 
-export function getShareShopUrl (identity, storeId) {
+export function getShareShopUrl(identity, storeId) {
   return baseShareShopUrl + 'index/' + identity + '/' + storeId
 }

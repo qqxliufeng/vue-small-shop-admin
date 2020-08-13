@@ -7,12 +7,16 @@
  * @FilePath: /small-shop-admin/src/pages/order/OrderList.vue
  -->
 <template>
-    <div class="o-a-list-container">
-        <my-navi title="我的订单" :isFixed="true" :isShowBack="false">
-        </my-navi>
-        <order-list-item ref="allItem"></order-list-item>
-        <div style="height: 1rem"></div>
-    </div>
+  <div class="o-a-list-container">
+    <my-navi
+      title="我的订单"
+      :isFixed="true"
+      :isShowBack="false"
+    >
+    </my-navi>
+    <order-list-item ref="allItem"></order-list-item>
+    <div style="height: 1rem"></div>
+  </div>
 </template>
 
 <script>
@@ -22,22 +26,22 @@ export default {
   components: {
     orderListItem
   },
-  data () {
+  data() {
     return {
       currentRefs: null
     }
   },
   methods: {
-    refundList () {
-      this.$router.push({name: 'orderRufundList'})
+    refundList() {
+      this.$router.push({ name: 'orderRufundList' })
     }
   },
-  beforeRouteEnter (to, from, next) {
+  beforeRouteEnter(to, from, next) {
     next(vm => {
       vm.$refs.allItem.$refs.mescroll && vm.$refs.allItem.$refs.mescroll.beforeRouteEnter()
     })
   },
-  beforeRouteLeave (to, from, next) {
+  beforeRouteLeave(to, from, next) {
     this.$refs.allItem.$refs.mescroll && this.$refs.allItem.$refs.mescroll.beforeRouteLeave()
     next()
   }
@@ -45,9 +49,11 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-@import '~styles/varibles.styl'
-@import '~styles/mixin.styl'
-.o-a-list-container >>> .mescroll
-    top $headerHeight
-    height 93%
+@import '~styles/varibles.styl';
+@import '~styles/mixin.styl';
+
+.o-a-list-container >>> .mescroll {
+  top: $headerHeight;
+  height: 93%;
+}
 </style>

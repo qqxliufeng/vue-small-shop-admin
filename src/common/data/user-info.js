@@ -15,13 +15,15 @@ const userInfo = {
     rebate: sessionStorage.getItem('rebate'),
     credit: sessionStorage.getItem('credit'),
     linkname: sessionStorage.getItem('linkname'),
-    openid: sessionStorage.getItem('openid')
+    openid: sessionStorage.getItem('openid'),
+    payType: sessionStorage.getItem('payType') === 'null' ? null : sessionStorage.getItem('payType'),
+    payAccount: sessionStorage.getItem('payAccount') === 'null' ? null : sessionStorage.getItem('payAccount')
   },
-  isLogin () {
+  isLogin() {
     // return this.state.id !== '' && this.state.id !== null && this.state.token !== '' && this.state.token !== null && this.state.phone !== '' && this.state.phone !== null
     return this.state.id && this.state.token && this.state.phone
   },
-  setUserInfo (userInfo) {
+  setUserInfo(userInfo) {
     this.state.id = userInfo.id
     this.state.authset = userInfo.auth_set
     this.state.token = userInfo.token
@@ -36,6 +38,8 @@ const userInfo = {
     this.state.credit = userInfo.line_of_credit
     this.state.linkname = userInfo.linkname
     this.state.openid = userInfo.openid
+    this.state.payType = userInfo.pay_type
+    this.state.payAccount = userInfo.pay_account
     sessionStorage.setItem('id', this.state.id)
     sessionStorage.setItem('authset', this.state.authset)
     localStorage.setItem('token', this.state.token)
@@ -50,41 +54,49 @@ const userInfo = {
     sessionStorage.setItem('credit', this.state.credit)
     sessionStorage.setItem('linkname', this.state.linkname)
     sessionStorage.setItem('openid', this.state.openid)
+    sessionStorage.setItem('payType', this.state.payType)
+    sessionStorage.setItem('payAccount', this.state.payAccount)
     state.saveSallerInfo('2', this.state.id)
   },
-  setUserInfoAvatar (avatar) {
+  setUserInfoAvatar(avatar) {
     this.state.avatar = avatar
     sessionStorage.setItem('avatar', this.state.avatar)
   },
-  setUserInfoName (name) {
+  setUserInfoName(name) {
     this.state.name = name
     sessionStorage.setItem('name', this.state.name)
   },
-  setUserInfoEmail (email) {
+  setUserInfoEmail(email) {
     this.state.email = email
     sessionStorage.setItem('email', this.state.email)
   },
-  setUserInfoQQ (qq) {
+  setUserInfoQQ(qq) {
     this.state.qq = qq
     sessionStorage.setItem('qq', this.state.qq)
   },
-  setUserInfoCity (city) {
+  setUserInfoCity(city) {
     this.state.city = city
     sessionStorage.setItem('city', this.state.city)
   },
-  setUserInfoRebate (rebate) {
+  setUserInfoRebate(rebate) {
     this.state.rebate = rebate
     sessionStorage.setItem('rebate', this.state.rebate)
   },
-  setUserInfoBalance (balance) {
+  setUserInfoBalance(balance) {
     this.state.balance = balance
     sessionStorage.setItem('balance', this.state.balance)
   },
-  setUserInfoOpenId (openid) {
+  setUserInfoOpenId(openid) {
     this.state.openid = openid
     sessionStorage.setItem('openid', this.state.openid)
   },
-  clearInfoAction () {
+  setPayAccountInfo(payType, payAccount) {
+    this.state.payType = payType
+    this.state.payAccount = payAccount
+    sessionStorage.setItem('payType', this.state.payType)
+    sessionStorage.setItem('payAccount', this.state.payAccount)
+  },
+  clearInfoAction() {
     this.state.id = ''
     this.state.token = ''
     this.state.phone = ''
