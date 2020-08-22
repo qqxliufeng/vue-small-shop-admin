@@ -97,7 +97,7 @@
       @click="crash"
     >确定</el-button>
     <confirm-dialog
-      content="当前账号未进行认证，请先认证"
+      :content="authStatusTip"
       @dialogConfirm="dialogConfirm"
       ref="confrimDialog"
     ></confirm-dialog>
@@ -126,7 +126,8 @@ export default {
       serviceCharge: 0.00,
       realMoney: 0.00,
       crashAccount: this.$root.userInfo.state.payAccount || '',
-      crashName: ''
+      crashName: '',
+      authStatusTip: '当前账号未进行认证，请先认证'
     }
   },
   watch: {
@@ -136,9 +137,10 @@ export default {
           balance: this.$root.userInfo.state.balance,
           miniCrash: Number(newVal.minimum_cash),
           miniBalance: Number(newVal.minimum_balance),
-          serviceCharge: Number(newVal.service_charge)
+          serviceCharge: Number(newVal.service_charge),
+          auth_status: Number(newVal.certification_status)
         }
-        this.canCrash = this.crashTip.balance && this.crashTip.balance > 0 && this.crashTip.balance > this.crashTip.miniCrash + this.crashTip.miniBalance
+        this.canCrash = this.crashTip.balance && this.crashTip.balance > 0 && this.crashTip.balance > this.crashTip.miniCrash + this.crashTip.miniBalance && this.crashTip.auth_status === 2
       }
     },
     crashMoney(newVal, oldVal) {
@@ -173,6 +175,16 @@ export default {
     getData() {
       this.$http(this.$urlPath.withdrawCash, {}, '', (data) => {
         this.info = data.data
+        const state = Number(this.info.certification_status)
+        if (state === 0) {
+          this.authStatusTip = '当前账号未进行认证，请先认证'
+          this.$refs.confrimDialog.showDialog()
+        } else if (state === 1) {
+          this.$toast('当前账号正在审核中，请耐心等待……')
+        } else if (state === 3) {
+          this.authStatusTip = '当前账号审核失败，请重新认证'
+          this.$refs.confrimDialog.showDialog()
+        }
       }, (errorCode, error) => {
         if (errorCode === 200) {
           this.$refs.confrimDialog.showDialog()

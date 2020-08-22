@@ -1,3 +1,11 @@
+/*
+ * @Author: your name
+ * @Date: 2020-08-22 11:56:30
+ * @LastEditTime: 2020-08-22 12:00:23
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: /small-shop-admin/config/index.js
+ */ 
 'use strict'
 // Template version: 1.3.1
 // see http://vuejs-templates.github.io/webpack for documentation.
@@ -13,7 +21,7 @@ module.exports = {
     proxyTable: {},
 
     // Various Dev Server settings
-    host: '192.168.1.102', // can be overwritten by process.env.HOST
+    host: '192.168.0.111', // can be overwritten by process.env.HOST
     port: 8888, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
     autoOpenBrowser: false,
     errorOverlay: true,
