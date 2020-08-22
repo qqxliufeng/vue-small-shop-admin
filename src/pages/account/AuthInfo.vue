@@ -60,7 +60,7 @@
             type="text"
             class="p-i-input"
             placeholder="请输入身份证号"
-            maxlength="16"
+            maxlength="18"
             v-model="idCard"
             :readonly="status === 1 || status === 2"
           >

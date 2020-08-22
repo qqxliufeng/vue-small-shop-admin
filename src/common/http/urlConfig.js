@@ -1,8 +1,8 @@
 
 // 迁移到正式的服务器的时候，一定要更换这个地址，要不然会炸的
-// export const baseIP = 'http://www.liuyiqinzi.com/'
+export const baseIP = 'http://www.liuyiqinzi.com/'
 
-export const baseIP = 'http://www.yixinglvxing.com/'
+// export const baseIP = 'http://www.yixinglvxing.com/'
 
 export const baseUrl = 'distributor_api/'
 
